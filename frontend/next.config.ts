@@ -7,15 +7,9 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ['*.trycloudflare.com'],
   async rewrites() {
     return [
-      // Path dengan trailing slash — teruskan apa adanya
-      {
-        source: '/api/:path*/',
-        destination: 'https://faizulhq10.pythonanywhere.com/:path*/',
-      },
-      // Path tanpa trailing slash — tambahkan trailing slash agar Django happy
       {
         source: '/api/:path*',
-        destination: 'https://faizulhq10.pythonanywhere.com/:path*/',
+        destination: 'https://faizulhq10.pythonanywhere.com/api/:path*',
       },
     ];
   },
