@@ -7,11 +7,11 @@ import axios, { type InternalAxiosRequestConfig } from 'axios';
  * - SSR di server: langsung ke Django localhost
  */
 function getApiBase(): string {
-  if (typeof window !== 'undefined') {
-    // window.location.origin = "https://xxx.trycloudflare.com" atau "http://localhost:3001"
-    return `${window.location.origin}/api`;
-  }
-  return 'https://faizulhq10.pythonanywhere.com/';
+  // Selalu gunakan URL Django langsung baik di browser maupun server.
+  // Ini menghindari bug "ERR_TOO_MANY_REDIRECTS" dari Vercel saat Next.js dan Django
+  // bertabrakan soal masalah garis miring (trailing slashes).
+  // Karena CORS sudah diset True di backend, request silang domain ini aman.
+  return 'https://faizulhq10.pythonanywhere.com/api';
 }
 
 const api = axios.create({
