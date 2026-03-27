@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "name": "Anisa Rahmawati",
+    "role": "Mahasiswa S2 Manajemen, Universitas Gadjah Mada",
+    "avatar": "AR",
+    "quote": "Bootcamp SmartPLS dari Aji Mitra Statistika benar-benar mengubah cara saya memandang analisis data. Fasilitator sangat sabar menjelaskan konsep PLS-SEM yang rumit menjadi mudah dipahami. Tesis saya selesai tepat waktu berkat bimbingan mereka!",
+    "program": "Bootcamp SmartPLS",
+    "rating": 5
+  },
+  {
+    "id": 2,
+    "name": "Muhammad Fauzi Akbar",
+    "role": "Dosen Ekonomi, Universitas Brawijaya",
+    "avatar": "MF",
+    "quote": "Saya sudah mengikuti banyak pelatihan SPSS, tapi yang di Aji Mitra Statistika ini berbeda — materi terstruktur, praktik langsung dengan data riil, dan ada sesi tanya jawab intensif. Sangat direkomendasikan untuk para dosen dan peneliti!",
+    "program": "Bootcamp Analisis SPSS",
+    "rating": 5
+  },
+  {
+    "id": 3,
+    "name": "Dewi Lestari Kusuma",
+    "role": "Mahasiswa S1 Psikologi, Universitas Airlangga",
+    "avatar": "DL",
+    "quote": "Short class uji validitas dan reliabilitas sangat membantu saya menyelesaikan bab metodologi skripsi. Materinya padat, langsung ke inti, dan bisa dipraktikkan sendiri setelah kelas. Terima kasih Aji Mitra Statistika!",
+    "program": "Short Class Uji Instrumen",
+    "rating": 5
+  },
+  {
+    "id": 4,
+    "name": "Rizky Pratama Putra",
+    "role": "Peneliti Muda, Lembaga Riset Independen",
+    "avatar": "RP",
+    "quote": "Konsultasi analisis data di Aji Statistik sangat profesional. Tim mereka membantu saya dari pemilihan metode hingga interpretasi hasil dan penulisan laporan. Hasilnya artikel saya berhasil diterima jurnal terindeks Sinta 2!",
+    "program": "Konsultasi AJI Statistik",
+    "rating": 5
+  },
+  {
+    "id": 5,
+    "name": "Sari Indah Permata",
+    "role": "Mahasiswa S3 Pendidikan, Universitas Pendidikan Indonesia",
+    "avatar": "SI",
+    "quote": "Program private class Aji Mitra Statistika memampukan saya menguasai analisis kualitatif NVivo dalam waktu singkat. Mentor sangat responsif, jadwal fleksibel, dan modul belajarnya sangat lengkap. Disertasi saya kini jauh lebih kuat secara metodologis!",
+    "program": "Private Class NVivo",
+    "rating": 5
+  }
+]

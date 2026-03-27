@@ -1,0 +1,36 @@
+# Node.js
+node_modules/
+npm-debug.log
+.env
+.env.local
+
+# Python / Django (Backend)
+__pycache__/
+*.py[cod]
+*$py.class
+backend/venv/
+backend/.venv/
+.venv/
+venv/
+backend/db.sqlite3
+db.sqlite3
+
+# Next.js (Frontend)
+frontend/.next/
+frontend/out/
+frontend/build/
+
+# IDE / OS specific
+.vscode/
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Misc
+cloudflared.exe
+temp/
+tmp/
