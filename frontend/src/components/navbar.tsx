@@ -65,15 +65,13 @@ export function Navbar() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 shrink-0">
-            <div className="bg-white rounded-xl px-2.5 py-1.5 shadow-sm flex items-center justify-center">
-              <Image
-                src="/logo.png"
-                alt="Aji Institute"
-                width={48}
-                height={34}
-                className="h-8 w-auto"
-              />
-            </div>
+            <Image
+              src="/logo.png"
+              alt="Aji Institute"
+              width={48}
+              height={34}
+              className="h-10 w-auto"
+            />
             <div className="hidden sm:block">
               <p className="text-white font-bold text-sm leading-tight">Aji Institute</p>
               <p className="text-[#4FA8D8] text-[10px]">PT. Amanah Jana Insani</p>
@@ -151,16 +149,14 @@ export function Navbar() {
 
           {/* Right actions */}
           <div className="flex items-center gap-2">
-            {/* WhatsApp CTA */}
-            <a
-              href={WA_LINK('Halo, saya ingin konsultasi program Aji Institute')}
-              target="_blank"
-              rel="noopener noreferrer"
+            {/* Konsultasi CTA */}
+            <Link
+              href="/konsultasi"
               className="hidden lg:flex items-center gap-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors"
             >
               <MessageCircle className="w-3.5 h-3.5" />
               Konsultasi
-            </a>
+            </Link>
 
             {/* Cart */}
             <Link
