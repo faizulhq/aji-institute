@@ -2,239 +2,285 @@
 
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
-import { ArrowRight, BookOpen, Microscope, GraduationCap, Users, Star, ChevronLeft, ChevronRight, Award, TrendingUp, Clock } from 'lucide-react';
-import { useState } from 'react';
+import { ArrowRight, Users, BookOpen, Award, Briefcase, Star, MessageCircle, CheckCircle } from 'lucide-react';
 import { programsApi } from '@/lib/api';
 import { ProgramCard } from '@/components/program-card';
 import { ProgramCardSkeleton } from '@/components/program-card-skeleton';
-import { formatPrice } from '@/lib/utils';
-import type { Program, Testimonial } from '@/lib/types';
+import { SUB_BRANDS, WA_LINK, SITE } from '@/lib/config';
+import type { Program } from '@/lib/types';
 
-const serviceUnits = [
-  { icon: BookOpen, label: 'AJI Learning', desc: 'Bootcamp intensif & short class: statistika, metodologi penelitian, penulisan akademik.', href: '/bootcamp', color: 'bg-blue-50', iconColor: 'text-[#2568B5]', cta: 'Lihat Program →' },
-  { icon: Microscope, label: 'AJI Statistik', desc: 'Konsultasi analisis data, statistik akademik, pendampingan skripsi, tesis, dan disertasi.', href: '/konsultasi', color: 'bg-emerald-50', iconColor: 'text-emerald-600', cta: 'Konsultasi →' },
-  { icon: GraduationCap, label: 'AJI EduLab', desc: 'Workshop riset & inovasi laboratorium pembelajaran. Kolaborasi peneliti dan akademisi.', href: '/konsultasi', color: 'bg-amber-50', iconColor: 'text-amber-600', cta: 'Eksplor →' },
-  { icon: Users, label: 'AJI Private', desc: 'Mentoring personal: statistika, metodologi penelitian, akademik dan profesional.', href: '/private-class', color: 'bg-purple-50', iconColor: 'text-purple-600', cta: 'Daftar →' },
+const STATS = [
+  { icon: Users, value: '500+', label: 'Alumni Terlatih' },
+  { icon: BookOpen, value: '30+', label: 'Program Aktif' },
+  { icon: Briefcase, value: '10+', label: 'Fasilitator Expert' },
+  { icon: Award, value: '5', label: 'Divisi Program' },
 ];
 
-const values = [
-  { icon: '🤝', label: 'Amanah', desc: 'Integritas, kejujuran, dan tanggung jawab menjadi fondasi setiap layanan kami.' },
-  { icon: '🔬', label: 'Jana', desc: 'Berpikir kritis, berbasis data, mencari kebenaran ilmiah dengan metode yang valid.' },
-  { icon: '❤️', label: 'Insani', desc: 'Humanis, empatik, dan pengembangan holistik untuk dampak nyata pada manusia.' },
+const KEUNGGULAN = [
+  { icon: '🎓', title: 'Kurikulum Berbasis Riset', desc: 'Materi dirancang langsung dari kebutuhan nyata peneliti dan akademisi Indonesia.' },
+  { icon: '👨‍🏫', title: 'Fasilitator Berpengalaman', desc: 'Dipandu oleh praktisi dengan pengalaman riset dan konsultasi bertahun-tahun.' },
+  { icon: '📊', title: 'Praktik Data Nyata', desc: 'Setiap sesi menggunakan dataset riset nyata agar pembelajaran langsung berdampak.' },
+  { icon: '🏆', title: 'Sertifikasi Resmi', desc: 'Sertifikat kelulusan terverifikasi yang diakui oleh lembaga akademik dan industri.' },
+  { icon: '💬', title: 'Konsultasi Lanjutan', desc: 'Akses dukungan via WhatsApp setelah program selesai, tidak meninggalkan peserta.' },
+  { icon: '📹', title: 'Rekaman Seumur Hidup', desc: 'Akses ulang rekaman sesi kapan saja, selamanya, tanpa biaya tambahan.' },
 ];
 
-const stats = [
-  { num: '2.000+', label: 'Peserta Aktif' },
-  { num: '120+', label: 'Program Selesai' },
-  { num: '95%', label: 'Tingkat Kepuasan' },
-  { num: '50+', label: 'Instansi Mitra' },
+const TESTIMONIALS = [
+  { name: 'Rahma A.', role: 'Mahasiswa S2, UGM', program: 'Bootcamp SmartPLS', rating: 5, comment: 'Bootcamp SmartPLS AjiStat benar-benar mengubah cara saya memandang SEM. Dalam 3 hari saya sudah bisa menganalisis sendiri untuk tesis saya.' },
+  { name: 'Dr. Budi S.', role: 'Dosen, Universitas Indonesia', program: 'Bootcamp NVivo', rating: 5, comment: 'Materi NVivo-nya sangat mendalam dan aplikatif. Sekarang saya rutin merekomendasikan AjiStat ke mahasiswa bimbingan saya.' },
+  { name: 'Fira N.', role: 'Peneliti, LIPI', rating: 5, program: 'Private Class SPSS', comment: 'Private class-nya sangat personal dan fleksibel. Fasilitatornya sabar sekali menjelaskan analisis yang kompleks sekalipun.' },
 ];
 
 export default function HomePage() {
-  const [testimonialIdx, setTestimonialIdx] = useState(0);
-
-  const { data: featuredData, isLoading: featuredLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['programs', 'featured'],
     queryFn: () => programsApi.list({ featured: true }).then((r) => r.data),
   });
 
-  const { data: testimonialsData } = useQuery({
-    queryKey: ['testimonials'],
-    queryFn: () => programsApi.testimonials().then((r) => r.data),
-  });
-
-  const featured: Program[] = featuredData?.data ?? [];
-  const testimonials: Testimonial[] = testimonialsData?.data ?? [];
-  const t = testimonials[testimonialIdx];
+  const featuredPrograms: Program[] = data?.data?.slice(0, 3) ?? [];
 
   return (
     <>
-      {/* ─── HERO ─────────────────────────────────────────── */}
-      <section className="relative min-h-[90vh] flex items-center bg-gradient-to-br from-[#0C1A45] via-[#162660] to-[#1e4fa0] overflow-hidden">
-        {/* Background pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-10 left-10 w-96 h-96 rounded-full bg-[#4FA8D8] blur-3xl" />
-          <div className="absolute bottom-10 right-10 w-72 h-72 rounded-full bg-[#F0A500] blur-3xl" />
+      {/* ─── HERO ─── */}
+      <section className="relative bg-[#0C1A45] overflow-hidden min-h-[90vh] flex items-center">
+        {/* BG decorations */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#2568B5]/20 rounded-full blur-3xl -translate-y-1/3 translate-x-1/4" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#4FA8D8]/10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4" />
+          {/* Grid pattern */}
+          <div className="absolute inset-0 opacity-[0.03]"
+            style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 bg-[#4FA8D8]/15 border border-[#4FA8D8]/30 text-[#4FA8D8] px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase mb-6">
-              <TrendingUp className="w-3.5 h-3.5" /> Platform Edukasi Statistika #1 Indonesia
-            </div>
-            <h1 className="font-[family-name:var(--font-poppins)] text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
-              Kuasai Statistika &<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F0A500] to-[#FFD166]">
-                Riset Bersama Ahlinya
-              </span>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+          <div className="max-w-3xl">
+            <span className="inline-flex items-center gap-2 bg-[#4FA8D8]/20 border border-[#4FA8D8]/30 text-[#4FA8D8] text-xs font-semibold px-4 py-1.5 rounded-full mb-8">
+              ✦ {SITE.tagline}
+            </span>
+
+            <h1 className="font-[family-name:var(--font-poppins)] text-5xl sm:text-6xl font-bold text-white mb-6 leading-[1.1]">
+              Tingkatkan{' '}
+              <span className="text-[#4FA8D8]">Kompetensi</span>{' '}
+              Anda Bersama<br />
+              <span className="text-[#F0A500]">Aji Institute</span>
             </h1>
-            <p className="text-white/70 text-lg leading-relaxed mb-8 max-w-xl">
-              Bootcamp intensif, kelas singkat, dan konsultasi personal bersama praktisi berpengalaman. Dari skripsi hingga publikasi Scopus.
+
+            <p className="text-white/65 text-lg leading-relaxed mb-10 max-w-2xl">
+              Platform pelatihan profesional, pengembangan kompetensi, dan konsultasi riset — dari statistik & analisis data, bisnis, public speaking, digital skills, hingga bahasa.
             </p>
+
             <div className="flex flex-wrap gap-4">
               <Link href="/bootcamp"
-                className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#0C1A45] font-bold px-6 py-3 rounded-xl text-sm transition-all hover:scale-105 shadow-lg shadow-amber-500/20">
-                🚀 Lihat Program Kami
+                className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#0C1A45] font-bold px-7 py-3.5 rounded-xl transition-all hover:-translate-y-0.5 shadow-lg shadow-[#F0A500]/20">
+                Lihat Semua Program <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link href="/konsultasi"
-                className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 border border-white/25 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all">
-                💬 Konsultasi Gratis <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-            {/* Stats */}
-            <div className="grid grid-cols-4 gap-6 mt-14 pt-10 border-t border-white/10">
-              {stats.map((s) => (
-                <div key={s.label}>
-                  <p className="text-white font-bold text-2xl font-[family-name:var(--font-poppins)]">{s.num}</p>
-                  <p className="text-white/50 text-xs mt-1">{s.label}</p>
-                </div>
-              ))}
+              <a href={WA_LINK('Halo Aji Institute, saya ingin konsultasi program yang cocok untuk saya')}
+                target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/25 text-white font-semibold px-7 py-3.5 rounded-xl transition-all">
+                <MessageCircle className="w-4 h-4 text-green-400" /> Konsultasi Gratis
+              </a>
             </div>
           </div>
-        </div>
-        <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-white to-transparent" />
-      </section>
 
-      {/* ─── VALUES ───────────────────────────────────────── */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <span className="inline-block bg-blue-50 text-[#2568B5] text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider border border-blue-100 mb-4">
-              Nilai Kami
-            </span>
-            <h2 className="font-[family-name:var(--font-poppins)] text-3xl font-bold text-gray-900">
-              Dibangun di Atas Tiga Pilar Utama
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {values.map((v) => (
-              <div key={v.label} className="text-center p-8 rounded-2xl border border-gray-100 hover:border-blue-100 hover:shadow-lg transition-all group">
-                <div className="text-4xl mb-4">{v.icon}</div>
-                <h3 className="font-[family-name:var(--font-poppins)] text-xl font-bold text-gray-900 mb-3">{v.label}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{v.desc}</p>
+          {/* Stats */}
+          <div className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {STATS.map(({ icon: Icon, value, label }) => (
+              <div key={label} className="bg-white/8 border border-white/12 rounded-2xl p-5 flex items-center gap-3">
+                <div className="w-10 h-10 bg-[#2568B5]/40 rounded-xl flex items-center justify-center shrink-0">
+                  <Icon className="w-5 h-5 text-[#4FA8D8]" />
+                </div>
+                <div>
+                  <p className="text-white font-bold text-xl leading-none">{value}</p>
+                  <p className="text-white/45 text-xs mt-0.5">{label}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ─── SERVICE UNITS ────────────────────────────────── */}
+      {/* ─── SUB-BRAND CARDS ─── */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <span className="inline-block bg-blue-50 text-[#2568B5] text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider border border-blue-100 mb-4">
-              Unit Layanan
-            </span>
-            <h2 className="font-[family-name:var(--font-poppins)] text-3xl font-bold text-gray-900">Empat Unit Unggulan Kami</h2>
-            <p className="text-gray-500 mt-3">Setiap unit dirancang khusus untuk memenuhi kebutuhan akademik dan profesional Anda.</p>
+          <div className="text-center mb-12">
+            <p className="text-[#2568B5] text-sm font-semibold uppercase tracking-widest mb-3">5 Divisi Program</p>
+            <h2 className="font-[family-name:var(--font-poppins)] text-3xl font-bold text-gray-900 mb-4">
+              Temukan Program yang Tepat untuk Anda
+            </h2>
+            <p className="text-gray-500 max-w-xl mx-auto">
+              Aji Institute hadir dengan lima divisi program yang mencakup seluruh kebutuhan pengembangan kompetensi Anda.
+            </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {serviceUnits.map((u) => (
-              <Link key={u.label} href={u.href}
-                className="group bg-white rounded-2xl p-6 border border-gray-100 hover:border-blue-100 hover:shadow-xl transition-all hover:-translate-y-1">
-                <div className={`w-12 h-12 ${u.color} rounded-xl flex items-center justify-center mb-5`}>
-                  <u.icon className={`w-6 h-6 ${u.iconColor}`} />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+            {SUB_BRANDS.map((brand) => (
+              <Link
+                key={brand.id}
+                href={brand.href}
+                className="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 p-6 flex flex-col"
+              >
+                <div className="text-3xl mb-4">{brand.icon}</div>
+                <h3 className="font-bold text-gray-900 text-base mb-1 group-hover:text-[#2568B5] transition-colors">
+                  {brand.name}
+                </h3>
+                <p className="text-[#2568B5] text-xs font-medium mb-3">{brand.label}</p>
+                <p className="text-gray-500 text-xs leading-relaxed flex-1">{brand.description}</p>
+                <div className="mt-4 flex items-center justify-between">
+                  {!brand.available ? (
+                    <span className="text-[10px] bg-amber-50 text-amber-600 border border-amber-200 px-2 py-0.5 rounded-full font-medium">
+                      Segera Hadir
+                    </span>
+                  ) : (
+                    <span className="text-[10px] bg-green-50 text-green-600 border border-green-200 px-2 py-0.5 rounded-full font-medium">
+                      Tersedia
+                    </span>
+                  )}
+                  <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-[#2568B5] group-hover:translate-x-1 transition-all" />
                 </div>
-                <h3 className="font-[family-name:var(--font-poppins)] font-bold text-gray-900 mb-2">{u.label}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed mb-4">{u.desc}</p>
-                <span className="text-[#2568B5] text-sm font-semibold group-hover:underline">{u.cta}</span>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ─── FEATURED PROGRAMS ────────────────────────────── */}
+      {/* ─── FEATURED PROGRAMS ─── */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <span className="inline-block bg-blue-50 text-[#2568B5] text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider border border-blue-100 mb-4">
-              Program Unggulan
-            </span>
-            <h2 className="font-[family-name:var(--font-poppins)] text-3xl font-bold text-gray-900">Mulai Belajar Sekarang</h2>
-            <p className="text-gray-500 mt-3">Pilih program sesuai kebutuhan riset dan karier akademik Anda.</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {featuredLoading 
-              ? [...Array(3)].map((_, i) => <ProgramCardSkeleton key={i} />) 
-              : featured.map((p) => <ProgramCard key={p.id} program={p} />)}
-          </div>
-          <div className="flex justify-center gap-4">
-            <Link href="/bootcamp" className="inline-flex items-center gap-2 bg-[#162660] text-white font-semibold px-6 py-3 rounded-xl text-sm hover:bg-[#2568B5] transition-colors">
-              🎓 Lihat Semua Bootcamp
+          <div className="flex items-end justify-between mb-10">
+            <div>
+              <p className="text-[#2568B5] text-sm font-semibold uppercase tracking-widest mb-2">Program Unggulan</p>
+              <h2 className="font-[family-name:var(--font-poppins)] text-3xl font-bold text-gray-900">
+                Program Terpopuler AjiStat
+              </h2>
+            </div>
+            <Link href="/bootcamp" className="hidden sm:flex items-center gap-1 text-[#2568B5] text-sm font-semibold hover:gap-2 transition-all">
+              Lihat Semua <ArrowRight className="w-4 h-4" />
             </Link>
-            <Link href="/short-class" className="inline-flex items-center gap-2 border-2 border-[#162660] text-[#162660] font-semibold px-6 py-3 rounded-xl text-sm hover:bg-[#162660] hover:text-white transition-colors">
-              ⚡ Lihat Short Class
-            </Link>
+          </div>
+
+          {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[...Array(3)].map((_, i) => <ProgramCardSkeleton key={i} />)}
+            </div>
+          ) : featuredPrograms.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {featuredPrograms.map((p) => <ProgramCard key={p.id} program={p} />)}
+            </div>
+          ) : (
+            <div className="text-center py-16 text-gray-400">
+              <p className="text-4xl mb-3">📚</p>
+              <p>Program sedang disiapkan</p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ─── KEUNGGULAN ─── */}
+      <section className="py-20 bg-[#0C1A45]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-[#4FA8D8] text-sm font-semibold uppercase tracking-widest mb-3">Mengapa Aji Institute?</p>
+            <h2 className="font-[family-name:var(--font-poppins)] text-3xl font-bold text-white mb-4">
+              Standar Kualitas yang Tidak Kami Kompromikan
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {KEUNGGULAN.map((item) => (
+              <div key={item.title} className="bg-white/6 border border-white/10 rounded-2xl p-6 hover:bg-white/10 transition-colors">
+                <div className="text-3xl mb-4">{item.icon}</div>
+                <h3 className="text-white font-semibold mb-2">{item.title}</h3>
+                <p className="text-white/55 text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ─── TESTIMONIALS ─────────────────────────────────── */}
-      {testimonials.length > 0 && (
-        <section className="py-20 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-14">
-              <span className="inline-block bg-blue-50 text-[#2568B5] text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider border border-blue-100 mb-4">
-                Testimoni
-              </span>
-              <h2 className="font-[family-name:var(--font-poppins)] text-3xl font-bold text-gray-900">Kata Mereka tentang Kami</h2>
-            </div>
-            {t && (
-              <div className="max-w-2xl mx-auto">
-                <div className="bg-white rounded-2xl p-8 sm:p-10 shadow-md border border-gray-100 relative">
-                  <div className="text-7xl text-blue-100 font-black absolute top-6 left-8 leading-none select-none">"</div>
-                  <div className="flex gap-1 mb-4 relative z-10">
-                    {[...Array(t.rating)].map((_, i) => <Star key={i} className="w-4 h-4 fill-[#F0A500] text-[#F0A500]" />)}
-                  </div>
-                  <p className="text-gray-700 text-base italic leading-relaxed mb-6 relative z-10">{t.comment}</p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#162660] to-[#4FA8D8] flex items-center justify-center text-white font-bold text-sm">{t.avatar}</div>
-                    <div>
-                      <p className="font-semibold text-gray-900 text-sm">{t.name}</p>
-                      <p className="text-gray-500 text-xs">{t.role}</p>
-                      <p className="text-[#2568B5] text-xs font-medium">Program: {t.program_name}</p>
-                    </div>
-                  </div>
+      {/* ─── TESTIMONI ─── */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-[#2568B5] text-sm font-semibold uppercase tracking-widest mb-3">Testimoni</p>
+            <h2 className="font-[family-name:var(--font-poppins)] text-3xl font-bold text-gray-900">
+              Apa Kata Alumni Kami?
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {TESTIMONIALS.map((t) => (
+              <div key={t.name} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                <div className="flex gap-1 mb-3">
+                  {[...Array(t.rating)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-[#F0A500] text-[#F0A500]" />
+                  ))}
                 </div>
-                <div className="flex items-center justify-center gap-4 mt-6">
-                  <button onClick={() => setTestimonialIdx((testimonialIdx - 1 + testimonials.length) % testimonials.length)}
-                    className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:bg-[#2568B5] hover:border-[#2568B5] hover:text-white transition-colors">
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <div className="flex gap-2">
-                    {testimonials.map((_, i) => (
-                      <button key={i} onClick={() => setTestimonialIdx(i)}
-                        className={`h-2 rounded-full transition-all ${i === testimonialIdx ? 'w-6 bg-[#2568B5]' : 'w-2 bg-gray-200'}`} />
-                    ))}
+                <p className="text-gray-600 text-sm italic leading-relaxed mb-5">"{t.comment}"</p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#162660] to-[#2568B5] flex items-center justify-center text-white font-bold text-sm shrink-0">
+                    {t.name.slice(0, 2).toUpperCase()}
                   </div>
-                  <button onClick={() => setTestimonialIdx((testimonialIdx + 1) % testimonials.length)}
-                    className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:bg-[#2568B5] hover:border-[#2568B5] hover:text-white transition-colors">
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
+                  <div>
+                    <p className="text-sm font-semibold text-gray-800">{t.name}</p>
+                    <p className="text-xs text-gray-400">{t.role}</p>
+                    <p className="text-xs text-[#2568B5]">{t.program}</p>
+                  </div>
                 </div>
               </div>
-            )}
+            ))}
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
-      {/* ─── CTA ──────────────────────────────────────────── */}
-      <section className="py-20 bg-gradient-to-br from-[#162660] to-[#0C1A45]">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <Award className="w-12 h-12 text-[#F0A500] mx-auto mb-6" />
-          <h2 className="font-[family-name:var(--font-poppins)] text-3xl sm:text-4xl font-bold text-white mb-4">
-            Siap Memulai Perjalanan Riset Anda?
+      {/* ─── LAYANAN ─── */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <p className="text-[#2568B5] text-sm font-semibold uppercase tracking-widest mb-3">Layanan Kami</p>
+            <h2 className="font-[family-name:var(--font-poppins)] text-3xl font-bold text-gray-900 mb-4">
+              Solusi Lengkap untuk Kebutuhan Riset & Kompetensi
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {[
+              { icon: '🎓', title: 'Bootcamp', desc: '3–5 hari intensif', href: '/bootcamp' },
+              { icon: '⚡', title: 'Short Class', desc: '1–3 jam fokus', href: '/short-class' },
+              { icon: '🎯', title: 'Private Class', desc: '1-on-1 custom', href: '/private-class' },
+              { icon: '📋', title: 'Konsultasi', desc: 'Analisis data riset', href: '/konsultasi' },
+              { icon: '🤝', title: 'Kerja Sama', desc: 'Institusional & korporat', href: '/kerja-sama' },
+            ].map((item) => (
+              <Link key={item.title} href={item.href}
+                className="group text-center p-5 rounded-2xl border border-gray-100 hover:border-[#2568B5]/30 hover:bg-blue-50 transition-all">
+                <div className="text-3xl mb-3">{item.icon}</div>
+                <p className="font-semibold text-gray-900 text-sm mb-1 group-hover:text-[#2568B5]">{item.title}</p>
+                <p className="text-gray-400 text-xs">{item.desc}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── CTA KERJA SAMA ─── */}
+      <section className="py-16 bg-gradient-to-br from-[#162660] to-[#1e4fa0]">
+        <div className="max-w-4xl mx-auto text-center px-4">
+          <p className="text-[#4FA8D8] text-sm font-semibold uppercase tracking-widest mb-4">Kolaborasi Institusional</p>
+          <h2 className="font-[family-name:var(--font-poppins)] text-3xl font-bold text-white mb-4">
+            Wujudkan Program Pelatihan untuk Institusi Anda
           </h2>
-          <p className="text-white/60 text-lg mb-8">
-            Bergabunglah dengan ribuan mahasiswa, dosen, dan peneliti yang telah mempercayai AjiStat.
+          <p className="text-white/65 mb-8 max-w-xl mx-auto">
+            Aji Institute membuka kerja sama dengan kampus, sekolah, lembaga pemerintah, dan perusahaan untuk program pelatihan riset dan kompetensi berbasis kebutuhan institusi.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/bootcamp" className="bg-[#F0A500] hover:bg-[#C8870A] text-[#0C1A45] font-bold px-8 py-3.5 rounded-xl transition-all hover:scale-105">
-              🚀 Lihat Semua Program
+            <Link href="/kerja-sama"
+              className="inline-flex items-center gap-2 bg-white text-[#162660] font-bold px-8 py-3.5 rounded-xl hover:bg-gray-50 transition-colors">
+              <CheckCircle className="w-4 h-4" /> Pelajari Kerja Sama
             </Link>
-            <Link href="/konsultasi" className="bg-white/10 hover:bg-white/15 border border-white/25 text-white font-semibold px-8 py-3.5 rounded-xl transition-all">
-              📩 Hubungi Kami
-            </Link>
+            <a href={WA_LINK('Halo Aji Institute, kami tertarik untuk kerja sama institusional')}
+              target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3.5 rounded-xl transition-colors">
+              <MessageCircle className="w-4 h-4" /> Hubungi Kami
+            </a>
           </div>
         </div>
       </section>

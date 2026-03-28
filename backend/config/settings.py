@@ -4,9 +4,9 @@ from datetime import timedelta
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-ajistat-secret-key-change-in-production-2026'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-ajistat-secret-key-change-in-production-2026')
 
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['*']
 
@@ -109,7 +109,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 
-# --- Midtrans Payment Gateway (Sandbox) ---
-MIDTRANS_IS_PRODUCTION = False
-MIDTRANS_SERVER_KEY = 'SB-Mid-server-YOUR_SERVER_KEY' # Ganti dengan Server Key sungguhan nanti
-MIDTRANS_CLIENT_KEY = 'SB-Mid-client-YOUR_CLIENT_KEY' # Ganti dengan Client Key sungguhan nanti
+# --- Midtrans Payment Gateway ---
+MIDTRANS_IS_PRODUCTION = os.environ.get('MIDTRANS_IS_PRODUCTION', 'False') == 'True'
+MIDTRANS_SERVER_KEY = os.environ.get('MIDTRANS_SERVER_KEY', 'SB-Mid-server-YOUR_SERVER_KEY')
+MIDTRANS_CLIENT_KEY = os.environ.get('MIDTRANS_CLIENT_KEY', 'SB-Mid-client-YOUR_CLIENT_KEY')

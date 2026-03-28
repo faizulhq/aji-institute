@@ -101,16 +101,31 @@ class CheckoutView(APIView):
             }
         }
         
-        try:
-            transaction = snap.create_transaction(param)
-            snap_token = transaction['token']
-        except Exception as e:
-            return Response({'error': f'Midtrans Error: {str(e)}'}, status=500)
+        snap_token = None
+        midtrans_error = None
 
-        return Response({
+        try:
+            # Only attempt if server key is configured (not placeholder)
+            if settings.MIDTRANS_SERVER_KEY and 'YOUR_SERVER_KEY' not in settings.MIDTRANS_SERVER_KEY:
+                transaction = snap.create_transaction(param)
+                snap_token = transaction['token']
+            else:
+                midtrans_error = 'Midtrans key belum dikonfigurasi.'
+        except Exception as e:
+            # Graceful fallback: order still created, but no payment popup
+            midtrans_error = str(e)
+
+        response_data = {
             'order': OrderSerializer(order).data,
-            'snap_token': snap_token
-        }, status=201)
+            'snap_token': snap_token,
+        }
+        if midtrans_error:
+            response_data['payment_note'] = (
+                'Pesanan berhasil dibuat. Tim kami akan menghubungi Anda via WhatsApp '
+                'untuk konfirmasi pembayaran. Terima kasih!'
+            )
+
+        return Response(response_data, status=201)
 
 
 class OrderListView(APIView):

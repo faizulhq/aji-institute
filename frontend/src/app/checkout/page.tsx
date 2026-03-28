@@ -23,6 +23,7 @@ export default function CheckoutPage() {
   const [notes, setNotes] = useState('');
   const [done, setDone] = useState(false);
   const [orderId, setOrderId] = useState<number | null>(null);
+  const [paymentNote, setPaymentNote] = useState<string | null>(null);
 
   const { data: cart, isLoading } = useQuery({
     queryKey: ['cart'],
@@ -52,29 +53,20 @@ export default function CheckoutPage() {
       
       const snapToken = res.data.snap_token;
       const order = res.data.order;
+      const note = res.data.payment_note ?? null;
 
       if (snapToken && window.snap) {
         window.snap.pay(snapToken, {
-          onSuccess: function () {
-            setOrderId(order.id);
-            setDone(true);
-          },
-          onPending: function () {
-            setOrderId(order.id);
-            setDone(true);
-          },
-          onError: function () {
-            alert('Pembayaran gagal atau dibatalkan jaringan.');
-          },
+          onSuccess: function () { setOrderId(order.id); setDone(true); },
+          onPending: function () { setOrderId(order.id); setDone(true); },
+          onError: function () { alert('Pembayaran gagal atau dibatalkan jaringan.'); },
           onClose: function () {
-            alert('Anda menutup popup pembayaran sebelum menyelesaikan transaksi.');
-            // Tetap arahkan ke pesanan karena order sudah terbuat di database (status pending)
             setOrderId(order.id);
             setDone(true);
           }
         });
       } else {
-        // Fallback jika tidak ada midtrans token
+        setPaymentNote(note);
         setOrderId(order.id);
         setDone(true);
       }
@@ -102,7 +94,14 @@ export default function CheckoutPage() {
         </div>
         <h2 className="font-[family-name:var(--font-poppins)] text-2xl font-bold text-gray-900 mb-2">Pesanan Berhasil! 🎉</h2>
         <p className="text-gray-500 mb-2">Order #{orderId} telah kami terima.</p>
-        <p className="text-gray-400 text-sm mb-8">Tim AjiStat akan menghubungi Anda melalui WhatsApp untuk konfirmasi pembayaran dan jadwal kelas.</p>
+        {paymentNote ? (
+          <div className="bg-amber-50 border border-amber-200 text-amber-800 text-sm rounded-xl p-4 mb-6 text-left">
+            <p className="font-semibold mb-1">ℹ️ Informasi Pembayaran</p>
+            <p>{paymentNote}</p>
+          </div>
+        ) : (
+          <p className="text-gray-400 text-sm mb-8">Tim Aji Institute akan menghubungi Anda melalui WhatsApp untuk konfirmasi pembayaran dan jadwal kelas.</p>
+        )}
         <div className="flex gap-3">
           <Link href="/orders" className="flex-1 bg-[#162660] text-white font-semibold py-3 rounded-xl hover:bg-[#2568B5] transition-colors text-sm text-center">
             Lihat Pesanan

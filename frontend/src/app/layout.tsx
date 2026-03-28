@@ -13,9 +13,22 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: { default: 'AjiStat — Aji Mitra Statistika', template: '%s — Aji Mitra Statistika' },
-  description: 'Platform edukasi statistika, analisis data, dan metodologi penelitian terpercaya. Bootcamp, short class, private class, dan konsultasi riset.',
-  keywords: ['statistika', 'analisis data', 'SPSS', 'SmartPLS', 'metodologi penelitian', 'skripsi', 'tesis'],
+  title: {
+    default: 'Aji Institute — Center for Research, Data & Professional Development',
+    template: '%s | Aji Institute',
+  },
+  description: 'Platform pelatihan, pengembangan kompetensi, dan konsultasi profesional. AjiStat, Business Class, Public Speaking, Digital Skills, Language Class.',
+  keywords: [
+    'aji institute', 'ajistat', 'statistika', 'analisis data', 'SPSS', 'SmartPLS',
+    'metodologi penelitian', 'skripsi', 'tesis', 'pelatihan profesional', 'konsultasi riset',
+    'bootcamp statistik', 'private class', 'olah data'
+  ],
+  openGraph: {
+    title: 'Aji Institute',
+    description: 'Center for Research, Data, and Professional Development',
+    type: 'website',
+    locale: 'id_ID',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
