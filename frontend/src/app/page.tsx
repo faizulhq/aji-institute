@@ -34,10 +34,10 @@ const TESTIMONIALS = [
 export default function HomePage() {
   const { data, isLoading } = useQuery({
     queryKey: ['programs', 'featured'],
-    queryFn: () => programsApi.list({ featured: true }).then((r) => r.data),
+    queryFn: () => programsApi.list({ featured: true }).then((r) => r.data?.data ?? r.data),
   });
 
-  const featuredPrograms: Program[] = data?.data?.slice(0, 3) ?? [];
+  const featuredPrograms: Program[] = Array.isArray(data) ? data.slice(0, 3) : [];
 
   return (
     <>

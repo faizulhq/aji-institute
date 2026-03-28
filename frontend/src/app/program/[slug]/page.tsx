@@ -43,7 +43,7 @@ export default function ProgramDetailPage() {
     queryFn: () => programsApi.detail(slug).then((r) => r.data),
   });
 
-  const program: Program | undefined = data?.data;
+  const program: Program | undefined = data; // API detail mengembalikan object langsung, bukan {data: ...}
 
   const cartMutation = useMutation({
     mutationFn: () => cartApi.add(program!.id),
