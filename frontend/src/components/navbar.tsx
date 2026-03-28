@@ -65,13 +65,15 @@ export function Navbar() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 shrink-0">
-            <Image
-              src="/logo.png"
-              alt="Aji Institute"
-              width={48}
-              height={34}
-              className="h-9 w-auto drop-shadow-[0_0_8px_rgba(255,255,255,0.15)]"
-            />
+            <div className="bg-white rounded-lg px-2 py-1 flex items-center justify-center">
+              <Image
+                src="/logo.png"
+                alt="Aji Institute"
+                width={48}
+                height={34}
+                className="h-9 w-auto"
+              />
+            </div>
             <div className="hidden sm:block">
               <p className="text-white font-bold text-sm leading-tight">Aji Institute</p>
               <p className="text-[#4FA8D8] text-[10px]">PT. Amanah Jana Insani</p>

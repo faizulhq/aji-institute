@@ -248,6 +248,34 @@ export default function ProgramDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2 space-y-10">
 
+            {/* ─── Video Review ─── */}
+            {program.demo_video_url && (() => {
+              // Convert youtube.com/watch?v=ID atau youtu.be/ID → embed URL
+              let embedUrl = program.demo_video_url;
+              const watchMatch = embedUrl.match(/[?&]v=([^&]+)/);
+              const shortMatch = embedUrl.match(/youtu\.be\/([^?&]+)/);
+              const id = watchMatch?.[1] ?? shortMatch?.[1];
+              if (id) embedUrl = `https://www.youtube.com/embed/${id}`;
+
+              return (
+                <section>
+                  <h2 className="text-xl font-bold text-gray-900 mb-5">🎬 Video Preview Program</h2>
+                  <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-black aspect-video">
+                    <iframe
+                      src={embedUrl}
+                      title={`Preview: ${program.title}`}
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                  <p className="text-gray-400 text-xs mt-2 text-center">
+                    👆 Tonton preview untuk gambaran lengkap program ini
+                  </p>
+                </section>
+              );
+            })()}
+
             {/* Yang akan dipelajari */}
             {curriculum.length > 0 && (
               <section>
