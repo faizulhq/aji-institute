@@ -1,68 +1,10 @@
 'use client';
 
-import { Users, Clock, CheckCircle, MessageSquare, Award, Zap, Target, ShieldCheck } from 'lucide-react';
+import { Clock, CheckCircle, Award, MessageSquare, Zap } from 'lucide-react';
 import { useState } from 'react';
 
-const CORE_VALUES = [
-  {
-    code: 'A',
-    name: 'Amanah',
-    color: 'from-[#0C1A45] to-[#162660]',
-    accentColor: 'bg-[#4FA8D8]',
-    badge: 'text-[#4FA8D8]',
-    desc: 'Kami berkomitmen memberikan layanan yang jujur, transparan, dan dapat dipercaya. Setiap program dirancang berdasarkan standar akademis yang tinggi.',
-    icon: ShieldCheck,
-  },
-  {
-    code: 'J',
-    name: 'Jana',
-    color: 'from-[#162660] to-[#2568B5]',
-    accentColor: 'bg-[#F0A500]',
-    badge: 'text-[#F0A500]',
-    desc: 'Bersama membangun ekosistem riset yang inklusif. Kami percaya kolaborasi antara mahasiswa, peneliti, dan praktisi menciptakan inovasi nyata.',
-    icon: Users,
-  },
-  {
-    code: 'I',
-    name: 'Insani',
-    color: 'from-[#2568B5] to-[#1e4fa0]',
-    accentColor: 'bg-emerald-400',
-    badge: 'text-emerald-300',
-    desc: 'Layanan yang memanusiakan. Kami memahami tantangan nyata yang dihadapi peneliti dan hadir sebagai mitra belajar, bukan sekadar penyedia kursus.',
-    icon: Target,
-  },
-];
-
-const SUB_BRANDS = [
-  {
-    name: 'AJI Learning',
-    icon: '🎓',
-    desc: 'Platform pelatihan intensif untuk statistik & metodologi penelitian',
-    color: 'border-[#4FA8D8]/30 bg-[#4FA8D8]/5 hover:bg-[#4FA8D8]/10',
-    badge: 'bg-[#4FA8D8]/20 text-[#4FA8D8]',
-  },
-  {
-    name: 'AJI Statistik',
-    icon: '📊',
-    desc: 'Layanan konsultasi analisis data untuk skripsi, tesis, dan disertasi',
-    color: 'border-[#2568B5]/30 bg-[#2568B5]/5 hover:bg-[#2568B5]/10',
-    badge: 'bg-[#2568B5]/20 text-[#2568B5]',
-  },
-  {
-    name: 'AJI EduLab',
-    icon: '🔬',
-    desc: 'Laboratorium digital untuk riset kolaboratif berbasis data nyata',
-    color: 'border-purple-500/30 bg-purple-500/5 hover:bg-purple-500/10',
-    badge: 'bg-purple-500/20 text-purple-600',
-  },
-  {
-    name: 'AJI Private Class',
-    icon: '🎯',
-    desc: 'Mentoring personal 1-on-1 dengan kurikulum yang disesuaikan sepenuhnya',
-    color: 'border-[#F0A500]/30 bg-[#F0A500]/5 hover:bg-[#F0A500]/10',
-    badge: 'bg-[#F0A500]/20 text-[#C8870A]',
-  },
-];
+const WA_NUMBER = '6285892605592';
+const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Halo Kak, saya ingin berkonsultasi mengenai layanan Private Class.')}`;
 
 const benefits = [
   'Jadwal 100% fleksibel sesuai waktu Anda',
@@ -156,64 +98,8 @@ export default function PrivateClassPage() {
         </div>
       </div>
 
-      {/* ─── CORE VALUES ─── */}
-      <section className="py-20 bg-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <span className="inline-block bg-[#162660]/5 border border-[#162660]/10 text-[#162660] text-xs font-bold px-4 py-1.5 rounded-full mb-4 uppercase tracking-widest">
-              Nilai Inti Kami
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
-              Dibangun di Atas Tiga Pilar Utama
-            </h2>
-            <p className="text-gray-500 max-w-xl mx-auto text-sm leading-relaxed">
-              Singkatan <strong>AJI</strong> bukan sekadar nama — ini adalah janji kami kepada setiap peserta yang mempercayakan perjalanan risetnya bersama kami.
-            </p>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {CORE_VALUES.map((cv) => (
-              <div key={cv.code} className={`bg-gradient-to-br ${cv.color} rounded-2xl p-6 text-white relative overflow-hidden`}>
-                <div className="absolute top-4 right-4 text-white/10 text-6xl font-black select-none">{cv.code}</div>
-                <div className="relative">
-                  <div className={`w-12 h-12 ${cv.accentColor} rounded-xl flex items-center justify-center mb-4 shadow-lg`}>
-                    <cv.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-1">{cv.name}</h3>
-                  <p className={`text-xs font-semibold mb-3 ${cv.badge}`}>Nilai Utama AJI</p>
-                  <p className="text-white/70 text-sm leading-relaxed">{cv.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* ─── SUB-BRANDS ─── */}
-      <section className="py-16 bg-gray-50 border-y border-gray-100">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Ekosistem AJI</h2>
-            <p className="text-gray-500 text-sm">Empat sub-brand yang saling melengkapi untuk mendukung perjalanan riset Anda</p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {SUB_BRANDS.map((brand) => (
-              <div key={brand.name} className={`rounded-2xl p-5 border transition-all duration-200 ${brand.color}`}>
-                <div className="flex items-start gap-4">
-                  <span className="text-3xl">{brand.icon}</span>
-                  <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-bold text-gray-900 text-sm">{brand.name}</h3>
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${brand.badge}`}>AJI</span>
-                    </div>
-                    <p className="text-gray-500 text-xs leading-relaxed">{brand.desc}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ─── BENEFITS ─── */}
       <section className="py-16 bg-white">
