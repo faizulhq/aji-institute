@@ -10,7 +10,11 @@
     "duration": "4 Hari (8 Sesi Live Zoom)",
     "price": 350000,
     "originalPrice": 700000,
-    "tags": ["SPSS", "Kuantitatif", "Olah Data"],
+    "tags": [
+      "SPSS",
+      "Kuantitatif",
+      "Olah Data"
+    ],
     "status": "Akan dilaksanakan",
     "facilitator": "Dr. Ahmad Fauzan, M.Si.",
     "facilitatorBio": "Dosen Statistika Universitas Negeri Malang, konsultan data berpengalaman lebih dari 10 tahun.",
@@ -38,7 +42,11 @@
     "duration": "3 Hari (6 Sesi Live Zoom)",
     "price": 400000,
     "originalPrice": 800000,
-    "tags": ["SmartPLS", "SEM", "Kuantitatif"],
+    "tags": [
+      "SmartPLS",
+      "SEM",
+      "Kuantitatif"
+    ],
     "status": "Akan dilaksanakan",
     "facilitator": "Rizka Amalia, M.M.",
     "facilitatorBio": "Konsultan penelitian manajemen, aktif membantu mahasiswa S2 dan S3 dalam analisis SEM.",
@@ -66,7 +74,11 @@
     "duration": "5 Hari (10 Sesi Live Zoom)",
     "price": 450000,
     "originalPrice": 900000,
-    "tags": ["R", "R Studio", "Data Science"],
+    "tags": [
+      "R",
+      "R Studio",
+      "Data Science"
+    ],
     "status": "Akan dilaksanakan",
     "facilitator": "Budi Santoso, M.Si.",
     "facilitatorBio": "Data Scientist & dosen metodologi penelitian, certified R programmer.",
@@ -96,7 +108,11 @@
     "duration": "4 Hari (8 Sesi Live Zoom)",
     "price": 475000,
     "originalPrice": 950000,
-    "tags": ["Python", "Data Science", "Visualisasi"],
+    "tags": [
+      "Python",
+      "Data Science",
+      "Visualisasi"
+    ],
     "status": "Akan dilaksanakan",
     "facilitator": "Siti Nurhayati, S.T., M.Kom.",
     "facilitatorBio": "Data Analyst berpengalaman 7 tahun, pengajar Python di beberapa institusi pendidikan.",
@@ -124,7 +140,11 @@
     "duration": "4 Hari (8 Sesi Live Zoom)",
     "price": 350000,
     "originalPrice": 700000,
-    "tags": ["Metodologi", "Kuantitatif", "Kualitatif"],
+    "tags": [
+      "Metodologi",
+      "Kuantitatif",
+      "Kualitatif"
+    ],
     "status": "Akan dilaksanakan",
     "facilitator": "Prof. Dr. Endang Rahayu, M.Pd.",
     "facilitatorBio": "Guru Besar Metodologi Penelitian, penulis 5 buku metodologi penelitian terbitan Penerbit Erlangga.",
@@ -152,7 +172,11 @@
     "duration": "3 Hari (6 Sesi Live Zoom)",
     "price": 500000,
     "originalPrice": 1000000,
-    "tags": ["NVivo", "Kualitatif", "Tematik"],
+    "tags": [
+      "NVivo",
+      "Kualitatif",
+      "Tematik"
+    ],
     "status": "Akan dilaksanakan",
     "facilitator": "Dr. Laila Fitriani, M.Hum.",
     "facilitatorBio": "Peneliti kualitatif senior, certified NVivo trainer, dosen di Universitas Indonesia.",
@@ -180,7 +204,11 @@
     "duration": "1 Hari (2 Jam Live Zoom)",
     "price": 99000,
     "originalPrice": 250000,
-    "tags": ["SPSS", "Validitas", "Reliabilitas"],
+    "tags": [
+      "SPSS",
+      "Validitas",
+      "Reliabilitas"
+    ],
     "status": "Akan dilaksanakan",
     "facilitator": "Rina Kusumawati, M.Si.",
     "facilitatorBio": "Konsultan statistik untuk mahasiswa S1 dan S2, pengalaman 5 tahun.",
@@ -204,7 +232,11 @@
     "duration": "1 Hari (3 Jam Live Zoom)",
     "price": 125000,
     "originalPrice": 300000,
-    "tags": ["SPSS", "Regresi", "Kuantitatif"],
+    "tags": [
+      "SPSS",
+      "Regresi",
+      "Kuantitatif"
+    ],
     "status": "Akan dilaksanakan",
     "facilitator": "Drs. Hendra Wijaya, M.Si.",
     "facilitatorBio": "Pengamat statistika sosial, fasilitator pelatihan data di berbagai universitas.",
@@ -228,7 +260,11 @@
     "duration": "1 Hari (2 Jam Live Zoom)",
     "price": 99000,
     "originalPrice": 250000,
-    "tags": ["Python", "Visualisasi", "Data Science"],
+    "tags": [
+      "Python",
+      "Visualisasi",
+      "Data Science"
+    ],
     "status": "Akan dilaksanakan",
     "facilitator": "Siti Nurhayati, S.T., M.Kom.",
     "facilitatorBio": "Data Analyst berpengalaman 7 tahun, pengajar Python di beberapa institusi pendidikan.",
@@ -252,7 +288,11 @@
     "duration": "1 Hari (3 Jam Live Zoom)",
     "price": 150000,
     "originalPrice": 350000,
-    "tags": ["Penulisan Ilmiah", "Scopus", "Sinta"],
+    "tags": [
+      "Penulisan Ilmiah",
+      "Scopus",
+      "Sinta"
+    ],
     "status": "Sedang Berlangsung",
     "facilitator": "Dr. Faridah Baroroh, M.Hum.",
     "facilitatorBio": "Editor jurnal internasional, penulis lebih dari 30 artikel terindeks Scopus.",
@@ -276,7 +316,10 @@
     "duration": "1 Hari (2 Jam Live Zoom)",
     "price": 99000,
     "originalPrice": 250000,
-    "tags": ["Statistika Dasar", "Pemula"],
+    "tags": [
+      "Statistika Dasar",
+      "Pemula"
+    ],
     "status": "Akan dilaksanakan",
     "facilitator": "Rina Kusumawati, M.Si.",
     "facilitatorBio": "Konsultan statistik untuk mahasiswa S1 dan S2, pengalaman 5 tahun.",
@@ -300,7 +343,11 @@
     "duration": "1 Hari (2 Jam Live Zoom)",
     "price": 99000,
     "originalPrice": 250000,
-    "tags": ["R", "R Studio", "Pemula"],
+    "tags": [
+      "R",
+      "R Studio",
+      "Pemula"
+    ],
     "status": "Rekaman",
     "facilitator": "Budi Santoso, M.Si.",
     "facilitatorBio": "Data Scientist & dosen metodologi penelitian, certified R programmer.",
@@ -312,5 +359,248 @@
     ],
     "whatsappLink": "https://wa.me/6281234567890?text=Halo,%20saya%20ingin%20daftar%20Short%20Class%20R%20Pemula",
     "marketplaceLink": "#"
+  },
+  {
+    "type": "bootcamp",
+    "title": "Bootcamp AjiBiz: Menyusun Business Plan & Analisis Kelayakan",
+    "slug": "bootcamp-ajibiz-business-plan",
+    "description": "Pelatihan intensif 5 hari merancang model bisnis, strategi go-to-market, hingga analisis kelayakan finansial bagi calon pengusaha dan manajer.",
+    "thumbnail": "/assets/thumb-biz-bp.png",
+    "date": "15 Juni 2026",
+    "duration": "5 Hari (10 Sesi Live Zoom)",
+    "price": 500000,
+    "originalPrice": 1000000,
+    "tags": [
+      "AjiBiz",
+      "Business Plan",
+      "Bisnis",
+      "Manajemen"
+    ],
+    "status": "upcoming",
+    "facilitator": "Pak Budi",
+    "facilitatorBio": "-",
+    "curriculum": [
+      "Mindset Pengusaha",
+      "Business Model Canvas",
+      "Penyusunan Anggaran",
+      "Proyeksi Keuangan Dasar",
+      "Pitching ke Investor"
+    ],
+    "whatsappLink": "https://wa.me/6281234567890?text=Halo,%20saya%20ingin%20daftar%20Bootcamp%20AjiBiz",
+    "marketplaceLink": "#",
+    "is_featured": true,
+    "id": 13
+  },
+  {
+    "type": "short-class",
+    "title": "Short Class AjiBiz: Digital Marketing untuk UMKM",
+    "slug": "short-ajibiz-digital-marketing",
+    "description": "Kuasai teknik pemasaran digital dasar, FB/IG Ads, dan optimasi toko online untuk skala bisnis kecil hingga menengah dalam 3 jam.",
+    "thumbnail": "/assets/thumb-biz-dm.png",
+    "date": "20 Juni 2026",
+    "duration": "1 Hari (3 Jam Live Zoom)",
+    "price": 99000,
+    "originalPrice": 250000,
+    "tags": [
+      "AjiBiz",
+      "Digital Marketing",
+      "UMKM",
+      "Bisnis"
+    ],
+    "status": "upcoming",
+    "facilitator": "-",
+    "facilitatorBio": "-",
+    "curriculum": [
+      "Pengenalan Lanskap Digital",
+      "Funnel Marketing",
+      "Setup FB/IG Ads Dasar",
+      "Analisa Metrik Iklan"
+    ],
+    "whatsappLink": "https://wa.me/6281234567890?text=Halo,%20sya",
+    "marketplaceLink": "#",
+    "is_featured": false,
+    "id": 14
+  },
+  {
+    "type": "bootcamp",
+    "title": "Bootcamp AjiPR: Corporate Communication & Public Speaking",
+    "slug": "bootcamp-ajipr-corpcomm",
+    "description": "Pelatihan intensif menguasai seni public speaking, negosiasi tingkat tinggi, dan penanganan krisis PR bagi perusahaan.",
+    "thumbnail": "/assets/thumb-pr-comm.png",
+    "date": "1 Juli 2026",
+    "duration": "4 Hari (8 Sesi Live Zoom)",
+    "price": 600000,
+    "originalPrice": 1200000,
+    "tags": [
+      "AjiPR",
+      "Public Speaking",
+      "Corporate",
+      "Komunikasi"
+    ],
+    "status": "upcoming",
+    "facilitator": "-",
+    "facilitatorBio": "-",
+    "curriculum": [
+      "Dasar-dasar Public Speaking",
+      "Gestur dan Olah Vokal",
+      "Manajemen Krisis (Crisis Handling)",
+      "Corporate Branding via Media",
+      "Negosiasi Bisnis"
+    ],
+    "whatsappLink": "https://wa.me/6281234567890?text=Halo",
+    "marketplaceLink": "#",
+    "is_featured": true,
+    "id": 15
+  },
+  {
+    "type": "short-class",
+    "title": "Short Class AjiPR: Tips Jitu Menulis Press Release",
+    "slug": "short-ajipr-press-release",
+    "description": "Pelajari teknik menulis press release yang dilirik jurnalis dan editor media massa terkenal.",
+    "thumbnail": "/assets/thumb-pr-press.png",
+    "date": "5 Juli 2026",
+    "duration": "1 Hari (2 Jam Live Zoom)",
+    "price": 85000,
+    "originalPrice": 200000,
+    "tags": [
+      "AjiPR",
+      "Press Release",
+      "Komunikasi",
+      "Menulis"
+    ],
+    "status": "upcoming",
+    "facilitator": "-",
+    "facilitatorBio": "-",
+    "curriculum": [
+      "Struktur Berita (Piramida Terbalik)",
+      "Angle Berita yang Menarik",
+      "Tips Mendekati Media dan Jurnalis",
+      "Review Press Release"
+    ],
+    "whatsappLink": "https://wa.me/6281234567890",
+    "marketplaceLink": "#",
+    "is_featured": false,
+    "id": 16
+  },
+  {
+    "type": "bootcamp",
+    "title": "Bootcamp AjiDigi: Fullstack Web Development (MERN)",
+    "slug": "bootcamp-ajidigi-mern",
+    "description": "Belajar dari nol hingga mahir membuat aplikasi web modern menggunakan MongoDB, Express, React, dan Node.js.",
+    "thumbnail": "/assets/thumb-digi-mern.png",
+    "date": "10 Agustus 2026",
+    "duration": "8 Minggu (16 Sesi Live)",
+    "price": 1500000,
+    "originalPrice": 3000000,
+    "tags": [
+      "AjiDigi",
+      "Programming",
+      "Web Development",
+      "React"
+    ],
+    "status": "upcoming",
+    "facilitator": "-",
+    "facilitatorBio": "-",
+    "curriculum": [
+      "HTML/CSS/JS Dasar",
+      "React Core Concepts",
+      "Node.js & Express API",
+      "MongoDB & Mongoose",
+      "Deployment ke Server"
+    ],
+    "whatsappLink": "https://wa.me/6281234567890",
+    "marketplaceLink": "#",
+    "is_featured": true,
+    "id": 17
+  },
+  {
+    "type": "short-class",
+    "title": "Short Class AjiDigi: UI/UX Design Fundamentals",
+    "slug": "short-ajidigi-uiux",
+    "description": "Kuasai Figma dan prinsip dasar merancang antarmuka aplikasi yang user-friendly dalam 3 jam.",
+    "thumbnail": "/assets/thumb-digi-uiux.png",
+    "date": "15 Agustus 2026",
+    "duration": "1 Hari (3 Jam Live)",
+    "price": 125000,
+    "originalPrice": 250000,
+    "tags": [
+      "AjiDigi",
+      "UI/UX",
+      "Desain",
+      "Figma"
+    ],
+    "status": "upcoming",
+    "facilitator": "-",
+    "facilitatorBio": "-",
+    "curriculum": [
+      "Prinsip Heuristik",
+      "User Flow dan Persona",
+      "Wireframing Dasar",
+      "Prototyping menggunakan Figma"
+    ],
+    "whatsappLink": "https://wa.me/6281234567890",
+    "marketplaceLink": "#",
+    "is_featured": false,
+    "id": 18
+  },
+  {
+    "type": "bootcamp",
+    "title": "Bootcamp AjiLanguage: TOEFL ITP Preparation",
+    "slug": "bootcamp-ajilanguage-toefl",
+    "description": "Bootcamp intensif dengan native speaker dan test simulasi gratis untuk meroketkan skor TOEFL ITP Anda.",
+    "thumbnail": "/assets/thumb-lang-toefl.png",
+    "date": "1 September 2026",
+    "duration": "4 Minggu (8 Sesi Live)",
+    "price": 400000,
+    "originalPrice": 800000,
+    "tags": [
+      "AjiLanguage",
+      "TOEFL",
+      "Bahasa Inggris",
+      "Sertifikasi"
+    ],
+    "status": "upcoming",
+    "facilitator": "-",
+    "facilitatorBio": "-",
+    "curriculum": [
+      "Listening Comprehension Strategies",
+      "Structure & Written Expression Hacks",
+      "Reading Comprehension Mastery",
+      "Full Diagnostic Test"
+    ],
+    "whatsappLink": "https://wa.me/6281234567890",
+    "marketplaceLink": "#",
+    "is_featured": true,
+    "id": 19
+  },
+  {
+    "type": "private-class",
+    "title": "Private Class: English for Academic Writing",
+    "slug": "private-ajilanguage-academic",
+    "description": "Bimbingan 1-on-1 menulis esai dan literatur akademis berbahasa Inggris dari dosen bersertifikasi.",
+    "thumbnail": "/assets/thumb-lang-academic.png",
+    "date": "Fleksibel",
+    "duration": "8 Sesi (Sesuai Perjanjian)",
+    "price": 1200000,
+    "originalPrice": 2000000,
+    "tags": [
+      "AjiLanguage",
+      "Bahasa Inggris",
+      "Menulis",
+      "Private Class"
+    ],
+    "status": "upcoming",
+    "facilitator": "-",
+    "facilitatorBio": "-",
+    "curriculum": [
+      "Penyusunan Kalimat Pasif & Akademik",
+      "Kosa Kata Formal",
+      "Menghindari Plagiarisme",
+      "Proofreading Jurnal Anda"
+    ],
+    "whatsappLink": "https://wa.me/6281234567890",
+    "marketplaceLink": "#",
+    "is_featured": false,
+    "id": 20
   }
 ]
