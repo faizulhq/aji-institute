@@ -2,6 +2,11 @@
 
 import { Clock, CheckCircle, Award, MessageSquare, Zap } from 'lucide-react';
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { programsApi } from '@/lib/api';
+import { ProgramCard } from '@/components/program-card';
+import { ProgramCardSkeleton } from '@/components/program-card-skeleton';
+import type { Program } from '@/lib/types';
 
 const WA_NUMBER = '6285892605592';
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Halo Kak, saya ingin berkonsultasi mengenai layanan Private Class.')}`;
@@ -49,6 +54,21 @@ const packages = [
 export default function PrivateClassPage() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', topic: '', notes: '' });
   const [sent, setSent] = useState(false);
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['programs', 'private-class'],
+    queryFn: () => programsApi.list({ type: 'private-class' }).then((r) => r.data),
+  });
+
+  const programs: Program[] = data?.data ?? [];
+
+  const groupedPrograms = [
+    { title: 'AjiStat — Statistik & Riset', filterKey: 'ajistat', items: programs.filter(p => !p.tags.some(t => ['ajibiz', 'ajipr', 'ajidigi', 'ajilanguage'].includes(t.toLowerCase()))) },
+    { title: 'AjiBiz — Bisnis & Manajemen', filterKey: 'ajibiz', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajibiz')) },
+    { title: 'AjiPR — Public Relation & Komunikasi', filterKey: 'ajipr', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajipr')) },
+    { title: 'AjiDigi — Digital Marketing & IT', filterKey: 'ajidigi', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajidigi')) },
+    { title: 'AjiLanguage — Bahasa Asing & Akademik', filterKey: 'ajilanguage', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajilanguage')) },
+  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -134,8 +154,44 @@ export default function PrivateClassPage() {
         </div>
       </section>
 
+      {/* ─── PROGRAM LIST ─── */}
+      <section className="py-14 bg-gray-50 border-y border-gray-100 min-h-[50vh]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-10 text-center">
+            <h2 className="text-2xl font-bold text-gray-900 mb-1">Topik Private Class</h2>
+            <p className="text-gray-500 text-sm">Pilih layanan bimbingan 1-on-1 sesuai kebutuhan dan bidang Anda.</p>
+          </div>
+
+          {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(3)].map((_, i) => <ProgramCardSkeleton key={i} />)}
+            </div>
+          ) : programs.length > 0 ? (
+            <div className="flex flex-col gap-12">
+              {groupedPrograms.map((group) => group.items.length > 0 && (
+                <div key={group.title}>
+                  <div className="flex items-center gap-3 mb-6">
+                    <h3 className="text-xl font-bold text-gray-900">{group.title}</h3>
+                    <div className="h-px bg-gray-200 flex-1"></div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {group.items.map((p) => <ProgramCard key={p.id} program={p} />)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-24 text-gray-400">
+              <p className="text-5xl mb-4">🔍</p>
+              <p className="font-medium text-gray-500 mb-1">Belum ada kelas private yang tersedia</p>
+              <p className="text-sm">Silakan hubungi kami untuk request topik khusus.</p>
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* ─── PACKAGES ─── */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Pilih Paket yang Sesuai</h2>
@@ -254,14 +310,15 @@ export default function PrivateClassPage() {
           <p className="text-[#4FA8D8] text-sm font-semibold uppercase tracking-widest mb-3">Masih Ragu?</p>
           <h2 className="text-2xl font-bold text-white mb-4">Konsultasi Gratis Sebelum Mendaftar</h2>
           <p className="text-white/60 mb-8 leading-relaxed">
-            Ceritakan kebutuhan riset Anda dan tim AJI akan merekomendasikan paket yang paling tepat, tanpa tekanan untuk langsung mendaftar.
+            Ceritakan kebutuhan belajar Anda dan tim AJI akan merekomendasikan paket yang paling tepat, tanpa tekanan untuk langsung mendaftar.
           </p>
           <a
-            href="/konsultasi"
+            href="https://wa.me/6285892605592?text=Halo%20Admin,%20saya%20ingin%20konsultasi%20sebelum%20daftar%20Private%20Class"
+            target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#0C1A45] font-bold px-8 py-3.5 rounded-xl transition-colors"
           >
             <Zap className="w-4 h-4" />
-            Konsultasi Gratis Sekarang
+            Hubungi via WhatsApp
           </a>
         </div>
       </section>

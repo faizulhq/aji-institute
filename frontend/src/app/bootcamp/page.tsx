@@ -30,6 +30,13 @@ export default function BootcampPage() {
     !activeTag || p.tags.some((t) => t.toLowerCase().includes(activeTag.toLowerCase()))
   );
 
+  const groupedPrograms = [
+    { title: 'AjiStat — Statistik & Riset', filterKey: 'ajistat', items: programs.filter(p => !p.tags.some(t => ['ajibiz', 'ajipr', 'ajidigi', 'ajilanguage'].includes(t.toLowerCase()))) },
+    { title: 'AjiBiz — Bisnis & Manajemen', filterKey: 'ajibiz', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajibiz')) },
+    { title: 'AjiPR — Public Relation & Komunikasi', filterKey: 'ajipr', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajipr')) },
+    { title: 'AjiDigi — Digital Marketing & IT', filterKey: 'ajidigi', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajidigi')) },
+    { title: 'AjiLanguage — Bahasa Asing & Akademik', filterKey: 'ajilanguage', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajilanguage')) },
+  ];
   return (
     <>
       {/* ─── HERO ─── */}
@@ -149,8 +156,18 @@ export default function BootcampPage() {
               {[...Array(6)].map((_, i) => <ProgramCardSkeleton key={i} />)}
             </div>
           ) : programs.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {programs.map((p) => <ProgramCard key={p.id} program={p} />)}
+            <div className="flex flex-col gap-12">
+              {groupedPrograms.map((group) => group.items.length > 0 && (
+                <div key={group.title}>
+                  <div className="flex items-center gap-3 mb-6">
+                    <h3 className="text-xl font-bold text-gray-900">{group.title}</h3>
+                    <div className="h-px bg-gray-200 flex-1"></div>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {group.items.map((p) => <ProgramCard key={p.id} program={p} />)}
+                  </div>
+                </div>
+              ))}
             </div>
           ) : (
             <div className="text-center py-24 text-gray-400">
@@ -165,14 +182,14 @@ export default function BootcampPage() {
       {/* ─── CTA KONSULTASI ─── */}
       <section className="bg-[#162660] py-14">
         <div className="max-w-3xl mx-auto text-center px-4">
-          <p className="text-[#4FA8D8] text-sm font-semibold uppercase tracking-widest mb-3">Butuh Panduan?</p>
-          <h2 className="text-2xl font-bold text-white mb-4">Tidak yakin program mana yang cocok?</h2>
-          <p className="text-white/60 mb-8">Tim konsultan AjiStat siap membantu Anda memilih program yang paling sesuai dengan kebutuhan riset dan jadwal Anda.</p>
+          <p className="text-[#4FA8D8] text-sm font-semibold uppercase tracking-widest mb-3">Butuh Bantuan Riset?</p>
+          <h2 className="text-2xl font-bold text-white mb-4">Konsultasi Olah Data & Skripsi</h2>
+          <p className="text-white/60 mb-8">Tim ahli AjiStat siap membantu memperlancar penelitian dan analisis data Anda secara profesional.</p>
           <a
             href="/konsultasi"
             className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#0C1A45] font-bold px-8 py-3.5 rounded-xl transition-colors"
           >
-            💬 Konsultasi Gratis
+            💬 Konsultasi Data AjiStat
           </a>
         </div>
       </section>

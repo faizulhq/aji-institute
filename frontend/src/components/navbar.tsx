@@ -13,12 +13,12 @@ const LAYANAN_LINKS = [
   { icon: '👤', label: 'Private Class', href: '/private-class' },
   { icon: '⚡', label: 'Short Class', href: '/short-class' },
   { icon: '🔧', label: 'Workshop', href: '/workshop' },
-  { icon: '📊', label: 'Konsultasi', href: '/konsultasi' },
-  { icon: '🏢', label: 'Program Institusional', href: '/kerja-sama' },
+  { icon: '📊', label: 'Konsultasi AjiStat', href: '/konsultasi' },
+  { icon: '🏢', label: 'In-House Training', href: '/in-house-training' },
 ];
 
 const MAIN_LINKS = [
-  { href: '/kerja-sama', label: 'Kerja Sama' },
+  { href: '/in-house-training', label: 'In-House Training' },
   { href: '/blog', label: 'Blog' },
   { href: '/tentang', label: 'Tentang' },
 ];
@@ -144,7 +144,7 @@ export function Navbar() {
           <div className="flex items-center gap-2">
             <Link href="/konsultasi"
               className="hidden lg:flex items-center gap-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors">
-              <MessageCircle className="w-3.5 h-3.5" /> Konsultasi
+              <MessageCircle className="w-3.5 h-3.5" /> Konsultasi Data
             </Link>
             <a href={WA_LINK('Halo Aji Institute, saya ingin mendaftar program')}
               target="_blank" rel="noopener noreferrer"
@@ -216,7 +216,7 @@ export function Navbar() {
             <div className="pt-3 border-t border-white/10 space-y-2">
               <Link href="/konsultasi" onClick={() => setMobileOpen(false)}
                 className="flex items-center justify-center gap-2 w-full bg-green-600 text-white font-semibold py-2.5 rounded-xl text-sm">
-                <MessageCircle className="w-4 h-4" /> Konsultasi
+                <MessageCircle className="w-4 h-4" /> Konsultasi Data
               </Link>
               <a href={WA_LINK('Halo Aji Institute, saya ingin mendaftar program')}
                 target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)}

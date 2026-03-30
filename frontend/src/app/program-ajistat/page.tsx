@@ -9,14 +9,6 @@ import { ProgramCardSkeleton } from '@/components/program-card-skeleton';
 import { WA_LINK } from '@/lib/config';
 import type { Program } from '@/lib/types';
 
-const FORMATS = [
-  { icon: '🎓', name: 'Bootcamp', desc: 'Program intensif 3–5 hari. Materi mendalam, praktik langsung, kelompok kecil.', href: '/bootcamp', badge: 'Terpopuler' },
-  { icon: '👤', name: 'Private Class', desc: 'Sesi 1-on-1 dengan mentor. Jadwal fleksibel, materi disesuaikan kebutuhan Anda.', href: '/private-class', badge: null },
-  { icon: '⚡', name: 'Short Class', desc: 'Fokus topik spesifik dalam 2–4 jam. Cocok untuk pemula maupun peneliti berpengalaman.', href: '/short-class', badge: null },
-  { icon: '🔧', name: 'Workshop', desc: 'Hands-on workshop dengan dataset riset nyata. Langsung bisa dipraktikkan.', href: '/workshop', badge: null },
-  { icon: '💬', name: 'Konsultasi', desc: 'Pendampingan riset personal — dari pemilihan metode hingga interpretasi hasil.', href: '/konsultasi', badge: null },
-];
-
 const TOOLS = [
   { name: 'SPSS', desc: 'Statistical Package for Social Sciences', color: '#003087' },
   { name: 'SmartPLS', desc: 'SEM berbasis Partial Least Squares', color: '#E8A020' },
@@ -45,13 +37,17 @@ const KEUNGGULAN = [
 ];
 
 export default function AjiStatPage() {
-  const { data: allData, isLoading } = useQuery({
+  const { data: allDataRaw, isLoading } = useQuery({
     queryKey: ['programs', 'ajistat', 'all'],
     queryFn: () => programsApi.list().then((r) => {
       const arr = r.data?.data ?? r.data;
       return (Array.isArray(arr) ? arr : []) as Program[];
     }),
   });
+
+  const programs: Program[] = (allDataRaw ?? []).filter((p: Program) =>
+    !p.tags.some((t) => ['ajibiz', 'ajipr', 'ajidigi', 'ajilanguage'].includes(t.toLowerCase()))
+  );
 
   return (
     <>
@@ -104,29 +100,29 @@ export default function AjiStatPage() {
         </div>
       </div>
 
-      {/* FORMAT KELAS */}
-      <section className="py-20 bg-white">
+
+      {/* PROGRAM LIST dari API */}
+      <section className="py-20 bg-white min-h-[50vh]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <p className="text-[#2568B5] text-sm font-semibold uppercase tracking-widest mb-3">Format Belajar</p>
-            <h2 className="text-3xl font-black text-gray-900">Pilih Format yang Sesuai</h2>
+            <p className="text-[#2568B5] text-sm font-semibold uppercase tracking-widest mb-3">Tersedia Saat Ini</p>
+            <h2 className="text-3xl font-black text-gray-900 border-b-2 border-dashed border-gray-200 pb-6 inline-block">Program AjiStat Tersedia</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {FORMATS.map((f) => (
-              <Link key={f.name} href={f.href}
-                className="group relative bg-gray-50 hover:bg-[#162660] border border-gray-100 hover:border-[#162660] rounded-2xl p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-                {f.badge && (
-                  <span className="absolute top-4 right-4 text-[10px] bg-[#F0A500] text-[#0C1A45] font-bold px-2 py-0.5 rounded-full">{f.badge}</span>
-                )}
-                <div className="text-3xl mb-3">{f.icon}</div>
-                <h3 className="font-black text-lg text-gray-900 group-hover:text-white mb-2 transition-colors">{f.name} AjiStat</h3>
-                <p className="text-gray-500 group-hover:text-white/70 text-sm leading-relaxed transition-colors">{f.desc}</p>
-                <div className="mt-4 flex items-center gap-1 text-[#2568B5] group-hover:text-[#4FA8D8] text-sm font-semibold transition-colors">
-                  Lihat Program <ArrowRight className="w-4 h-4" />
-                </div>
-              </Link>
-            ))}
-          </div>
+          {isLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.from({ length: 3 }).map((_, i) => <ProgramCardSkeleton key={i} />)}
+            </div>
+          ) : programs.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {programs.map((p) => <ProgramCard key={p.id} program={p} />)}
+            </div>
+          ) : (
+            <div className="text-center py-16 bg-gray-50 rounded-3xl border border-gray-100">
+              <span className="text-4xl mb-4 block">🚀</span>
+              <p className="font-bold text-gray-800 text-lg mb-2">Program Segera Hadir!</p>
+              <p className="text-gray-500 max-w-sm mx-auto text-sm">Tim AjiStat sedang menyiapkan kelas terbaik untuk Anda. Silakan sampaikan minat Anda pada layanan Konsultasi.</p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -188,31 +184,7 @@ export default function AjiStatPage() {
         </div>
       </section>
 
-      {/* PROGRAM LIST dari API */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-end justify-between mb-10">
-            <div>
-              <p className="text-[#2568B5] text-sm font-semibold uppercase tracking-widest mb-2">Jadwal & Program</p>
-              <h2 className="text-3xl font-black text-gray-900">Program AjiStat Tersedia</h2>
-            </div>
-          </div>
-          {isLoading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Array.from({ length: 3 }).map((_, i) => <ProgramCardSkeleton key={i} />)}
-            </div>
-          ) : allData && allData.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {allData.map((p) => <ProgramCard key={p.id} program={p} />)}
-            </div>
-          ) : (
-            <div className="text-center py-16 bg-gray-50 rounded-2xl">
-              <p className="text-5xl mb-4">📊</p>
-              <p className="text-gray-500">Program segera tersedia. Hubungi kami untuk info lebih lanjut.</p>
-            </div>
-          )}
-        </div>
-      </section>
+
 
       {/* CTA */}
       <section className="py-16 bg-gradient-to-br from-[#0C1A45] to-[#2568B5]">

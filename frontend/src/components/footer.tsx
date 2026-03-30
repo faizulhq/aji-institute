@@ -10,15 +10,15 @@ export function Footer() {
     { label: 'Bootcamp Intensif', href: '/bootcamp' },
     { label: 'Short Class', href: '/short-class' },
     { label: 'Private Class', href: '/private-class' },
-    { label: 'Konsultasi Statistik', href: '/konsultasi' },
-    { label: 'Kerja Sama Institusional', href: '/kerja-sama' },
+    { label: 'Konsultasi Data AjiStat', href: '/konsultasi' },
+    { label: 'In-House Training', href: '/in-house-training' },
   ];
 
   const perusahaan = [
     { label: 'Tentang Kami', href: '/tentang' },
     { label: 'Blog & Artikel', href: '/blog' },
-    { label: 'Kerja Sama', href: '/kerja-sama' },
-    { label: 'Layanan', href: '/layanan' },
+    { label: 'In-House Training', href: '/in-house-training' },
+    { label: 'Layanan Utama', href: '/layanan' },
   ];
 
   return (

@@ -1,98 +1,181 @@
 'use client';
 
 import { useState } from 'react';
-import { CheckCircle, MessageSquare, BarChart3, FileText, Database } from 'lucide-react';
+import { CheckCircle, MessageSquare, BarChart3, Database, FileText, PieChart, Users, Building, Laptop, Target } from 'lucide-react';
+import { WA_LINK } from '@/lib/config';
 
-const services = [
-  { icon: BarChart3, title: 'Analisis Data Statistik', desc: 'SPSS, SmartPLS, R, Python — uji asumsi, regresi, SEM, hingga interpretasi.' },
-  { icon: FileText, title: 'Pendampingan Skripsi/Tesis', desc: 'Bab I–V, dari perumusan masalah, metodologi, analisis, hingga sidang.' },
-  { icon: Database, title: 'Pengolahan Data Primer', desc: 'Pembersihan data, koding variabel, imputasi missing value.' },
+const SERVICES = [
+  'Konsultasi statistik dan metodologi penelitian',
+  'Olah data penelitian',
+  'Analisis data kuantitatif',
+  'Analisis data kualitatif dengan NVivo',
+  'Uji statistik untuk skripsi, tesis, dan disertasi',
+  'Analisis regresi, uji hipotesis, SEM, dan model penelitian',
+  'Interpretasi hasil analisis',
+  'Pendampingan riset akademik',
+  'Penyusunan laporan hasil analisis',
+  'Konsultasi data untuk kebutuhan institusi dan bisnis'
+];
+
+const SOFTWARES = ['SPSS', 'SmartPLS', 'AMOS', 'LISREL', 'EViews', 'R', 'Python', 'NVivo'];
+
+const TARGET_LAYANAN = [
+  'Mahasiswa', 'Dosen', 'Peneliti', 'Akademisi', 'Instansi pemerintah', 'Lembaga pendidikan', 'Perusahaan', 'UMKM'
 ];
 
 export default function KonsultasiPage() {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', service: '', desc: '' });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', programType: '', software: '', desc: '' });
   const [sent, setSent] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); setSent(true); };
+  const handleSubmit = (e: React.FormEvent) => { 
+    e.preventDefault(); 
+    // Format message to WhatsApp
+    const message = `Halo Tim AjiStat! Saya ingin berkonsultasi mengenai olah data/riset.
+Nama: ${form.name}
+Email: ${form.email}
+Kebutuhan Layanan: ${form.programType}
+Software yang dibutuhkan: ${form.software}
+Detail / Topik Riset: ${form.desc}`;
+    window.open(WA_LINK(message), '_blank');
+    setSent(true); 
+  };
 
   return (
     <>
-      <div className="bg-gradient-to-br from-[#0C1A45] via-[#162660] to-[#1e4fa0] border-b-4 border-[#4FA8D8] py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="font-[family-name:var(--font-poppins)] text-3xl sm:text-4xl font-bold text-white mb-4">
-            💬 Konsultasi AJI Statistik
+      <div className="bg-gradient-to-br from-[#0C1A45] via-[#162660] to-[#2568B5] border-b-4 border-[#F0A500] py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <span className="text-[#F0A500] text-sm font-bold uppercase tracking-widest mb-3 block">Layanan AjiStat by Aji Institute</span>
+          <h1 className="text-4xl sm:text-5xl font-black text-white mb-6">
+            Konsultasi Statistik & Olah Data Profesional
           </h1>
-          <p className="text-white/70 max-w-xl mx-auto">
-            Konsultasi analisis data dan pendampingan riset langsung bersama tim ahli kami. Mulai dari pemilihan metode hingga interpretasi hasil.
+          <p className="text-white/80 max-w-2xl mx-auto text-lg leading-relaxed">
+            AjiStat adalah mitra profesional Anda yang membantu memperoleh hasil analisis yang akurat, sistematis, terpercaya, dan mudah dipahami, baik untuk kebutuhan akademik, institusi, maupun bisnis.
           </p>
         </div>
       </div>
 
-      {/* Services */}
-      <section className="py-16 bg-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-[family-name:var(--font-poppins)] text-2xl font-bold text-gray-900 text-center mb-10">Layanan Konsultasi</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            {services.map((s) => (
-              <div key={s.title} className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-                <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
-                  <s.icon className="w-6 h-6 text-[#2568B5]" />
+      {/* KEUNGGULAN SECTION */}
+      <section className="py-12 bg-white border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center divide-x divide-gray-100">
+            {[
+              { label: 'Terpercaya', desc: 'Profesional & Berpengalaman' },
+              { label: 'Akurat', desc: 'Sesuai Kaidah Metodologi' },
+              { label: 'Sistematis', desc: 'Mudah Dipahami' },
+              { label: 'Rahasia', desc: 'Keamanan Data Transparan' }
+            ].map((k, i) => (
+              <div key={i} className="px-4">
+                <h4 className="font-bold text-[#2568B5] text-lg">{k.label}</h4>
+                <p className="text-gray-500 text-sm mt-1">{k.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* LAYANAN DETAIL */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <h2 className="text-3xl font-black text-gray-900 mb-4">Layanan Kami</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">Berbagai layanan profesional yang dirancang untuk memenuhi kebutuhan olah data kuantitatif dan kualitatif.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-14">
+            {SERVICES.map((s, i) => (
+              <div key={i} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex items-start gap-4">
+                <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center shrink-0">
+                  <CheckCircle className="w-5 h-5 text-[#2568B5]" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">{s.title}</h3>
-                <p className="text-gray-500 text-sm">{s.desc}</p>
+                <p className="font-semibold text-gray-800 leading-snug">{s}</p>
               </div>
             ))}
           </div>
 
-          {/* What you get */}
-          <div className="bg-gradient-to-br from-[#162660] to-[#2568B5] rounded-2xl p-8 text-white mb-12">
-            <h3 className="font-[family-name:var(--font-poppins)] text-lg font-bold mb-5">Yang Anda Dapatkan</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {['Sesi konsultasi via Zoom (1 sesi = 90 menit)', 'Laporan hasil analisis + interpretasi', 'File syntax / script yang digunakan', 'Panduan penulisan hasil di laporan', 'Follow-up konsultasi via WhatsApp 7 hari'].map((item) => (
-                <div key={item} className="flex items-center gap-2.5 text-sm">
-                  <CheckCircle className="w-4 h-4 text-[#4FA8D8] shrink-0" /> {item}
-                </div>
+          <div className="bg-[#0C1A45] rounded-3xl p-8 sm:p-12 text-center text-white relative overflow-hidden">
+            <h3 className="text-2xl font-bold mb-6">Software & Tools yang Digunakan</h3>
+            <div className="flex flex-wrap justify-center gap-3">
+              {SOFTWARES.map((sw) => (
+                <span key={sw} className="px-5 py-2.5 bg-white/10 border border-white/20 rounded-xl text-sm font-semibold tracking-wide backdrop-blur-sm">
+                  {sw}
+                </span>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Form */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-xl mx-auto px-4">
-          <h2 className="font-[family-name:var(--font-poppins)] text-2xl font-bold text-gray-900 text-center mb-2">Ajukan Konsultasi</h2>
-          <p className="text-gray-500 text-sm text-center mb-8">Gratis konsultasi awal 15 menit. Tim kami akan membalas dalam 24 jam.</p>
+      {/* TARGET & KLIEN */}
+      <section className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-black text-gray-900 mb-8">Target Layanan</h2>
+          <div className="flex flex-wrap justify-center gap-4">
+            {TARGET_LAYANAN.map((t) => (
+              <div key={t} className="px-6 py-3 bg-gray-50 border border-gray-200 rounded-full text-gray-700 font-medium whitespace-nowrap">
+                {t}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FORM KONSULTASI KHUSUS */}
+      <section className="py-20 bg-gray-50 border-t border-gray-100">
+        <div className="max-w-2xl mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-black text-gray-900 mb-3">Ajukan Konsultasi Anda</h2>
+            <p className="text-gray-500">Isi formulir berikut dan tim AjiStat akan menghubungi Anda untuk menawarkan solusi olah data yang tepat sesuai metodologi.</p>
+          </div>
+          
           {sent ? (
-            <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-10 text-center">
-              <p className="text-4xl mb-3">✅</p>
-              <p className="font-semibold text-emerald-700 text-lg">Permintaan konsultasi diterima!</p>
-              <p className="text-sm text-emerald-600 mt-2">Tim AJI Statistik akan menghubungi Anda via WhatsApp dalam 24 jam.</p>
+            <div className="bg-emerald-50 border border-emerald-200 rounded-3xl p-10 text-center shadow-lg">
+              <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-5">
+                <CheckCircle className="w-10 h-10 text-emerald-600" />
+              </div>
+              <p className="font-black text-gray-900 text-2xl mb-2">Permintaan Berhasil Dibuat!</p>
+              <p className="text-gray-600 mb-6">Klik tombol di bawah ini jika WhatsApp tidak otomatis terbuka untuk melanjutkan pengiriman pesan ke tim kami.</p>
+              <button onClick={() => window.open(WA_LINK('Halo, saya sudah mengisi form konsultasi di website.'), '_blank')} className="bg-emerald-600 text-white font-bold px-8 py-3 rounded-xl hover:bg-emerald-700">Lanjutkan ke WhatsApp</button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="bg-white border border-gray-100 shadow-sm rounded-2xl p-8 space-y-4">
-              {[
-                { key: 'name', label: 'Nama Lengkap', type: 'text', placeholder: 'Ahmad Fauzan' },
-                { key: 'email', label: 'Email', type: 'email', placeholder: 'email@contoh.com' },
-                { key: 'phone', label: 'Nomor WhatsApp', type: 'tel', placeholder: '08xx-xxxx-xxxx' },
-                { key: 'service', label: 'Jenis Kebutuhan', type: 'text', placeholder: 'Misal: analisis data SmartPLS untuk tesis' },
-              ].map(({ key, label, type, placeholder }) => (
-                <div key={key}>
-                  <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider block mb-1.5">{label}</label>
-                  <input type={type} required value={form[key as keyof typeof form]}
-                    onChange={(e) => setForm({ ...form, [key]: e.target.value })} placeholder={placeholder}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#2568B5] focus:ring-2 focus:ring-[#2568B5]/10" />
+            <form onSubmit={handleSubmit} className="bg-white border border-gray-100 shadow-xl rounded-3xl p-8 space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                  <label className="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-2">Nama Lengkap</label>
+                  <input type="text" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:border-[#2568B5] focus:ring-2 focus:ring-[#2568B5]/20 transition-all" />
                 </div>
-              ))}
-              <div>
-                <label className="text-xs font-semibold text-gray-600 uppercase tracking-wider block mb-1.5">Ceritakan Kebutuhan Anda</label>
-                <textarea rows={4} required value={form.desc}
-                  onChange={(e) => setForm({ ...form, desc: e.target.value })}
-                  placeholder="Jelaskan penelitian Anda, tools yang dimiliki, dan output yang diinginkan..."
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#2568B5] resize-none" />
+                <div>
+                  <label className="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-2">Nomor WhatsApp</label>
+                  <input type="tel" required value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:border-[#2568B5] focus:ring-2 focus:ring-[#2568B5]/20 transition-all" />
+                </div>
               </div>
-              <button type="submit" className="w-full bg-[#162660] hover:bg-[#2568B5] text-white font-bold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2">
-                <MessageSquare className="w-4 h-4" /> Kirim Permintaan Konsultasi
+
+              <div>
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-2">Jenis Layanan yang Dibutuhkan</label>
+                <select required value={form.programType} onChange={(e) => setForm({ ...form, programType: e.target.value })}
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:border-[#2568B5] focus:ring-2 focus:ring-[#2568B5]/20 transition-all appearance-none cursor-pointer">
+                  <option value="" disabled>-- Pilih Jenis Layanan --</option>
+                  {SERVICES.map(s => <option key={s} value={s}>{s}</option>)}
+                </select>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-2">Software (Jika Ada Spesifikasi)</label>
+                <input type="text" value={form.software} onChange={(e) => setForm({ ...form, software: e.target.value })} placeholder="Contoh: Sangat butuh SmartPLS 4"
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:border-[#2568B5] focus:ring-2 focus:ring-[#2568B5]/20 transition-all" />
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-2">Ceritakan Tujuan / Topik Anda</label>
+                <textarea rows={4} required value={form.desc} onChange={(e) => setForm({ ...form, desc: e.target.value })}
+                  placeholder="Ceritakan metodologi Anda, hambatan yang sedang dialami (misal data tidak normal), atau target jadwal sidang Anda..."
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:border-[#2568B5] focus:ring-2 focus:ring-[#2568B5]/20 transition-all resize-none" />
+              </div>
+              
+              <button type="submit" className="w-full bg-gradient-to-r from-[#0C1A45] to-[#2568B5] hover:opacity-90 text-white font-black py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
+                <MessageSquare className="w-5 h-5" /> Konsultasikan Sekarang via WhatsApp
               </button>
             </form>
           )}

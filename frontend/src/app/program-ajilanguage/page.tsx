@@ -3,11 +3,11 @@
 import Link from 'next/link';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import { WA_LINK } from '@/lib/config';
-
-const FORMATS = [
-  { icon: '🌐', name: 'Kelas AjiLanguage', desc: 'Program terstruktur bahasa Inggris akademik, profesional, dan komunikasi global.' },
-  { icon: '👤', name: 'Private Class AjiLanguage', desc: 'Sesi 1-on-1 dengan tutor. Jadwal fleksibel, materi disesuaikan level dan tujuan.' },
-];
+import { useQuery } from '@tanstack/react-query';
+import { programsApi } from '@/lib/api';
+import { ProgramCard } from '@/components/program-card';
+import { ProgramCardSkeleton } from '@/components/program-card-skeleton';
+import type { Program } from '@/lib/types';
 
 const TOPICS = [
   'Academic Writing & Research Paper', 'English for Research & Publication (Scopus)',
@@ -28,6 +28,15 @@ const KEUNGGULAN = [
 ];
 
 export default function AjiLanguagePage() {
+  const { data, isLoading } = useQuery({
+    queryKey: ['programs', 'ajilanguage'],
+    queryFn: () => programsApi.list().then((r) => r.data),
+  });
+
+  const programs: Program[] = (data?.data ?? []).filter((p: Program) =>
+    p.tags.some((t) => t.toLowerCase() === 'ajilanguage')
+  );
+
   return (
     <>
       <div className="bg-gradient-to-br from-[#78350f] via-[#92400e] to-[#B45309] relative overflow-hidden">
@@ -55,32 +64,36 @@ export default function AjiLanguagePage() {
                 className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#0C1A45] font-black px-8 py-4 rounded-2xl transition-all hover:scale-105">
                 💬 Daftar via WhatsApp <ArrowRight className="w-5 h-5" />
               </a>
-              <Link href="/konsultasi"
-                className="inline-flex items-center gap-2 border border-white/30 hover:border-white/60 text-white font-semibold px-8 py-4 rounded-2xl transition-all hover:bg-white/10">
-                Konsultasi Gratis
-              </Link>
+              
             </div>
           </div>
         </div>
       </div>
 
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white min-h-[50vh]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <p className="text-[#B45309] text-sm font-semibold uppercase tracking-widest mb-3">Format Belajar</p>
-            <h2 className="text-3xl font-black text-gray-900">Pilih Format yang Sesuai</h2>
+            <p className="text-[#B45309] text-sm font-semibold uppercase tracking-widest mb-3">Tersedia Saat Ini</p>
+            <h2 className="text-3xl font-black text-gray-900 border-b-2 border-dashed border-gray-200 pb-6 inline-block">Program AjiLanguage Tersedia</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-3xl mx-auto">
-            {FORMATS.map((f) => (
-              <a key={f.name} href={WA_LINK(`Halo, saya ingin info tentang ${f.name}`)}
-                target="_blank" rel="noopener noreferrer"
-                className="group bg-gray-50 hover:bg-[#B45309] border border-gray-100 hover:border-[#B45309] rounded-2xl p-6 transition-all hover:shadow-xl hover:-translate-y-1">
-                <div className="text-3xl mb-3">{f.icon}</div>
-                <h3 className="font-black text-lg text-gray-900 group-hover:text-white mb-2 transition-colors">{f.name}</h3>
-                <p className="text-gray-500 group-hover:text-white/70 text-sm transition-colors">{f.desc}</p>
-              </a>
-            ))}
-          </div>
+
+          {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(3)].map((_, i) => <ProgramCardSkeleton key={i} />)}
+            </div>
+          ) : programs.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {programs.map((program) => (
+                <ProgramCard key={program.id} program={program} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16 bg-gray-50 rounded-3xl border border-gray-100">
+              <span className="text-4xl mb-4 block">🚀</span>
+              <p className="font-bold text-gray-800 text-lg mb-2">Program Segera Hadir!</p>
+              <p className="text-gray-500 max-w-sm mx-auto text-sm">Tim AjiLanguage sedang menyiapkan kelas terbaik untuk Anda. Silakan sampaikan minat Anda pada layanan Konsultasi.</p>
+            </div>
+          )}
         </div>
       </section>
 

@@ -21,6 +21,10 @@ def load_programs():
 
     created_count = 0
     updated_count = 0
+    slugs_in_json = [item['slug'] for item in programs_data]
+
+    # Hapus data lama yang tidak ada di JSON lagi
+    deleted_count, _ = Program.objects.exclude(slug__in=slugs_in_json).delete()
 
     for item in programs_data:
         # Menangani nilai fallback jika field tidak ada
@@ -46,7 +50,7 @@ def load_programs():
         else:
             updated_count += 1
 
-    print(f"Selesai! {created_count} program baru ditambahkan, {updated_count} program diperbarui.")
+    print(f"Selesai! {created_count} program baru, {updated_count} diperbarui. {deleted_count} program lama telah dihapus.")
 
 if __name__ == '__main__':
     load_programs()

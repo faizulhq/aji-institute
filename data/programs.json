@@ -36,7 +36,7 @@
     "type": "bootcamp",
     "title": "Bootcamp SmartPLS: Structural Equation Modeling untuk Riset",
     "slug": "bootcamp-smartpls",
-    "description": "Pelajari teknik Partial Least Square – Structural Equation Modeling (PLS-SEM) menggunakan SmartPLS. Ideal untuk peneliti manajemen, ekonomi, dan ilmu sosial yang ingin membuktikan hubungan antar variabel laten dalam penelitiannya.",
+    "description": "Pelajari teknik Partial Least Square \u2013 Structural Equation Modeling (PLS-SEM) menggunakan SmartPLS. Ideal untuk peneliti manajemen, ekonomi, dan ilmu sosial yang ingin membuktikan hubungan antar variabel laten dalam penelitiannya.",
     "thumbnail": "/assets/thumb-smartpls.png",
     "date": "17 April 2026",
     "duration": "3 Hari (6 Sesi Live Zoom)",
@@ -99,9 +99,107 @@
   },
   {
     "id": 4,
-    "type": "bootcamp",
-    "title": "Bootcamp Python for Data Analysis: Pandas, NumPy & Visualisasi",
-    "slug": "bootcamp-python-data",
+    "type": "private-class",
+    "title": "Private Class Analisis Data dengan SPSS: Dari Dasar hingga Mahir",
+    "slug": "private-analisis-spss",
+    "description": "Program bootcamp intensif yang membekali peserta dengan kemampuan analisis data menggunakan SPSS secara komprehensif. Cocok untuk mahasiswa S1, S2, maupun peneliti yang ingin menguasai statistik kuantitatif untuk keperluan skripsi, tesis, atau publikasi ilmiah.",
+    "thumbnail": "/assets/thumb-spss.png",
+    "date": "10 April 2026",
+    "duration": "4 Hari (8 Sesi Live Zoom)",
+    "price": 350000,
+    "originalPrice": 700000,
+    "tags": [
+      "SPSS",
+      "Kuantitatif",
+      "Olah Data"
+    ],
+    "status": "Akan dilaksanakan",
+    "facilitator": "Dr. Ahmad Fauzan, M.Si.",
+    "facilitatorBio": "Dosen Statistika Universitas Negeri Malang, konsultan data berpengalaman lebih dari 10 tahun.",
+    "curriculum": [
+      "Pengenalan SPSS & Input Data",
+      "Statistik Deskriptif & Eksplorasi Data",
+      "Uji Normalitas & Asumsi Klasik",
+      "Uji Beda (T-Test, ANOVA, Mann-Whitney)",
+      "Analisis Korelasi & Regresi Linear",
+      "Regresi Berganda & Interpretasi",
+      "Analisis Faktor & Reliabilitas",
+      "Presentasi Hasil & Penulisan Laporan"
+    ],
+    "whatsappLink": "https://wa.me/6281234567890?text=Halo,%20saya%20ingin%20daftar%20Bootcamp%20SPSS",
+    "marketplaceLink": "#"
+  },
+  {
+    "id": 5,
+    "type": "private-class",
+    "title": "Private Class SmartPLS: Structural Equation Modeling untuk Riset",
+    "slug": "private-smartpls",
+    "description": "Pelajari teknik Partial Least Square \u2013 Structural Equation Modeling (PLS-SEM) menggunakan SmartPLS. Ideal untuk peneliti manajemen, ekonomi, dan ilmu sosial yang ingin membuktikan hubungan antar variabel laten dalam penelitiannya.",
+    "thumbnail": "/assets/thumb-smartpls.png",
+    "date": "17 April 2026",
+    "duration": "3 Hari (6 Sesi Live Zoom)",
+    "price": 400000,
+    "originalPrice": 800000,
+    "tags": [
+      "SmartPLS",
+      "SEM",
+      "Kuantitatif"
+    ],
+    "status": "Akan dilaksanakan",
+    "facilitator": "Rizka Amalia, M.M.",
+    "facilitatorBio": "Konsultan penelitian manajemen, aktif membantu mahasiswa S2 dan S3 dalam analisis SEM.",
+    "curriculum": [
+      "Pengantar SEM & PLS-SEM",
+      "Instalasi & Navigasi SmartPLS",
+      "Membangun Model Pengukuran (Outer Model)",
+      "Uji Validitas Konvergen & Diskriminan",
+      "Membangun Model Struktural (Inner Model)",
+      "Uji Hipotesis & Bootstrapping",
+      "Mediasi & Moderasi dalam PLS-SEM",
+      "Pelaporan Hasil dan Penulisan Bab Analisis"
+    ],
+    "whatsappLink": "https://wa.me/6281234567890?text=Halo,%20saya%20ingin%20daftar%20Bootcamp%20SmartPLS",
+    "marketplaceLink": "#"
+  },
+  {
+    "id": 6,
+    "type": "private-class",
+    "title": "Private Class R Studio: Analisis Statistika Lanjutan untuk Peneliti",
+    "slug": "private-rstudio",
+    "description": "Kuasai R dan R Studio untuk analisis statistik lanjutan: dari eksplorasi data, regresi, hingga visualisasi publikasi. Program ini dirancang untuk peneliti dan akademisi yang ingin beralih ke software statistik open-source terkuat di dunia.",
+    "thumbnail": "/assets/thumb-rstudio.png",
+    "date": "24 April 2026",
+    "duration": "5 Hari (10 Sesi Live Zoom)",
+    "price": 450000,
+    "originalPrice": 900000,
+    "tags": [
+      "R",
+      "R Studio",
+      "Data Science"
+    ],
+    "status": "Akan dilaksanakan",
+    "facilitator": "Budi Santoso, M.Si.",
+    "facilitatorBio": "Data Scientist & dosen metodologi penelitian, certified R programmer.",
+    "curriculum": [
+      "Instalasi R & R Studio, pengenalan sintaks dasar",
+      "Import & manipulasi data dengan tidyverse",
+      "Statistik deskriptif & eksplorasi data",
+      "Visualisasi data dengan ggplot2",
+      "Uji asumsi & non-parametrik",
+      "Regresi linear & logistik",
+      "Analisis multivariat (PCA, Cluster)",
+      "Membuat laporan dinamis dengan R Markdown",
+      "Studi kasus skripsi/tesis",
+      "Presentasi & evaluasi proyek akhir"
+    ],
+    "whatsappLink": "https://wa.me/6281234567890?text=Halo,%20saya%20ingin%20daftar%20Bootcamp%20R%20Studio",
+    "marketplaceLink": "#"
+  },
+  {
+    "id": 7,
+    "type": "private-class",
+    "title": "Private Class Python for Data Analysis: Pandas, NumPy & Visualisasi",
+    "slug": "private-python-data",
     "description": "Pelajari Python sebagai alat analisis data modern: dari manipulasi data dengan Pandas, analisis statistik dengan NumPy, hingga visualisasi interaktif dengan Matplotlib & Seaborn. Cocok untuk peneliti dan profesional data.",
     "thumbnail": "/assets/thumb-python.png",
     "date": "2 Mei 2026",
@@ -130,71 +228,7 @@
     "marketplaceLink": "#"
   },
   {
-    "id": 5,
-    "type": "bootcamp",
-    "title": "Bootcamp Metodologi Penelitian Kuantitatif & Kualitatif",
-    "slug": "bootcamp-metodologi",
-    "description": "Program komprehensif yang membahas metodologi penelitian dari hulu ke hilir: mulai dari perumusan masalah, pemilihan desain penelitian, teknik sampling, pengumpulan data, analisis, hingga penulisan laporan ilmiah yang berkualitas.",
-    "thumbnail": "/assets/thumb-metodologi.png",
-    "date": "9 Mei 2026",
-    "duration": "4 Hari (8 Sesi Live Zoom)",
-    "price": 350000,
-    "originalPrice": 700000,
-    "tags": [
-      "Metodologi",
-      "Kuantitatif",
-      "Kualitatif"
-    ],
-    "status": "Akan dilaksanakan",
-    "facilitator": "Prof. Dr. Endang Rahayu, M.Pd.",
-    "facilitatorBio": "Guru Besar Metodologi Penelitian, penulis 5 buku metodologi penelitian terbitan Penerbit Erlangga.",
-    "curriculum": [
-      "Paradigma penelitian: positivisme vs konstruktivisme",
-      "Perumusan masalah & tujuan penelitian",
-      "Kajian literatur & kerangka teori",
-      "Desain penelitian eksperimen & survei",
-      "Sampling: probability vs non-probability",
-      "Instrumen penelitian & uji validitas",
-      "Analisis data kuantitatif & kualitatif",
-      "Penulisan laporan ilmiah & karya tulis"
-    ],
-    "whatsappLink": "https://wa.me/6281234567890?text=Halo,%20saya%20ingin%20daftar%20Bootcamp%20Metodologi",
-    "marketplaceLink": "#"
-  },
-  {
-    "id": 6,
-    "type": "bootcamp",
-    "title": "Bootcamp Analisis Kualitatif dengan NVivo: Tematik & Grounded Theory",
-    "slug": "bootcamp-nvivo",
-    "description": "Pelajari cara melakukan analisis kualitatif secara sistematis menggunakan software NVivo. Program ini mencakup coding data, analisis tematik, grounded theory, dan cara menyajikan temuan kualitatif yang komprehensif dan valid.",
-    "thumbnail": "/assets/thumb-nvivo.png",
-    "date": "16 Mei 2026",
-    "duration": "3 Hari (6 Sesi Live Zoom)",
-    "price": 500000,
-    "originalPrice": 1000000,
-    "tags": [
-      "NVivo",
-      "Kualitatif",
-      "Tematik"
-    ],
-    "status": "Akan dilaksanakan",
-    "facilitator": "Dr. Laila Fitriani, M.Hum.",
-    "facilitatorBio": "Peneliti kualitatif senior, certified NVivo trainer, dosen di Universitas Indonesia.",
-    "curriculum": [
-      "Pengenalan NVivo & setup proyek",
-      "Import & manajemen sumber data",
-      "Coding manual & auto-coding",
-      "Analisis tematik dengan nodes & themes",
-      "Analisis word frequency & text search",
-      "Grounded theory dalam NVivo",
-      "Visualisasi: diagram, chart, & word cloud",
-      "Penulisan temuan kualitatif"
-    ],
-    "whatsappLink": "https://wa.me/6281234567890?text=Halo,%20saya%20ingin%20daftar%20Bootcamp%20NVivo",
-    "marketplaceLink": "#"
-  },
-  {
-    "id": 7,
+    "id": 8,
     "type": "short-class",
     "title": "Short Class: Uji Instrumen Penelitian (Validitas & Reliabilitas) dengan SPSS",
     "slug": "short-uji-instrumen-spss",
@@ -222,9 +256,9 @@
     "marketplaceLink": "#"
   },
   {
-    "id": 8,
+    "id": 9,
     "type": "short-class",
-    "title": "Short Class: Regresi Linear Berganda dengan SPSS — Cepat & Tepat",
+    "title": "Short Class: Regresi Linear Berganda dengan SPSS \u2014 Cepat & Tepat",
     "slug": "short-regresi-spss",
     "description": "Kuasai analisis regresi linear berganda menggunakan SPSS dalam satu sesi singkat. Dari input data hingga interpretasi output dan penulisan hasil ke laporan penelitian.",
     "thumbnail": "/assets/thumb-regresi.png",
@@ -250,7 +284,7 @@
     "marketplaceLink": "#"
   },
   {
-    "id": 9,
+    "id": 10,
     "type": "short-class",
     "title": "Short Class: Visualisasi Data Penelitian dengan Python (Matplotlib & Seaborn)",
     "slug": "short-visualisasi-python",
@@ -278,7 +312,7 @@
     "marketplaceLink": "#"
   },
   {
-    "id": 10,
+    "id": 11,
     "type": "short-class",
     "title": "Short Class: Teknik Penulisan Artikel Ilmiah Terindeks Scopus & Sinta",
     "slug": "short-penulisan-artikel",
@@ -306,9 +340,9 @@
     "marketplaceLink": "#"
   },
   {
-    "id": 11,
+    "id": 12,
     "type": "short-class",
-    "title": "Short Class: Statistika Dasar untuk Pemula — Mahir dalam 1 Hari",
+    "title": "Short Class: Statistika Dasar untuk Pemula \u2014 Mahir dalam 1 Hari",
     "slug": "short-statistika-dasar",
     "description": "Program satu hari yang dirancang khusus bagi pemula yang ingin memahami konsep-konsep dasar statistika: dari mean, median, modus, distribusi data, hingga interpretasi hasil yang benar.",
     "thumbnail": "/assets/thumb-statdar.png",
@@ -330,34 +364,6 @@
       "Distribusi data & interpretasi grafik"
     ],
     "whatsappLink": "https://wa.me/6281234567890?text=Halo,%20saya%20ingin%20daftar%20Short%20Class%20Statistika%20Dasar",
-    "marketplaceLink": "#"
-  },
-  {
-    "id": 12,
-    "type": "short-class",
-    "title": "Short Class: Pengenalan Analisis Data dengan R — Mulai dari Nol",
-    "slug": "short-r-pemula",
-    "description": "Kelas singkat yang ramah pemula untuk mengenal R dan R Studio — instalasi, navigasi antarmuka, hingga analisis sederhana dan visualisasi data. Langkah pertama menuju analisis statistik profesional.",
-    "thumbnail": "/assets/thumb-rdasar.png",
-    "date": "10 Mei 2026",
-    "duration": "1 Hari (2 Jam Live Zoom)",
-    "price": 99000,
-    "originalPrice": 250000,
-    "tags": [
-      "R",
-      "R Studio",
-      "Pemula"
-    ],
-    "status": "Rekaman",
-    "facilitator": "Budi Santoso, M.Si.",
-    "facilitatorBio": "Data Scientist & dosen metodologi penelitian, certified R programmer.",
-    "curriculum": [
-      "Instalasi R & R Studio",
-      "Navigasi antarmuka R Studio",
-      "Sintaks dasar R: variabel, vektor, data frame",
-      "Analisis deskriptif & plot sederhana"
-    ],
-    "whatsappLink": "https://wa.me/6281234567890?text=Halo,%20saya%20ingin%20daftar%20Short%20Class%20R%20Pemula",
     "marketplaceLink": "#"
   },
   {
