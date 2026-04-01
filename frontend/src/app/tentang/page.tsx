@@ -1,11 +1,11 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { CheckCircle, Target, Eye, Heart, MessageCircle } from 'lucide-react';
 import { WA_LINK } from '@/lib/config';
 
 export const metadata: Metadata = {
   title: 'Tentang Kami',
-  description: 'Profil, visi misi, dan nilai inti Aji Institute — PT. Amanah Jana Insani.',
+  description: 'Profil, visi misi, dan nilai inti Aji Institute — PT. Amanah Jñāna Insani.',
 };
 
 const MILESTONES = [
@@ -35,7 +35,7 @@ export default function TentangPage() {
             <span className="text-white/80">Tentang Kami</span>
           </nav>
           <span className="inline-block bg-[#47C2EA]/20 border border-[#47C2EA]/30 text-[#47C2EA] text-xs font-semibold px-4 py-1.5 rounded-full mb-6">
-            🏛️ PT. Amanah Jana Insani
+            🏛️ PT. Amanah Jñāna Insani
           </span>
           <h1 className="font-[family-name:var(--font-poppins)] text-4xl sm:text-5xl font-bold text-white mb-6">
             Tentang <span className="text-[#F0A500]">Aji Institute</span>
@@ -56,13 +56,13 @@ export default function TentangPage() {
             </h2>
             <div className="space-y-4 text-gray-600 leading-relaxed">
               <p>
-                <strong className="text-gray-900">Aji Institute</strong> adalah platform pendidikan dan pengembangan kompetensi profesional yang dikelola oleh <strong>PT. Amanah Jana Insani</strong>. Kami hadir untuk menjawab kebutuhan masyarakat Indonesia akan pelatihan berkualitas tinggi di bidang statistik, riset, bisnis, komunikasi, dan teknologi.
+                <strong className="text-gray-900">Aji Institute</strong> adalah platform pendidikan dan pengembangan kompetensi profesional yang dikelola oleh <strong>PT. Amanah Jñāna Insani</strong>. Kami hadir untuk menjawab kebutuhan masyarakat Indonesia akan pelatihan berkualitas tinggi di bidang statistik, riset, bisnis, komunikasi, dan teknologi.
               </p>
               <p>
                 Didirikan atas dasar kepedulian terhadap kualitas riset Indonesia, Aji Institute telah berkembang menjadi salah satu lembaga pelatihan data dan statistik terpercaya dengan ratusan alumni dari berbagai universitas dan institusi di seluruh Indonesia.
               </p>
               <p>
-                Nama "AJI" bukan sekadar singkatan, tetapi merupakan cerminan nilai inti yang kami pegang: <strong>Amanah</strong> (integritas), <strong>Jana</strong> (ilmiah & analitis), dan <strong>Insani</strong> (humanis & empatik).
+                Nama "AJI" bukan sekadar singkatan, tetapi merupakan cerminan nilai inti yang kami pegang: <strong>Amanah</strong> (integritas), <strong>Jñāna</strong> (ilmiah & analitis), dan <strong>Insani</strong> (humanis & empatik).
               </p>
             </div>
           </div>
@@ -133,7 +133,7 @@ export default function TentangPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               { letter: 'A', name: 'Amanah', icon: Heart, color: 'from-blue-500 to-blue-700', desc: 'Menjunjung tinggi integritas, kejujuran, dan tanggung jawab dalam setiap layanan yang kami berikan. Kepercayaan Anda adalah amanah terbesar kami.' },
-              { letter: 'J', name: 'Jana', icon: Target, color: 'from-amber-500 to-amber-700', desc: 'Berpikir kritis, analitis, berbasis data, dan berorientasi pada kebenaran ilmiah. Setiap keputusan kami didukung oleh bukti dan pengetahuan yang sahih.' },
+              { letter: 'J', name: 'Jñāna', icon: Target, color: 'from-amber-500 to-amber-700', desc: 'Berpikir kritis, analitis, berbasis data, dan berorientasi pada kebenaran ilmiah. Setiap keputusan kami didukung oleh bukti dan pengetahuan yang sahih.' },
               { letter: 'I', name: 'Insani', icon: Heart, color: 'from-green-500 to-green-700', desc: 'Mengutamakan pendekatan humanis, empatik, dan pengembangan manusia seutuhnya. Setiap peserta adalah individu unik yang berhak mendapat perhatian penuh.' },
             ].map((val) => (
               <div key={val.letter} className="bg-white/8 border border-white/15 rounded-2xl p-8">

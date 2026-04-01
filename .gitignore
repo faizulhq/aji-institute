@@ -14,9 +14,16 @@ backend/.venv/
 venv/
 backend/db.sqlite3
 db.sqlite3
+# Allow pre-generated static files for cPanel (no terminal/SSH)
+!backend/staticfiles/
+!backend/staticfiles/**
 
 # Next.js (Frontend)
 frontend/.next/
+!frontend/.next/standalone/
+!frontend/.next/standalone/**
+!frontend/.next/static/
+!frontend/.next/static/**
 frontend/out/
 frontend/build/
 

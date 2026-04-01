@@ -1,10 +1,10 @@
-﻿// Konstanta global untuk seluruh aplikasi Aji Institute
+// Konstanta global untuk seluruh aplikasi Aji Institute
 export const BRAND = {
   name: 'Aji Institute',
-  legalName: 'PT. Amanah Jana Insani',
+  legalName: 'PT. Amanah Jñāna Insani',
   tagline: 'Pelatihan │ Pengembangan Kompetensi │ Konsultasi Profesional',
   taglineSub: 'Center for Research, Data, and Professional Development',
-  footerLabel: 'Aji Institute by PT. Amanah Jana Insani',
+  footerLabel: 'Aji Institute by PT. Amanah Jñāna Insani',
 }
 
 export const CONTACT = {
@@ -83,7 +83,7 @@ export const TOOLS = [
   {
     name: 'SPSS',
     color: '#BE1425',
-    logo: '/logos/spss.png',
+    logo: '/logos/spss-1.jpg',
     desc: 'Statistical Package for the Social Sciences. Software analisis statistik paling populer untuk riset akademik.',
     useFor: 'Uji asumsi, regresi, ANOVA, uji beda, korelasi, crosstab.',
   },
@@ -97,7 +97,7 @@ export const TOOLS = [
   {
     name: 'AMOS',
     color: '#CC2222',
-    logo: '/logos/amos.png',
+    logo: '/logos/amos-1.png',
     desc: 'Analysis of Moment Structures. Software SEM berbasis covariance untuk model pengukuran yang kompleks.',
     useFor: 'SEM-CB, CFA, path diagram, goodness of fit.',
   },
@@ -118,14 +118,14 @@ export const TOOLS = [
   {
     name: 'NVivo',
     color: '#8B0000',
-    logo: '/logos/nvivi.png',
+    logo: '/logos/nvivo-1.png',
     desc: 'Software analisis data kualitatif (QDA) terkemuka di dunia.',
     useFor: 'Coding tema, analisis wawancara, FGD, konten media.',
   },
   {
     name: 'EViews',
     color: '#005A9C',
-    logo: '/logos/eviews.png',
+    logo: '/logos/EViews-1.jpeg',
     desc: 'Software ekonometri untuk analisis data time series dan cross-section.',
     useFor: 'Regresi panel data, ARIMA, VAR, VECM, uji stasioneritas.',
   },
@@ -139,7 +139,7 @@ export const TOOLS = [
   {
     name: 'LISREL',
     color: '#444444',
-    logo: '/logos/lisrel.jpg',
+    logo: '/logos/lisrel-1.jpeg',
     desc: 'Pioneer software SEM berbasis covariance yang banyak dipakai di riset psikologi dan sosial.',
     useFor: 'CFA, SEM-CB, path analysis, multitrait-multimethod.',
   },
