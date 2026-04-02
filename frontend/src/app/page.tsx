@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -250,7 +250,7 @@ const AJI_PILLARS = [
   },
   {
     letter: 'J',
-    name: 'Jana',
+    name: 'Jñāna',
     tagline: 'Ilmiah & Analitis',
     desc: 'Berpikir kritis, ilmiah, analitis, berbasis data dan kebenaran ilmiah. Kami percaya ilmu pengetahuan adalah fondasi kemajuan.',
     gradient: 'from-[#0B7AB5] to-[#1AAEE0]',

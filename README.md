@@ -1,6 +1,6 @@
 # Aji Mitra Statistika — Website Edukasi Statistik
 
-Website multi-page untuk platform edukasi statistika, metodologi penelitian, dan riset by **PT. Amanah Jana Insani**.
+Website multi-page untuk platform edukasi statistika, metodologi penelitian, dan riset by **PT. Amanah Jñāna Insani**.
 
 ---
 
@@ -98,7 +98,7 @@ aji-mitra-statistika/
 ## Brand Identity
 
 - **Brand:** Aji Mitra Statistika
-- **Perusahaan:** PT. Amanah Jana Insani
+- **Perusahaan:** PT. Amanah Jñāna Insani
 - **Tagline:** *"Mitra Terpercaya untuk Riset dan Statistika Anda"*
 - **Warna Utama:** Deep Blue `#1B3A6B`, Medium Blue `#2E6DB4`, Gold `#F0A500`
 
