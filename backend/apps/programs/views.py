@@ -1,13 +1,20 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from rest_framework.throttling import AnonRateThrottle
 from django.db.models import Q
 from .models import Program, Testimonial
 from .serializers import ProgramListSerializer, ProgramDetailSerializer, TestimonialSerializer
 
 
 class ProgramListView(APIView):
+    """
+    GET /api/programs/
+    Query params: type, search, featured
+    Rate-limited: 100 req/jam per IP anonim.
+    """
     permission_classes = [AllowAny]
+    throttle_classes = [AnonRateThrottle]
 
     def get(self, request):
         qs = Program.objects.all()
@@ -33,7 +40,9 @@ class ProgramListView(APIView):
 
 
 class ProgramDetailView(APIView):
+    """GET /api/programs/<slug>/"""
     permission_classes = [AllowAny]
+    throttle_classes = [AnonRateThrottle]
 
     def get(self, request, slug):
         try:
@@ -43,8 +52,25 @@ class ProgramDetailView(APIView):
         return Response(ProgramDetailSerializer(program).data)
 
 
-class TestimonialListView(APIView):
+class ProgramSlugListView(APIView):
+    """
+    GET /api/programs/slugs/
+    Hanya mengembalikan daftar slug semua program.
+    Digunakan oleh Next.js generateStaticParams() saat npm run build.
+    Sangat ringan — tidak perlu autentikasi.
+    """
     permission_classes = [AllowAny]
+    # Tidak di-throttle: hanya dipanggil saat build, bukan oleh user biasa
+
+    def get(self, request):
+        slugs = list(Program.objects.values_list('slug', flat=True))
+        return Response({'count': len(slugs), 'slugs': slugs})
+
+
+class TestimonialListView(APIView):
+    """GET /api/programs/testimonials/all/"""
+    permission_classes = [AllowAny]
+    throttle_classes = [AnonRateThrottle]
 
     def get(self, request):
         qs = Testimonial.objects.all()[:10]
