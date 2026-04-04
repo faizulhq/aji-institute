@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { CheckCircle, Target, Eye, Heart, MessageCircle } from 'lucide-react';
+import { CheckCircle, Target, Eye, MessageCircle } from 'lucide-react';
 import { WA_LINK } from '@/lib/config';
 
 export const metadata: Metadata = {
@@ -9,12 +9,11 @@ export const metadata: Metadata = {
 };
 
 const MILESTONES = [
-  { year: '2020', title: 'Berdiri', desc: 'Aji Institute lahir sebagai konsultan statistik personal.' },
-  { year: '2021', title: 'Program Pertama', desc: 'Bootcamp SPSS pertama dengan 30 peserta mahasiswa S2.' },
-  { year: '2022', title: 'Ekspansi Digital', desc: 'Kelas mulai diselenggarakan sepenuhnya via Zoom & online.' },
-  { year: '2023', title: '300+ Alumni', desc: 'Mencapai 300+ alumni dari berbagai universitas di Indonesia.' },
-  { year: '2024', title: 'Multi-Divisi', desc: 'Ekspansi ke 5 divisi program: Stat, Business, Speaking, Digital, Language.' },
-  { year: '2025', title: 'Rebranding', desc: 'Resmi menjadi Aji Institute dengan identitas korporat yang kuat.' },
+  { year: '2015', title: 'Berdiri', desc: 'Aji Institute lahir sebagai konsultan statistik dan riset personal.' },
+  { year: '2022', title: 'Ekspansi Digital', desc: 'Kelas mulai diselenggarakan sepenuhnya via Zoom & online, menjangkau seluruh Indonesia.' },
+  { year: '2023', title: '10.000+ Alumni', desc: 'Mencapai 10.000+ alumni dari berbagai universitas dan instansi di seluruh Indonesia.' },
+  { year: '2024', title: 'Multi-Program', desc: 'Ekspansi ke 5 program: AjiStat, AjiBiz, AjiPR, AjiDigi, AjiLanguage.' },
+  { year: '2025', title: 'Rebranding', desc: 'Resmi menjadi Aji Institute dengan identitas korporat yang kuat di bawah PT. Amanah Jñāna Insani.' },
 ];
 
 const TEAM = [
@@ -25,11 +24,36 @@ const TEAM = [
   { name: 'Tim Fasilitator AjiLanguage', role: 'English & Academic Instructor', initials: 'LG', desc: 'Pengajar bahasa Inggris setingkat ahli dengan spesialisasi persiapan tes akademik dan komunikasi bisnis global.' },
 ];
 
+// ── Makna AJI (dipindahkan dari beranda) ──────────────────────────────────────
+const AJI_PILLARS = [
+  {
+    letter: 'A',
+    name: 'Amanah',
+    tagline: 'Integritas & Kepercayaan',
+    desc: 'Integritas, kejujuran, dan tanggung jawab dalam setiap layanan kami. Kepercayaan Anda adalah amanah terbesar kami.',
+    accent: '#47C2EA',
+  },
+  {
+    letter: 'J',
+    name: 'Jñāna',
+    tagline: 'Ilmiah & Analitis',
+    desc: 'Berpikir kritis, ilmiah, analitis, berbasis data dan kebenaran ilmiah. Kami percaya ilmu pengetahuan adalah fondasi kemajuan.',
+    accent: '#F0A500',
+  },
+  {
+    letter: 'I',
+    name: 'Insani',
+    tagline: 'Humanis & Empatik',
+    desc: 'Humanis, empatik, dan pengembangan manusia seutuhnya. Setiap peserta adalah individu yang berhak tumbuh dan berkembang.',
+    accent: '#4ade80',
+  },
+];
+
 export default function TentangPage() {
   return (
     <>
       {/* Hero */}
-      <div className="bg-gradient-to-br from-[#054E7A] to-[#1090C8] py-20">
+      <div className="bg-[#054E7A] py-20">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <nav className="flex justify-center gap-2 text-white/40 text-sm mb-8">
             <Link href="/" className="hover:text-white transition-colors">Beranda</Link>
@@ -39,7 +63,7 @@ export default function TentangPage() {
           <span className="inline-block bg-[#47C2EA]/20 border border-[#47C2EA]/30 text-[#47C2EA] text-xs font-semibold px-4 py-1.5 rounded-full mb-6">
             🏛️ PT. Amanah Jñāna Insani
           </span>
-          <h1 className="font-[family-name:var(--font-poppins)] text-4xl sm:text-5xl font-bold text-white mb-6">
+          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">
             Tentang <span className="text-[#F0A500]">Aji Institute</span>
           </h1>
           <p className="text-white/70 text-lg max-w-2xl mx-auto">
@@ -53,7 +77,7 @@ export default function TentangPage() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
           <div>
             <p className="text-[#1AAEE0] text-sm font-semibold uppercase tracking-widest mb-3">Profil Perusahaan</p>
-            <h2 className="font-[family-name:var(--font-poppins)] text-3xl font-bold text-gray-900 mb-5">
+            <h2 className="text-3xl font-bold text-gray-900 mb-5">
               Mitra Terpercaya untuk Riset dan Kompetensi Anda
             </h2>
             <div className="space-y-4 text-gray-600 leading-relaxed">
@@ -61,19 +85,19 @@ export default function TentangPage() {
                 <strong className="text-gray-900">Aji Institute</strong> adalah platform pendidikan dan pengembangan kompetensi profesional yang dikelola oleh <strong>PT. Amanah Jñāna Insani</strong>. Kami hadir untuk menjawab kebutuhan masyarakat Indonesia akan pelatihan berkualitas tinggi di bidang statistik, riset, bisnis, komunikasi, dan teknologi.
               </p>
               <p>
-                Didirikan atas dasar kepedulian terhadap kualitas riset Indonesia, Aji Institute telah berkembang menjadi salah satu lembaga pelatihan data dan statistik terpercaya dengan ratusan alumni dari berbagai universitas dan institusi di seluruh Indonesia.
+                Didirikan atas dasar kepedulian terhadap kualitas riset Indonesia, Aji Institute telah berkembang menjadi salah satu lembaga pelatihan data dan statistik terpercaya dengan ribuan alumni dari berbagai universitas dan institusi di seluruh Indonesia.
               </p>
               <p>
-                Nama "AJI" bukan sekadar singkatan, tetapi merupakan cerminan nilai inti yang kami pegang: <strong>Amanah</strong> (integritas), <strong>Jñāna</strong> (ilmiah & analitis), dan <strong>Insani</strong> (humanis & empatik).
+                Nama &quot;AJI&quot; bukan sekadar singkatan, tetapi merupakan cerminan nilai inti yang kami pegang: <strong>Amanah</strong> (integritas), <strong>Jñāna</strong> (ilmiah &amp; analitis), dan <strong>Insani</strong> (humanis &amp; empatik).
               </p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             {[
-              { value: '500+', label: 'Alumni Terlatih', color: 'bg-blue-50 border-blue-100' },
-              { value: '30+', label: 'Program Aktif', color: 'bg-amber-50 border-amber-100' },
+              { value: '10.000+', label: 'Alumni Terlatih', color: 'bg-blue-50 border-blue-100' },
+              { value: '30+', label: 'Layanan Aktif', color: 'bg-amber-50 border-amber-100' },
               { value: '10+', label: 'Fasilitator Expert', color: 'bg-green-50 border-green-100' },
-              { value: '5th', label: 'Tahun Pengalaman', color: 'bg-purple-50 border-purple-100' },
+              { value: '5', label: 'Program Unggulan', color: 'bg-purple-50 border-purple-100' },
             ].map((stat) => (
               <div key={stat.label} className={`${stat.color} border rounded-2xl p-6 text-center`}>
                 <p className="text-3xl font-bold text-gray-900 mb-1">{stat.value}</p>
@@ -84,11 +108,60 @@ export default function TentangPage() {
         </div>
       </section>
 
-      {/* Visi Misi */}
+      {/* ── Makna AJI (dipindahkan dari beranda) ── */}
       <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <p className="text-[#1AAEE0] text-sm font-semibold uppercase tracking-widest mb-3">Nilai Inti Kami</p>
+            <h2 className="text-4xl sm:text-5xl font-black text-gray-900">
+              Makna di Balik{' '}
+              <span className="bg-gradient-to-r from-[#0B7AB5] to-[#1AAEE0] bg-clip-text text-transparent">AJI</span>
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-3xl overflow-hidden shadow-2xl">
+            {/* Kiri — A J I */}
+            <div className="bg-gradient-to-b from-[#054E7A] via-[#0B7AB5] to-[#1090C8] flex flex-col">
+              {AJI_PILLARS.map((pillar, idx) => (
+                <div key={pillar.letter}
+                  className={`flex items-center gap-6 p-8 md:p-10 ${idx < AJI_PILLARS.length - 1 ? 'border-b border-white/10' : ''}`}>
+                  <span className="text-8xl md:text-9xl font-black leading-none w-24 shrink-0 text-center"
+                    style={{ color: pillar.accent }}>
+                    {pillar.letter}
+                  </span>
+                  <div>
+                    <p className="text-white/50 text-xs font-bold uppercase tracking-widest mb-1">{pillar.tagline}</p>
+                    <h3 className="text-2xl font-black text-white">{pillar.name}</h3>
+                    <p className="text-white/60 text-sm mt-2 leading-relaxed">{pillar.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {/* Kanan */}
+            <div className="bg-white flex flex-col justify-center p-8 md:p-12">
+              <p className="text-[#1AAEE0] text-xs font-bold uppercase tracking-widest mb-3">Mengapa Aji Institute?</p>
+              <h3 className="text-3xl font-black text-gray-900 mb-6 leading-snug">
+                Lebih dari Sekadar<br />
+                <span className="text-[#1AAEE0]">Tempat Belajar</span>
+              </h3>
+              <p className="text-gray-500 leading-relaxed mb-8">
+                Aji Institute berdiri di atas komitmen untuk mencetak individu yang tidak hanya kompeten secara teknis,
+                tetapi juga berintegritas, kritis, dan siap berkontribusi nyata bagi masyarakat.
+              </p>
+              <a href={WA_LINK('Halo, saya ingin tahu lebih lanjut tentang Aji Institute')}
+                target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 w-full bg-[#0B7AB5] hover:bg-[#1AAEE0] text-white font-bold py-3.5 rounded-xl transition-colors text-sm">
+                Hubungi Kami Sekarang
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Visi Misi */}
+      <section className="py-20 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="font-[family-name:var(--font-poppins)] text-3xl font-bold text-gray-900">Visi & Misi</h2>
+            <h2 className="text-3xl font-bold text-gray-900">Visi &amp; Misi</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
@@ -123,18 +196,16 @@ export default function TentangPage() {
         </div>
       </section>
 
-
-
       {/* Tim */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-gray-50">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <p className="text-[#1AAEE0] text-sm font-semibold uppercase tracking-widest mb-3">Tim Kami</p>
-            <h2 className="font-[family-name:var(--font-poppins)] text-3xl font-bold text-gray-900">Fasilitator Berpengalaman</h2>
+            <h2 className="text-3xl font-bold text-gray-900">Fasilitator Berpengalaman</h2>
           </div>
           <div className="flex flex-wrap justify-center gap-6">
             {TEAM.map((member) => (
-              <div key={member.name} className="w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <div key={member.name} className="w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#0B7AB5] to-[#1AAEE0] flex items-center justify-center text-white font-bold text-xl mb-5">
                   {member.initials}
                 </div>
@@ -148,11 +219,11 @@ export default function TentangPage() {
       </section>
 
       {/* Milestone */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <p className="text-[#1AAEE0] text-sm font-semibold uppercase tracking-widest mb-3">Perjalanan Kami</p>
-            <h2 className="font-[family-name:var(--font-poppins)] text-3xl font-bold text-gray-900">Milestone Aji Institute</h2>
+            <h2 className="text-3xl font-bold text-gray-900">Milestone Aji Institute</h2>
           </div>
           <div className="relative">
             <div className="absolute left-6 top-0 bottom-0 w-px bg-gray-200" />
@@ -174,13 +245,13 @@ export default function TentangPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-[#0B7AB5]">
+      <section className="py-16 bg-[#054E7A]">
         <div className="max-w-3xl mx-auto text-center px-4">
-          <h2 className="font-[family-name:var(--font-poppins)] text-2xl font-bold text-white mb-4">
+          <h2 className="text-2xl font-bold text-white mb-4">
             Siap Bergabung dengan Komunitas Aji Institute?
           </h2>
-          <p className="text-white/60 mb-8">Hubungi tim kami untuk informasi program yang paling sesuai dengan kebutuhan Anda.</p>
-          <a href={WA_LINK('Halo Aji Institute, saya ingin tahu lebih lanjut tentang program yang tersedia')}
+          <p className="text-white/60 mb-8">Hubungi tim kami untuk informasi layanan yang paling sesuai dengan kebutuhan Anda.</p>
+          <a href={WA_LINK('Halo Aji Institute, saya ingin tahu lebih lanjut tentang layanan yang tersedia')}
             target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#054E7A] font-bold px-8 py-3.5 rounded-xl transition-colors">
             <MessageCircle className="w-4 h-4" /> Hubungi Kami Sekarang

@@ -11,6 +11,7 @@ const KONSULTASI_LAYANAN = [
   { icon: ClipboardList, title: 'Penyusunan Laporan Hasil Analisis' },
 ];
 
+
 export function KonsultasiPreview() {
   return (
     <section className="py-20 bg-white">
@@ -32,7 +33,7 @@ export function KonsultasiPreview() {
           ))}
         </div>
         <div className="text-center">
-          <Link href="/layanan" className="inline-flex items-center gap-2 text-[#1AAEE0] font-semibold hover:underline">
+          <Link href="/konsultasi" className="inline-flex items-center gap-2 text-[#1AAEE0] font-semibold hover:underline">
             Lihat Semua Layanan <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

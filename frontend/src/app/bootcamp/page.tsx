@@ -1,155 +1,97 @@
-﻿'use client';
+'use client';
 
-import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Search, Users, Award, BookOpen, Star } from 'lucide-react';
+import { Users, Award, BookOpen, Star } from 'lucide-react';
 import { programsApi } from '@/lib/api';
 import { ProgramCard } from '@/components/program-card';
 import { ProgramCardSkeleton } from '@/components/program-card-skeleton';
 import type { Program } from '@/lib/types';
 
-const TAGS = ['SPSS', 'SmartPLS', 'R', 'Python', 'Metodologi', 'Scopus', 'Skripsi', 'Bisnis', 'Digital Marketing', 'Public Speaking', 'Bahasa Inggris'];
-
-const STATS = [
-  { icon: Users, value: '500+', label: 'Alumni Terlatih' },
-  { icon: BookOpen, value: '10+', label: 'Program Bootcamp' },
-  { icon: Star, value: '4.9★', label: 'Rating Rata-rata' },
-  { icon: Award, value: '100%', label: 'Sertifikasi Resmi' },
+const KEUNGGULAN = [
+  { icon: Users, title: 'Fasilitator Expert', desc: 'Dibimbing oleh praktisi dan peneliti berpengalaman di bidangnya' },
+  { icon: BookOpen, title: '3–5 Hari Intensif', desc: 'Pembelajaran intensif langsung praktik dengan data nyata' },
+  { icon: Star, title: 'Bersertifikat', desc: 'Sertifikat resmi Aji Institute yang diakui secara nasional' },
+  { icon: Award, title: 'Rekaman Tersedia', desc: 'Akses ulang rekaman sesi kapan saja setelah bootcamp selesai' },
 ];
 
 export default function BootcampPage() {
-  const [search, setSearch] = useState('');
-  const [activeTag, setActiveTag] = useState<string | null>(null);
-
   const { data, isLoading } = useQuery({
-    queryKey: ['programs', 'bootcamp', search],
-    queryFn: () => programsApi.list({ type: 'bootcamp', search: search || undefined }).then((r) => r.data),
+    queryKey: ['programs', 'bootcamp'],
+    queryFn: () => programsApi.list({ type: 'bootcamp' }).then((r) => r.data),
   });
 
-  const programs: Program[] = (data?.data ?? []).filter((p: Program) =>
-    !activeTag || p.tags.some((t) => t.toLowerCase().includes(activeTag.toLowerCase()))
-  );
+  const programs: Program[] = data?.data ?? [];
 
   const groupedPrograms = [
-    { title: 'AjiStat — Statistik & Riset', filterKey: 'ajistat', items: programs.filter(p => !p.tags.some(t => ['ajibiz', 'ajipr', 'ajidigi', 'ajilanguage'].includes(t.toLowerCase()))) },
-    { title: 'AjiBiz — Bisnis & Manajemen', filterKey: 'ajibiz', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajibiz')) },
-    { title: 'AjiPR — Public Relation & Komunikasi', filterKey: 'ajipr', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajipr')) },
-    { title: 'AjiDigi — Digital Marketing & IT', filterKey: 'ajidigi', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajidigi')) },
-    { title: 'AjiLanguage — Bahasa Asing & Akademik', filterKey: 'ajilanguage', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajilanguage')) },
+    { title: 'AjiStat — Statistik & Riset', items: programs.filter(p => !p.tags.some(t => ['ajibiz', 'ajipr', 'ajidigi', 'ajilanguage'].includes(t.toLowerCase()))) },
+    { title: 'AjiBiz — Bisnis & Manajemen', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajibiz')) },
+    { title: 'AjiPR — Public Relation & Komunikasi', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajipr')) },
+    { title: 'AjiDigi — Digital Marketing & IT', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajidigi')) },
+    { title: 'AjiLanguage — Bahasa Asing & Akademik', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajilanguage')) },
   ];
+
   return (
     <>
       {/* ─── HERO ─── */}
       <div className="bg-[#054E7A] relative overflow-hidden">
-        {/* Decorative background */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#47C2EA] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#F0A500] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#1AAEE0] rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          {/* Breadcrumb */}
           <nav className="flex gap-2 text-white/40 text-sm mb-8">
             <a href="/" className="hover:text-white transition-colors">Beranda</a>
             <span>/</span>
-            <span className="text-white/80">Bootcamp Intensif</span>
+            <span className="text-white/80">Bootcamp</span>
           </nav>
 
           <div className="max-w-3xl">
-            {/* Badge */}
-            <span className="inline-flex items-center gap-2 bg-[#1AAEE0]/30 border border-[#1AAEE0]/50 text-[#47C2EA] text-xs font-semibold px-4 py-1.5 rounded-full mb-6">
-              🎓 AJI Learning — Program Unggulan
+            <span className="inline-flex items-center gap-2 bg-[#F0A500]/20 border border-[#F0A500]/40 text-[#F0A500] text-xs font-semibold px-4 py-1.5 rounded-full mb-6">
+              🎓 AJI Learning — Bootcamp Intensif
             </span>
-
             <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
-              Bootcamp Intensif<br />
-              <span className="text-[#47C2EA]">Berbasis Data Nyata</span>
+              Bootcamp —<br />
+              <span className="text-[#F0A500]">Intensif, Praktis,</span>{' '}
+              <span className="text-white/80">&amp; Berdampak</span>
             </h1>
-
             <p className="text-white/70 text-lg leading-relaxed mb-10 max-w-2xl">
-              Program pelatihan intensif 3–5 hari dengan pendekatan langsung praktik menggunakan data riset nyata.
-              Dipandu fasilitator berpengalaman via Zoom. Dirancang untuk mahasiswa S1–S3 dan peneliti profesional
-              yang serius mengembangkan kompetensi statistik dan metodologi penelitian.
+              Program bootcamp 3–5 hari yang dirancang untuk membawa Anda dari pemula hingga mahir secara praktis.
+              Cocok untuk mahasiswa, peneliti, akademisi, dan profesional.
             </p>
-
-            {/* 3 keunggulan */}
-            <div className="flex flex-wrap gap-4">
-              {[
-                { icon: '📡', text: 'Live via Zoom & Rekaman Tersedia' },
-                { icon: '📊', text: 'Praktik Data Riset Nyata' },
-                { icon: '🏆', text: 'Sertifikat Kelulusan Resmi' },
-              ].map((item) => (
-                <div key={item.text} className="flex items-center gap-2 bg-white/10 border border-white/15 rounded-xl px-4 py-2">
-                  <span>{item.icon}</span>
-                  <span className="text-white/80 text-sm font-medium">{item.text}</span>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {KEUNGGULAN.map((item) => (
+                <div key={item.title} className="bg-white/10 border border-white/15 rounded-xl p-4">
+                  <item.icon className="w-6 h-6 text-[#F0A500] mb-2" />
+                  <p className="text-white font-semibold text-sm mb-1">{item.title}</p>
+                  <p className="text-white/50 text-xs leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Stats bar */}
         <div className="relative border-t border-white/10 bg-white/5">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-white/10">
-              {STATS.map(({ icon: Icon, value, label }) => (
-                <div key={label} className="flex items-center gap-3 py-5 px-6">
-                  <div className="w-10 h-10 bg-[#1AAEE0]/30 rounded-xl flex items-center justify-center shrink-0">
-                    <Icon className="w-5 h-5 text-[#47C2EA]" />
-                  </div>
-                  <div>
-                    <p className="text-white font-bold text-lg leading-none">{value}</p>
-                    <p className="text-white/50 text-xs mt-0.5">{label}</p>
-                  </div>
-                </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm text-white/60">
+              {['Mulai dari Rp 250.000', 'Sesi Live via Zoom', 'Sertifikat resmi AJI'].map((text) => (
+                <span key={text} className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F0A500]" />
+                  {text}
+                </span>
               ))}
             </div>
           </div>
         </div>
       </div>
 
-      {/* ─── PROGRAM LIST ─── */}
+      {/* ─── LAYANAN LIST ─── */}
       <section className="py-14 bg-gray-50 min-h-[60vh]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-          {/* Section heading */}
           <div className="mb-10">
-            <h2 className="text-2xl font-bold text-gray-900 mb-1">Pilih Program Bootcamp</h2>
-            <p className="text-gray-500 text-sm">Klik program untuk melihat kurikulum, fasilitator, dan detail lengkap pendaftaran.</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-1">Pilih Layanan Bootcamp</h2>
+            <p className="text-gray-500 text-sm">Klik layanan untuk melihat isi materi, jadwal, dan mendaftar.</p>
           </div>
-
-          {/* Filter bar */}
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 mb-8 flex flex-wrap gap-3 items-center">
-            <div className="relative flex-1 min-w-56">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Cari program bootcamp..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-[#1AAEE0] focus:ring-2 focus:ring-[#1AAEE0]/10"
-              />
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {TAGS.map((tag) => (
-                <button
-                  key={tag}
-                  onClick={() => setActiveTag(activeTag === tag ? null : tag)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${
-                    activeTag === tag
-                      ? 'bg-[#0B7AB5] text-white border-[#0B7AB5]'
-                      : 'border-gray-200 text-gray-600 hover:border-[#1AAEE0] hover:text-[#1AAEE0]'
-                  }`}
-                >
-                  {tag}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <p className="text-sm text-gray-400 mb-6">
-            {isLoading ? 'Memuat program...' : `${programs.length} program ditemukan`}
-          </p>
 
           {isLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -171,25 +113,23 @@ export default function BootcampPage() {
             </div>
           ) : (
             <div className="text-center py-24 text-gray-400">
-              <p className="text-5xl mb-4">🔍</p>
-              <p className="font-medium text-gray-500 mb-1">Tidak ada program yang cocok</p>
-              <p className="text-sm">Coba kata kunci atau filter yang berbeda</p>
+              <p className="text-5xl mb-4">🎓</p>
+              <p className="font-medium text-gray-500 mb-1">Belum ada bootcamp yang tersedia</p>
+              <p className="text-sm">Hubungi kami untuk jadwal bootcamp berikutnya</p>
             </div>
           )}
         </div>
       </section>
 
-      {/* ─── CTA KONSULTASI ─── */}
-      <section className="bg-[#0B7AB5] py-14">
+      {/* ─── CTA ─── */}
+      <section className="bg-[#F0A500] py-12">
         <div className="max-w-3xl mx-auto text-center px-4">
-          <p className="text-[#47C2EA] text-sm font-semibold uppercase tracking-widest mb-3">Butuh Bantuan Riset?</p>
-          <h2 className="text-2xl font-bold text-white mb-4">Konsultasi Olah Data & Skripsi</h2>
-          <p className="text-white/60 mb-8">Tim ahli AjiStat siap membantu memperlancar penelitian dan analisis data Anda secara profesional.</p>
-          <a
-            href="/konsultasi"
-            className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#054E7A] font-bold px-8 py-3.5 rounded-xl transition-colors"
-          >
-            💬 Konsultasi Data AjiStat
+          <h2 className="text-2xl font-bold text-[#054E7A] mb-3">Ada topik yang belum tersedia?</h2>
+          <p className="text-[#054E7A]/70 mb-6">Kami menerima permintaan topik khusus. Hubungi tim Aji Institute.</p>
+          <a href="https://wa.me/6285892605592?text=Halo%20Admin,%20saya%20ingin%20request%20topik%20Bootcamp%20baru"
+            target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[#054E7A] hover:bg-[#0B7AB5] text-white font-bold px-8 py-3.5 rounded-xl transition-colors">
+            💬 Request Topik via WhatsApp
           </a>
         </div>
       </section>
