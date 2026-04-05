@@ -18,10 +18,10 @@ export const metadata: Metadata = {
     default: `${BRAND.name} — ${BRAND.tagline}`,
     template: `%s | ${BRAND.name}`,
   },
-  description: 'Platform pelatihan, pengembangan kompetensi, dan konsultasi profesional. AjiStat, AjiBiz, AjiPR, AjiDigi, AjiLanguage.',
+  description: 'Platform pelatihan, pengembangan kompetensi, dan konsultasi profesional. AjiStat, AjiBiz, AjiPR, AjiDigi, AjiLangua.',
   keywords: [
     'aji institute', 'ajistat', 'statistika', 'analisis data', 'SPSS', 'SmartPLS',
-    'pelatihan profesional', 'pengembangan kompetensi', 'AjiBiz', 'AjiPR', 'AjiDigi', 'AjiLanguage',
+    'pelatihan profesional', 'pengembangan kompetensi', 'AjiBiz', 'AjiPR', 'AjiDigi', 'AjiLangua',
     'metodologi penelitian', 'konsultasi riset', 'skripsi', 'tesis'
   ],
   openGraph: {

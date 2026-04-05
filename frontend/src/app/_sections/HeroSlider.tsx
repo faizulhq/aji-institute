@@ -5,12 +5,16 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect, useState, useCallback } from 'react';
 import { TOOLS, WA_LINK } from '@/lib/config';
 import { cn } from '@/lib/utils';
+import { useQuery } from '@tanstack/react-query';
+import { programsApi } from '@/lib/api';
+import { TagProgramModal } from '@/components/TagProgramModal';
+import type { Program } from '@/lib/types';
 
 const SLIDES = [
   {
-    image: '/images/slide1.png',
+    image: '/images/slide1.jpeg',
     badge: 'Program Unggulan',
-    badgeColor: 'bg-[#0B7AB5] text-[#47C2EA] border border-[#47C2EA]/40',
+    badgeColor: 'bg-[#1B3A8C]/90 text-white border border-white/30',
     headline: 'Kuasai Statistika\n& Riset dengan AjiStat',
     subtext: 'SPSS, SmartPLS, NVivo, R, Python, AMOS, EViews, STATA — semua ada di sini. Dipandu langsung oleh pakar riset berpengalaman.',
     cta: 'Lihat Program AjiStat →',
@@ -19,26 +23,26 @@ const SLIDES = [
     cta2Href: WA_LINK('Halo, saya ingin info program AjiStat'),
     chips: ['SPSS', 'SmartPLS', 'NVivo', 'R', 'Python', 'AMOS'],
     stats: [{ val: '10+', label: 'Tools' }, { val: '5', label: 'Format Layanan' }],
-    overlay: 'from-[#054E7A]/90 via-[#0B7AB5]/75 to-transparent',
+    overlay: 'from-[#162058]/90 via-[#1B3A8C]/75 to-transparent',
   },
   {
-    image: '/images/slide3.png',
+    image: '/images/slide-programs.jpg',
     badge: 'Kini Tersedia',
-    badgeColor: 'bg-purple-600/80 text-white backdrop-blur',
+    badgeColor: 'bg-[#162058]/90 text-white border border-white/30',
     headline: '5 Program\nAji Institute',
-    subtext: 'AjiStat, AjiBiz, AjiPR, AjiDigi, AjiLanguage — satu platform untuk semua kebutuhan pengembangan kompetensi profesional Anda.',
+    subtext: 'AjiStat, AjiBiz, AjiPR, AjiDigi, AjiLangua — satu platform untuk semua kebutuhan pengembangan kompetensi profesional Anda.',
     cta: 'Eksplorasi Semua Program →',
     ctaHref: '/program-ajibiz',
     cta2: 'Diskusi Program',
     cta2Href: WA_LINK('Halo, saya ingin tahu lebih lanjut tentang program Aji Institute'),
-    chips: ['AjiStat', 'AjiBiz', 'AjiPR', 'AjiDigi', 'AjiLanguage'],
+    chips: ['AjiStat', 'AjiBiz', 'AjiPR', 'AjiDigi', 'AjiLangua'],
     stats: [{ val: '5', label: 'Program' }, { val: '30+', label: 'Layanan' }],
-    overlay: 'from-[#1a1040]/90 via-[#2d1b69]/70 to-transparent',
+    overlay: 'from-[#0d1632]/85 via-[#162058]/60 to-transparent',
   },
   {
-    image: '/images/slide2.png',
+    image: '/images/programs/bootcamp-slide.jpeg',
     badge: 'Terbatas — Daftar Sekarang',
-    badgeColor: 'bg-[#F0A500] text-[#054E7A]',
+    badgeColor: 'bg-[#F0A500] text-[#162058]',
     headline: 'Ikuti Bootcamp\nGratis Pertamamu',
     subtext: 'Mulai perjalanan belajar Anda di Aji Institute — gratis, terstruktur, dan langsung praktik bersama mentor berpengalaman.',
     cta: 'Daftar Sekarang →',
@@ -47,13 +51,20 @@ const SLIDES = [
     cta2Href: WA_LINK('Halo, saya ingin info Bootcamp Gratis Aji Institute'),
     chips: ['Gratis', 'Bersertifikat', 'Mentor Expert', 'Praktik Langsung'],
     stats: [{ val: '10.000+', label: 'Alumni' }, { val: '4.9', label: 'Rating' }],
-    overlay: 'from-[#054E7A]/90 via-[#054E7A]/70 to-transparent',
+    overlay: 'from-[#162058]/90 via-[#1B3A8C]/70 to-transparent',
   },
 ];
 
 export function HeroSlider() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [activeTag, setActiveTag] = useState<string | null>(null);
+
+  const { data: allProgramsData } = useQuery({
+    queryKey: ['programs', 'all-tags'],
+    queryFn: () => programsApi.list().then(r => r.data),
+  });
+  const allPrograms: Program[] = Array.isArray(allProgramsData?.data) ? allProgramsData.data : [];
 
   const next = useCallback(() => setActive((a) => (a + 1) % SLIDES.length), []);
   const prev = () => setActive((a) => (a - 1 + SLIDES.length) % SLIDES.length);
@@ -105,16 +116,17 @@ export function HeroSlider() {
               const toolMatch = TOOLS.find(t => t.name === c || (c === 'R' && t.name === 'R / RStudio'));
               if (toolMatch?.logo) {
                 return (
-                  <div key={c} title={toolMatch.name}
-                    className="w-8 h-8 rounded-lg overflow-hidden bg-white/20 backdrop-blur hover:bg-white/30 border border-white/30 flex items-center justify-center transition-all hover:scale-110 cursor-default">
+                  <button key={c} title={toolMatch.name} onClick={() => setActiveTag(toolMatch.name)}
+                    className="w-8 h-8 rounded-lg overflow-hidden bg-white/20 backdrop-blur hover:bg-white/30 border border-white/30 flex items-center justify-center transition-all hover:scale-110 cursor-pointer">
                     <Image src={toolMatch.logo} alt={toolMatch.name} width={24} height={24} className="object-contain p-0.5" />
-                  </div>
+                  </button>
                 );
               }
               return (
-                <span key={c} className="text-xs bg-white/20 backdrop-blur text-white px-3 py-1.5 rounded-full font-semibold border border-white/20">
+                <button key={c} onClick={() => setActiveTag(c)}
+                  className="text-xs bg-white/20 hover:bg-white/30 backdrop-blur text-white px-3 py-1.5 rounded-full font-semibold border border-white/20 cursor-pointer transition-colors">
                   {c}
-                </span>
+                </button>
               );
             })}
           </div>
@@ -132,7 +144,7 @@ export function HeroSlider() {
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-3">
             <a href={slide.ctaHref}
-              className="inline-flex items-center justify-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#054E7A] font-black px-8 py-4 rounded-2xl text-base transition-all hover:scale-105 shadow-2xl">
+              className="inline-flex items-center justify-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-black px-8 py-4 rounded-2xl text-base transition-all hover:scale-105 shadow-2xl">
               {slide.cta}
             </a>
             <a href={slide.cta2Href} target="_blank" rel="noopener noreferrer"
@@ -168,6 +180,12 @@ export function HeroSlider() {
           key={active}
         />
       )}
+
+      <TagProgramModal
+        tag={activeTag}
+        programs={allPrograms}
+        onClose={() => setActiveTag(null)}
+      />
     </section>
   );
 }

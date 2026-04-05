@@ -9,6 +9,7 @@
  */
 
 import { HeroSlider }        from './_sections/HeroSlider';
+import { AjiMeaningStrip }   from './_sections/AjiMeaningStrip';
 import { StatsStrip }        from './_sections/StatsStrip';
 import { ProgramGridSection, FeaturedPrograms } from './_sections/FeaturedPrograms';
 import { KonsultasiPreview, CtaKerjaSama }      from './_sections/KonsultasiPreview';
@@ -18,6 +19,7 @@ export default function HomePage() {
   return (
     <>
       <HeroSlider />
+      <AjiMeaningStrip />
       <StatsStrip />
       <ProgramGridSection />
       <FeaturedPrograms />

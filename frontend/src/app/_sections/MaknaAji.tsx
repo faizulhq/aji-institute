@@ -7,15 +7,15 @@ const AJI_PILLARS = [
     name: 'Amanah',
     tagline: 'Integritas & Kepercayaan',
     desc: 'Integritas, kejujuran, dan tanggung jawab dalam setiap layanan kami. Kepercayaan Anda adalah amanah terbesar kami.',
-    gradient: 'from-[#054E7A] to-[#0B7AB5]',
-    accent: '#47C2EA',
+    gradient: 'from-[#162058] to-[#1B3A8C]',
+    accent: '#4A72D4',
   },
   {
     letter: 'J',
     name: 'Jñāna',
     tagline: 'Ilmiah & Analitis',
     desc: 'Berpikir kritis, ilmiah, analitis, berbasis data dan kebenaran ilmiah. Kami percaya ilmu pengetahuan adalah fondasi kemajuan.',
-    gradient: 'from-[#0B7AB5] to-[#1AAEE0]',
+    gradient: 'from-[#1B3A8C] to-[#2348A8]',
     accent: '#F0A500',
   },
   {
@@ -23,7 +23,7 @@ const AJI_PILLARS = [
     name: 'Insani',
     tagline: 'Humanis & Empatik',
     desc: 'Humanis, empatik, dan pengembangan manusia seutuhnya. Setiap peserta adalah individu yang berhak tumbuh dan berkembang.',
-    gradient: 'from-[#1AAEE0] to-[#1090C8]',
+    gradient: 'from-[#2348A8] to-[#1B3A8C]',
     accent: '#4ade80',
   },
 ];
@@ -40,16 +40,16 @@ export function MaknaAji() {
     <section id="tentang" className="py-20 bg-gray-50 scroll-mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
-          <p className="text-[#1AAEE0] text-sm font-semibold uppercase tracking-widest mb-3">Nilai Inti Kami</p>
+          <p className="text-[#2348A8] text-sm font-semibold uppercase tracking-widest mb-3">Nilai Inti Kami</p>
           <h2 className="text-4xl sm:text-5xl font-black text-gray-900">
             Makna di Balik{' '}
-            <span className="bg-gradient-to-r from-[#0B7AB5] to-[#1AAEE0] bg-clip-text text-transparent">AJI</span>
+            <span className="bg-gradient-to-r from-[#1B3A8C] to-[#2348A8] bg-clip-text text-transparent">AJI</span>
           </h2>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-3xl overflow-hidden shadow-2xl">
           {/* Kiri — A / J / I vertikal */}
-          <div className="bg-gradient-to-b from-[#054E7A] via-[#0B7AB5] to-[#1090C8] flex flex-col">
+          <div className="bg-gradient-to-b from-[#162058] via-[#1B3A8C] to-[#1B3A8C] flex flex-col">
             {AJI_PILLARS.map((pillar, idx) => (
               <div key={pillar.letter}
                 className={cn('flex items-center gap-6 p-8 md:p-10', idx < AJI_PILLARS.length - 1 && 'border-b border-white/10')}>
@@ -69,10 +69,10 @@ export function MaknaAji() {
           {/* Kanan — Why AJI? */}
           <div className="bg-white flex flex-col justify-between p-8 md:p-12">
             <div>
-              <p className="text-[#1AAEE0] text-xs font-bold uppercase tracking-widest mb-3">Mengapa Aji Institute?</p>
+              <p className="text-[#2348A8] text-xs font-bold uppercase tracking-widest mb-3">Mengapa Aji Institute?</p>
               <h3 className="text-3xl font-black text-gray-900 mb-6 leading-snug">
                 Lebih dari Sekadar<br />
-                <span className="text-[#1AAEE0]">Tempat Belajar</span>
+                <span className="text-[#2348A8]">Tempat Belajar</span>
               </h3>
               <p className="text-gray-500 leading-relaxed mb-8">
                 Aji Institute berdiri di atas komitmen untuk mencetak individu yang tidak hanya kompeten secara teknis,
@@ -83,7 +83,7 @@ export function MaknaAji() {
             <div className="grid grid-cols-2 gap-4 mb-8">
               {KEY_METRICS.map((stat) => (
                 <div key={stat.label} className="bg-gray-50 rounded-2xl p-4 border border-gray-100">
-                  <p className="text-2xl font-black text-[#0B7AB5]">{stat.val}</p>
+                  <p className="text-2xl font-black text-[#1B3A8C]">{stat.val}</p>
                   <p className="text-gray-800 font-semibold text-sm">{stat.label}</p>
                   <p className="text-gray-400 text-xs mt-0.5">{stat.sub}</p>
                 </div>
@@ -92,7 +92,7 @@ export function MaknaAji() {
 
             <a href={WA_LINK('Halo, saya ingin tahu lebih lanjut tentang Aji Institute')}
               target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 w-full bg-[#0B7AB5] hover:bg-[#1AAEE0] text-white font-bold py-3.5 rounded-xl transition-colors text-sm">
+              className="inline-flex items-center justify-center gap-2 w-full bg-[#1B3A8C] hover:bg-[#2348A8] text-white font-bold py-3.5 rounded-xl transition-colors text-sm">
               Hubungi Kami Sekarang
             </a>
           </div>

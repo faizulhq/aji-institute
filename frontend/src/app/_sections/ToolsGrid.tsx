@@ -29,7 +29,7 @@ function ToolModal({ tool, onClose }: { tool: ToolType; onClose: () => void }) {
           </div>
           <div>
             <h3 className="text-xl font-black text-gray-900">{tool.name}</h3>
-            <span className="text-xs font-semibold bg-[#0B7AB5]/10 text-[#0B7AB5] px-2 py-0.5 rounded-full">
+            <span className="text-xs font-semibold bg-[#1B3A8C]/10 text-[#1B3A8C] px-2 py-0.5 rounded-full">
               Tersedia di AjiStat
             </span>
           </div>
@@ -41,7 +41,7 @@ function ToolModal({ tool, onClose }: { tool: ToolType; onClose: () => void }) {
         </div>
         <a href={WA_LINK(`Halo, saya ingin belajar ${tool.name} di AjiStat`)}
           target="_blank" rel="noopener noreferrer"
-          className="mt-4 w-full flex items-center justify-center gap-2 bg-[#0B7AB5] hover:bg-[#1AAEE0] text-white font-bold py-3 rounded-xl transition-colors text-sm">
+          className="mt-4 w-full flex items-center justify-center gap-2 bg-[#1B3A8C] hover:bg-[#2348A8] text-white font-bold py-3 rounded-xl transition-colors text-sm">
           Tanya Kelas {tool.name}
         </a>
       </div>

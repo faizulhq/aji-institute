@@ -22,7 +22,7 @@ const FEATURED_TOOLS = ['SPSS', 'SmartPLS', 'NVivo', 'R / RStudio', 'Python', 'A
 export function AjiStatSpotlight() {
   return (
     <section className="py-0 overflow-hidden">
-      <div className="bg-gradient-to-br from-[#054E7A] via-[#0B7AB5] to-[#1AAEE0] relative">
+      <div className="bg-gradient-to-br from-[#162058] via-[#1B3A8C] to-[#2348A8] relative">
         <div className="absolute inset-0 opacity-[0.04]"
           style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
@@ -59,7 +59,7 @@ export function AjiStatSpotlight() {
 
               <div className="flex flex-col sm:flex-row gap-3">
                 <a href="/program-ajistat"
-                  className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#054E7A] font-black px-7 py-3.5 rounded-xl transition-all hover:scale-105">
+                  className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-black px-7 py-3.5 rounded-xl transition-all hover:scale-105">
                   Lihat Semua Program AjiStat <ArrowRight className="w-4 h-4" />
                 </a>
                 <a href={WA_LINK('Halo, saya ingin konsultasi program AjiStat')}
@@ -77,7 +77,7 @@ export function AjiStatSpotlight() {
                 {FORMAT_BELAJAR.map((item) => (
                   <Link key={item.fmt} href={item.href}
                     className="flex items-start gap-3 bg-white/10 hover:bg-white/20 border border-white/15 rounded-xl p-4 transition-all group">
-                    <span className="w-2 h-2 rounded-full bg-[#47C2EA] mt-1.5 shrink-0" />
+                    <span className="w-2 h-2 rounded-full bg-[#4A72D4] mt-1.5 shrink-0" />
                     <div>
                       <p className="text-white font-bold text-sm group-hover:text-[#F0A500] transition-colors">{item.fmt}</p>
                       <p className="text-white/50 text-xs">{item.desc}</p>

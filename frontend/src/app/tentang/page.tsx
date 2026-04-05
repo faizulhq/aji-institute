@@ -12,7 +12,7 @@ const MILESTONES = [
   { year: '2015', title: 'Berdiri', desc: 'Aji Institute lahir sebagai konsultan statistik dan riset personal.' },
   { year: '2022', title: 'Ekspansi Digital', desc: 'Kelas mulai diselenggarakan sepenuhnya via Zoom & online, menjangkau seluruh Indonesia.' },
   { year: '2023', title: '10.000+ Alumni', desc: 'Mencapai 10.000+ alumni dari berbagai universitas dan instansi di seluruh Indonesia.' },
-  { year: '2024', title: 'Multi-Program', desc: 'Ekspansi ke 5 program: AjiStat, AjiBiz, AjiPR, AjiDigi, AjiLanguage.' },
+  { year: '2024', title: 'Multi-Program', desc: 'Ekspansi ke 5 program: AjiStat, AjiBiz, AjiPR, AjiDigi, AjiLangua.' },
   { year: '2025', title: 'Rebranding', desc: 'Resmi menjadi Aji Institute dengan identitas korporat yang kuat di bawah PT. Amanah Jñāna Insani.' },
 ];
 
@@ -21,7 +21,7 @@ const TEAM = [
   { name: 'Tim Fasilitator AjiBiz', role: 'Business & Management Trainer', initials: 'BZ', desc: 'Praktisi bisnis dan manajemen dengan latar belakang MBA dan pengalaman korporat lebih dari 10 tahun.' },
   { name: 'Tim Fasilitator AjiPR', role: 'PR & Communication Expert', initials: 'PR', desc: 'Trainer komunikasi publik, media relation, dan personal branding bersertifikat dengan jam terbang tinggi.' },
   { name: 'Tim Fasilitator AjiDigi', role: 'Digital Marketing & Developer', initials: 'DG', desc: 'Expert praktisi industri dalam pengembangan strategi digital, konten kreatif, dan teknologi komputasi modern.' },
-  { name: 'Tim Fasilitator AjiLanguage', role: 'English & Academic Instructor', initials: 'LG', desc: 'Pengajar bahasa Inggris setingkat ahli dengan spesialisasi persiapan tes akademik dan komunikasi bisnis global.' },
+  { name: 'Tim Fasilitator AjiLangua', role: 'English & Academic Instructor', initials: 'LG', desc: 'Pengajar bahasa Inggris setingkat ahli dengan spesialisasi persiapan tes akademik dan komunikasi bisnis global.' },
 ];
 
 // ── Makna AJI (dipindahkan dari beranda) ──────────────────────────────────────
@@ -31,7 +31,7 @@ const AJI_PILLARS = [
     name: 'Amanah',
     tagline: 'Integritas & Kepercayaan',
     desc: 'Integritas, kejujuran, dan tanggung jawab dalam setiap layanan kami. Kepercayaan Anda adalah amanah terbesar kami.',
-    accent: '#47C2EA',
+    accent: '#4A72D4',
   },
   {
     letter: 'J',
@@ -53,14 +53,14 @@ export default function TentangPage() {
   return (
     <>
       {/* Hero */}
-      <div className="bg-[#054E7A] py-20">
+      <div className="bg-[#162058] py-20">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <nav className="flex justify-center gap-2 text-white/40 text-sm mb-8">
             <Link href="/" className="hover:text-white transition-colors">Beranda</Link>
             <span>/</span>
             <span className="text-white/80">Tentang Kami</span>
           </nav>
-          <span className="inline-block bg-[#47C2EA]/20 border border-[#47C2EA]/30 text-[#47C2EA] text-xs font-semibold px-4 py-1.5 rounded-full mb-6">
+          <span className="inline-block bg-[#4A72D4]/20 border border-[#4A72D4]/30 text-[#4A72D4] text-xs font-semibold px-4 py-1.5 rounded-full mb-6">
             🏛️ PT. Amanah Jñāna Insani
           </span>
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">
@@ -76,7 +76,7 @@ export default function TentangPage() {
       <section className="py-20 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
           <div>
-            <p className="text-[#1AAEE0] text-sm font-semibold uppercase tracking-widest mb-3">Profil Perusahaan</p>
+            <p className="text-[#2348A8] text-sm font-semibold uppercase tracking-widest mb-3">Profil Perusahaan</p>
             <h2 className="text-3xl font-bold text-gray-900 mb-5">
               Mitra Terpercaya untuk Riset dan Kompetensi Anda
             </h2>
@@ -112,15 +112,15 @@ export default function TentangPage() {
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <p className="text-[#1AAEE0] text-sm font-semibold uppercase tracking-widest mb-3">Nilai Inti Kami</p>
+            <p className="text-[#2348A8] text-sm font-semibold uppercase tracking-widest mb-3">Nilai Inti Kami</p>
             <h2 className="text-4xl sm:text-5xl font-black text-gray-900">
               Makna di Balik{' '}
-              <span className="bg-gradient-to-r from-[#0B7AB5] to-[#1AAEE0] bg-clip-text text-transparent">AJI</span>
+              <span className="bg-gradient-to-r from-[#1B3A8C] to-[#2348A8] bg-clip-text text-transparent">AJI</span>
             </h2>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-3xl overflow-hidden shadow-2xl">
             {/* Kiri — A J I */}
-            <div className="bg-gradient-to-b from-[#054E7A] via-[#0B7AB5] to-[#1090C8] flex flex-col">
+            <div className="bg-gradient-to-b from-[#162058] via-[#1B3A8C] to-[#1B3A8C] flex flex-col">
               {AJI_PILLARS.map((pillar, idx) => (
                 <div key={pillar.letter}
                   className={`flex items-center gap-6 p-8 md:p-10 ${idx < AJI_PILLARS.length - 1 ? 'border-b border-white/10' : ''}`}>
@@ -138,10 +138,10 @@ export default function TentangPage() {
             </div>
             {/* Kanan */}
             <div className="bg-white flex flex-col justify-center p-8 md:p-12">
-              <p className="text-[#1AAEE0] text-xs font-bold uppercase tracking-widest mb-3">Mengapa Aji Institute?</p>
+              <p className="text-[#2348A8] text-xs font-bold uppercase tracking-widest mb-3">Mengapa Aji Institute?</p>
               <h3 className="text-3xl font-black text-gray-900 mb-6 leading-snug">
                 Lebih dari Sekadar<br />
-                <span className="text-[#1AAEE0]">Tempat Belajar</span>
+                <span className="text-[#2348A8]">Tempat Belajar</span>
               </h3>
               <p className="text-gray-500 leading-relaxed mb-8">
                 Aji Institute berdiri di atas komitmen untuk mencetak individu yang tidak hanya kompeten secara teknis,
@@ -149,7 +149,7 @@ export default function TentangPage() {
               </p>
               <a href={WA_LINK('Halo, saya ingin tahu lebih lanjut tentang Aji Institute')}
                 target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 w-full bg-[#0B7AB5] hover:bg-[#1AAEE0] text-white font-bold py-3.5 rounded-xl transition-colors text-sm">
+                className="inline-flex items-center justify-center gap-2 w-full bg-[#1B3A8C] hover:bg-[#2348A8] text-white font-bold py-3.5 rounded-xl transition-colors text-sm">
                 Hubungi Kami Sekarang
               </a>
             </div>
@@ -165,8 +165,8 @@ export default function TentangPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
-              <div className="w-12 h-12 bg-[#1AAEE0]/10 rounded-xl flex items-center justify-center mb-5">
-                <Eye className="w-6 h-6 text-[#1AAEE0]" />
+              <div className="w-12 h-12 bg-[#2348A8]/10 rounded-xl flex items-center justify-center mb-5">
+                <Eye className="w-6 h-6 text-[#2348A8]" />
               </div>
               <h3 className="font-bold text-gray-900 text-xl mb-4">Visi</h3>
               <p className="text-gray-600 leading-relaxed">
@@ -200,17 +200,17 @@ export default function TentangPage() {
       <section className="py-20 bg-gray-50">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <p className="text-[#1AAEE0] text-sm font-semibold uppercase tracking-widest mb-3">Tim Kami</p>
+            <p className="text-[#2348A8] text-sm font-semibold uppercase tracking-widest mb-3">Tim Kami</p>
             <h2 className="text-3xl font-bold text-gray-900">Fasilitator Berpengalaman</h2>
           </div>
           <div className="flex flex-wrap justify-center gap-6">
             {TEAM.map((member) => (
               <div key={member.name} className="w-full md:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#0B7AB5] to-[#1AAEE0] flex items-center justify-center text-white font-bold text-xl mb-5">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#1B3A8C] to-[#2348A8] flex items-center justify-center text-white font-bold text-xl mb-5">
                   {member.initials}
                 </div>
                 <h3 className="font-bold text-gray-900 mb-1">{member.name}</h3>
-                <p className="text-[#1AAEE0] text-sm font-medium mb-3">{member.role}</p>
+                <p className="text-[#2348A8] text-sm font-medium mb-3">{member.role}</p>
                 <p className="text-gray-500 text-sm leading-relaxed">{member.desc}</p>
               </div>
             ))}
@@ -222,7 +222,7 @@ export default function TentangPage() {
       <section className="py-20 bg-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <p className="text-[#1AAEE0] text-sm font-semibold uppercase tracking-widest mb-3">Perjalanan Kami</p>
+            <p className="text-[#2348A8] text-sm font-semibold uppercase tracking-widest mb-3">Perjalanan Kami</p>
             <h2 className="text-3xl font-bold text-gray-900">Milestone Aji Institute</h2>
           </div>
           <div className="relative">
@@ -230,7 +230,7 @@ export default function TentangPage() {
             <div className="space-y-8">
               {MILESTONES.map((m) => (
                 <div key={m.year} className="flex gap-6 relative">
-                  <div className="w-12 h-12 bg-[#0B7AB5] rounded-xl flex items-center justify-center text-white text-xs font-bold shrink-0 z-10">
+                  <div className="w-12 h-12 bg-[#1B3A8C] rounded-xl flex items-center justify-center text-white text-xs font-bold shrink-0 z-10">
                     {m.year}
                   </div>
                   <div className="pt-2">
@@ -245,7 +245,7 @@ export default function TentangPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-[#054E7A]">
+      <section className="py-16 bg-[#162058]">
         <div className="max-w-3xl mx-auto text-center px-4">
           <h2 className="text-2xl font-bold text-white mb-4">
             Siap Bergabung dengan Komunitas Aji Institute?
@@ -253,7 +253,7 @@ export default function TentangPage() {
           <p className="text-white/60 mb-8">Hubungi tim kami untuk informasi layanan yang paling sesuai dengan kebutuhan Anda.</p>
           <a href={WA_LINK('Halo Aji Institute, saya ingin tahu lebih lanjut tentang layanan yang tersedia')}
             target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#054E7A] font-bold px-8 py-3.5 rounded-xl transition-colors">
+            className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-bold px-8 py-3.5 rounded-xl transition-colors">
             <MessageCircle className="w-4 h-4" /> Hubungi Kami Sekarang
           </a>
         </div>

@@ -42,7 +42,7 @@ Detail / Topik Riset: ${form.desc}`;
 
   return (
     <>
-      <div className="bg-gradient-to-br from-[#054E7A] via-[#0B7AB5] to-[#1AAEE0] border-b-4 border-[#F0A500] py-20 relative overflow-hidden">
+      <div className="bg-gradient-to-br from-[#162058] via-[#1B3A8C] to-[#2348A8] border-b-4 border-[#F0A500] py-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] opacity-10"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <span className="text-[#F0A500] text-sm font-bold uppercase tracking-widest mb-3 block">Layanan AjiStat by Aji Institute</span>
@@ -66,7 +66,7 @@ Detail / Topik Riset: ${form.desc}`;
               { label: 'Rahasia', desc: 'Keamanan Data Transparan' }
             ].map((k, i) => (
               <div key={i} className="px-4">
-                <h4 className="font-bold text-[#1AAEE0] text-lg">{k.label}</h4>
+                <h4 className="font-bold text-[#2348A8] text-lg">{k.label}</h4>
                 <p className="text-gray-500 text-sm mt-1">{k.desc}</p>
               </div>
             ))}
@@ -86,14 +86,14 @@ Detail / Topik Riset: ${form.desc}`;
             {SERVICES.map((s, i) => (
               <div key={i} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex items-start gap-4">
                 <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center shrink-0">
-                  <CheckCircle className="w-5 h-5 text-[#1AAEE0]" />
+                  <CheckCircle className="w-5 h-5 text-[#2348A8]" />
                 </div>
                 <p className="font-semibold text-gray-800 leading-snug">{s}</p>
               </div>
             ))}
           </div>
 
-          <div className="bg-[#054E7A] rounded-3xl p-8 sm:p-12 text-center text-white relative overflow-hidden">
+          <div className="bg-[#162058] rounded-3xl p-8 sm:p-12 text-center text-white relative overflow-hidden">
             <h3 className="text-2xl font-bold mb-6">Software & Tools yang Digunakan</h3>
             <div className="flex flex-wrap justify-center gap-3">
               {SOFTWARES.map((sw) => (
@@ -121,10 +121,10 @@ Detail / Topik Riset: ${form.desc}`;
       </section>
 
       {/* PAKET HARGA */}
-      <section className="py-20 bg-[#054E7A]">
+      <section className="py-20 bg-[#162058]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <p className="text-[#47C2EA] text-sm font-bold uppercase tracking-widest mb-3">Estimasi Harga</p>
+            <p className="text-[#4A72D4] text-sm font-bold uppercase tracking-widest mb-3">Estimasi Harga</p>
             <h2 className="text-3xl font-black text-white mb-4">Paket Layanan Konsultasi</h2>
             <p className="text-white/60 max-w-xl mx-auto">Harga disesuaikan dengan kompleksitas, kedalaman analisis, dan kebutuhan spesifik klien. Konsultasikan terlebih dahulu untuk penawaran terbaik.</p>
           </div>
@@ -159,24 +159,24 @@ Detail / Topik Riset: ${form.desc}`;
               },
             ].map((pkg) => (
               <div key={pkg.tier}
-                className={`rounded-3xl p-8 flex flex-col gap-5 ${pkg.highlight ? 'bg-[#F0A500] text-[#054E7A]' : 'bg-white/5 border border-white/10 text-white'}`}>
+                className={`rounded-3xl p-8 flex flex-col gap-5 ${pkg.highlight ? 'bg-[#F0A500] text-[#162058]' : 'bg-white/5 border border-white/10 text-white'}`}>
                 <div>
-                  <p className={`text-xs font-bold uppercase tracking-widest mb-1 ${pkg.highlight ? 'text-[#054E7A]/60' : 'text-white/40'}`}>{pkg.tagline}</p>
+                  <p className={`text-xs font-bold uppercase tracking-widest mb-1 ${pkg.highlight ? 'text-[#162058]/60' : 'text-white/40'}`}>{pkg.tagline}</p>
                   <p className="text-4xl font-black mb-1">{pkg.price}</p>
-                  <p className={`text-xs font-semibold uppercase tracking-widest ${pkg.highlight ? 'text-[#054E7A]/70' : 'text-white/50'}`}>{pkg.tier}</p>
+                  <p className={`text-xs font-semibold uppercase tracking-widest ${pkg.highlight ? 'text-[#162058]/70' : 'text-white/50'}`}>{pkg.tier}</p>
                 </div>
-                <p className={`text-sm leading-relaxed ${pkg.highlight ? 'text-[#054E7A]/75' : 'text-white/60'}`}>{pkg.desc}</p>
+                <p className={`text-sm leading-relaxed ${pkg.highlight ? 'text-[#162058]/75' : 'text-white/60'}`}>{pkg.desc}</p>
                 <ul className="space-y-2 flex-1">
                   {pkg.features.map((f) => (
-                    <li key={f} className={`flex items-start gap-2 text-sm ${pkg.highlight ? 'text-[#054E7A]' : 'text-white/80'}`}>
-                      <span className={`mt-0.5 w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 ${pkg.highlight ? 'bg-[#054E7A]/20 text-[#054E7A]' : 'bg-white/10 text-white'}`}>✓</span>
+                    <li key={f} className={`flex items-start gap-2 text-sm ${pkg.highlight ? 'text-[#162058]' : 'text-white/80'}`}>
+                      <span className={`mt-0.5 w-4 h-4 rounded-full flex items-center justify-center text-[10px] font-bold shrink-0 ${pkg.highlight ? 'bg-[#162058]/20 text-[#162058]' : 'bg-white/10 text-white'}`}>✓</span>
                       {f}
                     </li>
                   ))}
                 </ul>
                 <a href={`https://wa.me/6285892605592?text=Halo%20Tim%20AjiStat%2C%20saya%20tertarik%20dengan%20Paket%20${encodeURIComponent(pkg.tier)}`}
                   target="_blank" rel="noopener noreferrer"
-                  className={`w-full text-center py-3.5 rounded-xl font-bold text-sm transition-colors ${pkg.highlight ? 'bg-[#054E7A] text-white hover:bg-[#0B7AB5]' : 'bg-white/10 hover:bg-white/20 text-white'}`}>
+                  className={`w-full text-center py-3.5 rounded-xl font-bold text-sm transition-colors ${pkg.highlight ? 'bg-[#162058] text-white hover:bg-[#1B3A8C]' : 'bg-white/10 hover:bg-white/20 text-white'}`}>
                   {pkg.cta}
                 </a>
               </div>
@@ -208,19 +208,19 @@ Detail / Topik Riset: ${form.desc}`;
                 <div>
                   <label className="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-2">Nama Lengkap</label>
                   <input type="text" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:border-[#1AAEE0] focus:ring-2 focus:ring-[#1AAEE0]/20 transition-all" />
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:border-[#2348A8] focus:ring-2 focus:ring-[#2348A8]/20 transition-all" />
                 </div>
                 <div>
                   <label className="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-2">Nomor WhatsApp</label>
                   <input type="tel" required value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:border-[#1AAEE0] focus:ring-2 focus:ring-[#1AAEE0]/20 transition-all" />
+                    className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:border-[#2348A8] focus:ring-2 focus:ring-[#2348A8]/20 transition-all" />
                 </div>
               </div>
 
               <div>
                 <label className="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-2">Jenis Layanan yang Dibutuhkan</label>
                 <select required value={form.programType} onChange={(e) => setForm({ ...form, programType: e.target.value })}
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:border-[#1AAEE0] focus:ring-2 focus:ring-[#1AAEE0]/20 transition-all appearance-none cursor-pointer">
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:border-[#2348A8] focus:ring-2 focus:ring-[#2348A8]/20 transition-all appearance-none cursor-pointer">
                   <option value="" disabled>-- Pilih Jenis Layanan --</option>
                   {SERVICES.map(s => <option key={s} value={s}>{s}</option>)}
                 </select>
@@ -229,17 +229,17 @@ Detail / Topik Riset: ${form.desc}`;
               <div>
                 <label className="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-2">Software (Jika Ada Spesifikasi)</label>
                 <input type="text" value={form.software} onChange={(e) => setForm({ ...form, software: e.target.value })} placeholder="Contoh: Sangat butuh SmartPLS 4"
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:border-[#1AAEE0] focus:ring-2 focus:ring-[#1AAEE0]/20 transition-all" />
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:border-[#2348A8] focus:ring-2 focus:ring-[#2348A8]/20 transition-all" />
               </div>
 
               <div>
                 <label className="text-xs font-bold text-gray-500 uppercase tracking-widest block mb-2">Ceritakan Tujuan / Topik Anda</label>
                 <textarea rows={4} required value={form.desc} onChange={(e) => setForm({ ...form, desc: e.target.value })}
                   placeholder="Ceritakan metodologi Anda, hambatan yang sedang dialami (misal data tidak normal), atau target jadwal sidang Anda..."
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:border-[#1AAEE0] focus:ring-2 focus:ring-[#1AAEE0]/20 transition-all resize-none" />
+                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:outline-none focus:border-[#2348A8] focus:ring-2 focus:ring-[#2348A8]/20 transition-all resize-none" />
               </div>
               
-              <button type="submit" className="w-full bg-gradient-to-r from-[#054E7A] to-[#1AAEE0] hover:opacity-90 text-white font-black py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
+              <button type="submit" className="w-full bg-gradient-to-r from-[#162058] to-[#2348A8] hover:opacity-90 text-white font-black py-4 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
                 <MessageSquare className="w-5 h-5" /> Konsultasikan Sekarang via WhatsApp
               </button>
             </form>

@@ -23,20 +23,20 @@ export default function BootcampPage() {
   const programs: Program[] = data?.data ?? [];
 
   const groupedPrograms = [
-    { title: 'AjiStat — Statistik & Riset', items: programs.filter(p => !p.tags.some(t => ['ajibiz', 'ajipr', 'ajidigi', 'ajilanguage'].includes(t.toLowerCase()))) },
+    { title: 'AjiStat — Statistik & Riset', items: programs.filter(p => !p.tags.some(t => ['ajibiz', 'ajipr', 'ajidigi', 'ajilangua'].includes(t.toLowerCase()))) },
     { title: 'AjiBiz — Bisnis & Manajemen', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajibiz')) },
     { title: 'AjiPR — Public Relation & Komunikasi', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajipr')) },
     { title: 'AjiDigi — Digital Marketing & IT', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajidigi')) },
-    { title: 'AjiLanguage — Bahasa Asing & Akademik', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajilanguage')) },
+    { title: 'AjiLangua — Bahasa Asing & Akademik', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajilangua')) },
   ];
 
   return (
     <>
       {/* ─── HERO ─── */}
-      <div className="bg-[#054E7A] relative overflow-hidden">
+      <div className="bg-[#162058] relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#F0A500] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#1AAEE0] rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#2348A8] rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -124,11 +124,11 @@ export default function BootcampPage() {
       {/* ─── CTA ─── */}
       <section className="bg-[#F0A500] py-12">
         <div className="max-w-3xl mx-auto text-center px-4">
-          <h2 className="text-2xl font-bold text-[#054E7A] mb-3">Ada topik yang belum tersedia?</h2>
-          <p className="text-[#054E7A]/70 mb-6">Kami menerima permintaan topik khusus. Hubungi tim Aji Institute.</p>
+          <h2 className="text-2xl font-bold text-[#162058] mb-3">Ada topik yang belum tersedia?</h2>
+          <p className="text-[#162058]/70 mb-6">Kami menerima permintaan topik khusus. Hubungi tim Aji Institute.</p>
           <a href="https://wa.me/6285892605592?text=Halo%20Admin,%20saya%20ingin%20request%20topik%20Bootcamp%20baru"
             target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#054E7A] hover:bg-[#0B7AB5] text-white font-bold px-8 py-3.5 rounded-xl transition-colors">
+            className="inline-flex items-center gap-2 bg-[#162058] hover:bg-[#1B3A8C] text-white font-bold px-8 py-3.5 rounded-xl transition-colors">
             💬 Request Topik via WhatsApp
           </a>
         </div>

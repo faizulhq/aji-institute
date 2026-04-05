@@ -1,5 +1,6 @@
-﻿'use client';
+'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import { WA_LINK } from '@/lib/config';
@@ -7,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { programsApi } from '@/lib/api';
 import { ProgramCard } from '@/components/program-card';
 import { ProgramCardSkeleton } from '@/components/program-card-skeleton';
+import { TagProgramModal } from '@/components/TagProgramModal';
 import type { Program } from '@/lib/types';
 
 const TOPICS = [
@@ -28,8 +30,10 @@ const KEUNGGULAN = [
 ];
 
 export default function AjiDigiPage() {
+  const [activeTag, setActiveTag] = useState<string | null>(null);
+
   const { data, isLoading } = useQuery({
-    queryKey: ['programs', 'ajidigi'],
+    queryKey: ['programs', 'ajidigi-all'],
     queryFn: () => programsApi.list().then((r) => r.data),
   });
 
@@ -39,7 +43,7 @@ export default function AjiDigiPage() {
 
   return (
     <>
-      <div className="bg-gradient-to-br from-[#064e3b] via-[#065f46] to-[#059669] relative overflow-hidden">
+      <div className="bg-gradient-to-br from-[#162058] via-[#162058] to-[#2348A8] relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.04]"
           style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '30px 30px' }} />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
@@ -55,12 +59,15 @@ export default function AjiDigiPage() {
             </p>
             <div className="flex flex-wrap gap-2 mb-8">
               {['Digital Marketing', 'Social Media', 'Content', 'SEO', 'Ads', 'Canva'].map((t) => (
-                <span key={t} className="text-xs bg-white/15 text-white px-3 py-1.5 rounded-full font-semibold border border-white/20">{t}</span>
+                <button key={t} onClick={() => setActiveTag(t)}
+                  className="text-xs bg-white/15 hover:bg-white/30 text-white px-3 py-1.5 rounded-full font-semibold border border-white/20 transition-colors cursor-pointer">
+                  {t}
+                </button>
               ))}
             </div>
             <div className="flex flex-col sm:flex-row gap-3">
               <a href={WA_LINK('Halo, saya ingin mendaftar program AjiDigi')} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#054E7A] font-black px-8 py-4 rounded-2xl transition-all hover:scale-105">
+                className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-black px-8 py-4 rounded-2xl transition-all hover:scale-105">
                 Daftar via WhatsApp <ArrowRight className="w-5 h-5" />
               </a>
               
@@ -72,7 +79,7 @@ export default function AjiDigiPage() {
       <section className="py-20 bg-white min-h-[50vh]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <p className="text-[#059669] text-sm font-semibold uppercase tracking-widest mb-3">Tersedia Saat Ini</p>
+            <p className="text-[#1B3A8C] text-sm font-semibold uppercase tracking-widest mb-3">Tersedia Saat Ini</p>
             <h2 className="text-3xl font-black text-gray-900 border-b-2 border-dashed border-gray-200 pb-6 inline-block">Program AjiDigi Tersedia</h2>
           </div>
 
@@ -100,7 +107,10 @@ export default function AjiDigiPage() {
           <div className="text-center mb-10"><h2 className="text-3xl font-black text-gray-900">Topik Program AjiDigi</h2></div>
           <div className="flex flex-wrap justify-center gap-3">
             {TOPICS.map((t) => (
-              <span key={t} className="px-4 py-2 bg-white border border-gray-200 hover:border-[#059669] hover:bg-green-50 text-gray-700 rounded-xl text-sm font-medium transition-colors cursor-default">{t}</span>
+              <button key={t} onClick={() => setActiveTag(t)}
+                className="px-4 py-2 bg-white border border-gray-200 hover:border-[#1B3A8C] hover:bg-blue-50 text-gray-700 rounded-xl text-sm font-medium transition-colors cursor-pointer">
+                {t}
+              </button>
             ))}
           </div>
         </div>
@@ -112,7 +122,7 @@ export default function AjiDigiPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {KEUNGGULAN.map((k, i) => (
               <div key={i} className="flex items-start gap-3 bg-gray-50 rounded-2xl border border-gray-100 p-5">
-                <CheckCircle className="w-5 h-5 text-[#059669] mt-0.5 shrink-0" />
+                <CheckCircle className="w-5 h-5 text-[#1B3A8C] mt-0.5 shrink-0" />
                 <p className="text-gray-700 text-sm">{k}</p>
               </div>
             ))}
@@ -120,17 +130,23 @@ export default function AjiDigiPage() {
         </div>
       </section>
 
-      <section className="py-16 bg-gradient-to-br from-[#064e3b] to-[#059669]">
+      <section className="py-16 bg-gradient-to-br from-[#162058] to-[#2348A8]">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-black text-white mb-4">Siap Bergabung dengan AjiDigi?</h2>
           <p className="text-white/70 mb-8">Kuasai digital marketing dan jadilah yang terdepan di era digital.</p>
           <a href={WA_LINK('Halo, saya ingin mendaftar program AjiDigi. Bisa dibantu?')}
             target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#054E7A] font-black px-10 py-4 rounded-2xl text-lg transition-all hover:scale-105 shadow-2xl">
+            className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-black px-10 py-4 rounded-2xl text-lg transition-all hover:scale-105 shadow-2xl">
             Hubungi Kami via WhatsApp
           </a>
         </div>
       </section>
+
+      <TagProgramModal
+        tag={activeTag}
+        programs={data?.data ?? []}
+        onClose={() => setActiveTag(null)}
+      />
     </>
   );
 }

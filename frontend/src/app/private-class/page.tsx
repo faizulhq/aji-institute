@@ -28,17 +28,17 @@ export default function PrivateClassPage() {
   const programs: Program[] = data?.data ?? [];
 
   const groupedPrograms = [
-    { title: 'AjiStat — Statistik & Riset', items: programs.filter(p => !p.tags.some(t => ['ajibiz', 'ajipr', 'ajidigi', 'ajilanguage'].includes(t.toLowerCase()))) },
+    { title: 'AjiStat — Statistik & Riset', items: programs.filter(p => !p.tags.some(t => ['ajibiz', 'ajipr', 'ajidigi', 'ajilangua'].includes(t.toLowerCase()))) },
     { title: 'AjiBiz — Bisnis & Manajemen', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajibiz')) },
     { title: 'AjiPR — Public Relation & Komunikasi', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajipr')) },
     { title: 'AjiDigi — Digital Marketing & IT', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajidigi')) },
-    { title: 'AjiLanguage — Bahasa Asing & Akademik', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajilanguage')) },
+    { title: 'AjiLangua — Bahasa Asing & Akademik', items: programs.filter(p => p.tags.some(t => t.toLowerCase() === 'ajilangua')) },
   ];
 
   return (
     <>
       {/* ─── HERO ─── */}
-      <div className="bg-[#054E7A] relative overflow-hidden py-20">
+      <div className="bg-[#162058] relative overflow-hidden py-20">
         <div className="absolute inset-0 opacity-10 pointer-events-none">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#F0A500] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4" />
@@ -118,7 +118,7 @@ export default function PrivateClassPage() {
       <section className="py-16 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
-            <span className="text-xs font-bold text-[#1AAEE0] uppercase tracking-widest mb-3 block">Kenapa Private Class?</span>
+            <span className="text-xs font-bold text-[#2348A8] uppercase tracking-widest mb-3 block">Kenapa Private Class?</span>
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Belajar Sesuai Ritme &amp; Kebutuhan Anda</h2>
             <ul className="space-y-3">
               {benefits.map((b) => (
@@ -134,7 +134,7 @@ export default function PrivateClassPage() {
               &ldquo;Private class AJI benar-benar game changer. Dalam 8 sesi saja saya sudah bisa analisis SEM sendiri dan tesis saya selesai tepat waktu. Fasilitatornya sabar dan sangat memahami kebutuhan saya.&rdquo;
             </p>
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#0B7AB5] to-[#47C2EA] flex items-center justify-center text-white font-bold text-sm">RA</div>
+              <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#1B3A8C] to-[#4A72D4] flex items-center justify-center text-white font-bold text-sm">RA</div>
               <div>
                 <p className="text-sm font-semibold text-gray-800">Rina Andriani</p>
                 <p className="text-xs text-gray-500">Mahasiswa S2 Manajemen, UGM</p>
@@ -145,15 +145,15 @@ export default function PrivateClassPage() {
       </section>
 
       {/* ─── CTA ─── */}
-      <section className="bg-[#054E7A] py-14">
+      <section className="bg-[#162058] py-14">
         <div className="max-w-3xl mx-auto text-center px-4">
-          <p className="text-[#47C2EA] text-sm font-semibold uppercase tracking-widest mb-3">Masih Ragu?</p>
+          <p className="text-[#4A72D4] text-sm font-semibold uppercase tracking-widest mb-3">Masih Ragu?</p>
           <h2 className="text-2xl font-bold text-white mb-4">Konsultasi Gratis Sebelum Mendaftar</h2>
           <p className="text-white/60 mb-8 leading-relaxed">
             Ceritakan kebutuhan belajar Anda dan tim AJI akan merekomendasikan layanan yang paling tepat.
           </p>
           <a href={WA_LINK_PRIVATE} target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#054E7A] font-bold px-8 py-3.5 rounded-xl transition-colors">
+            className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-bold px-8 py-3.5 rounded-xl transition-colors">
             <Zap className="w-4 h-4" />
             Hubungi via WhatsApp
           </a>

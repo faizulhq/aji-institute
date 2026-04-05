@@ -1,13 +1,16 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 
 :root {
-  --primary: #0B7AB5;
-  --primary-mid: #1AAEE0;
-  --primary-light: #47C2EA;
-  --navy: #054E7A;
-  --gold: #F0A500;
+  /* ── Brand Colors (disesuaikan logo baru — Royal Navy Blue) ── */
+  --primary:       #1B3A8C;   /* Royal Navy — warna utama logo Aji */
+  --primary-dark:  #162058;   /* Dark Navy — hover states, header bg */
+  --primary-mid:   #2348A8;   /* Medium Navy — accent, link active */
+  --primary-light: #4A72D4;   /* Light Navy Blue — badge, highlight */
+  --navy:          #111827;   /* Near-Black Navy — body text */
+  --gold:          #F0A500;   /* Gold — CTA tetap sama */
+
   --font-heading: var(--font-poppins);
-  --font-sans: var(--font-inter);
+  --font-sans:    var(--font-inter);
 }
 
 body {
