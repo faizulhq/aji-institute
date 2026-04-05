@@ -3,6 +3,11 @@ AjiStat — Seed Data Script
 Run: python manage.py shell < apps/seed.py
 """
 import os, sys, django
+
+# Tambahkan direktori root backend ke sistem path agar modul 'config' terbaca
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, BASE_DIR)
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 django.setup()
 
