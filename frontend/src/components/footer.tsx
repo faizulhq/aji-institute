@@ -82,11 +82,11 @@ export function Footer() {
             <p className="text-white font-semibold text-sm mb-4">Kontak</p>
             <ul className="space-y-3 text-sm text-white/50">
               <li>
-                <a href="https://wa.me/6285892605592"
-                  target="_blank" rel="noopener noreferrer"
-                  className="hover:text-white transition-colors">
-                  +62 859-9290-5592
-                </a>
+              <a href="https://wa.me/6285992905592"
+                target="_blank" rel="noopener noreferrer"
+                className="hover:text-white transition-colors">
+                +62 859-9290-5592
+              </a>
               </li>
               <li>
                 <a href="mailto:info@aji-institute.id"
@@ -94,7 +94,7 @@ export function Footer() {
                   info@aji-institute.id
                 </a>
               </li>
-              <li>Perum Palm Buah Batu Cluster Wanagaditya 7 No. 1</li>
+              <li className="leading-snug">Kompleks Bandung Indah Raya Blok C7 No.1,<br/>Kel. Mekarjaya, Kec. Rancasari, Bandung</li>
             </ul>
             <a href={WA_LINK('Halo Aji Institute, saya ingin bertanya')}
               target="_blank" rel="noopener noreferrer"

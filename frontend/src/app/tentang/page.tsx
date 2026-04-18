@@ -11,12 +11,11 @@ export const metadata: Metadata = {
 };
 
 const MILESTONES = [
-  { year: '2015', title: 'Berdiri', desc: 'Aji Institute lahir sebagai konsultan statistik dan riset personal untuk membantu mahasiswa dan peneliti.' },
-  { year: '2022', title: 'Ekspansi Digital', desc: 'Kelas mulai diselenggarakan sepenuhnya via Zoom & online, menjangkau seluruh Indonesia.' },
-  { year: '2023', title: 'Pertumbuhan Pesat', desc: 'Jumlah klien dan peserta pelatihan meningkat signifikan. Program AjiStat menjadi layanan konsultasi statistik yang paling diminati.' },
-  { year: '2025', title: '5.000+ Klien Terbantu', desc: 'Ribuan klien dari berbagai universitas dan institusi berhasil terbantu melalui layanan konsultasi olah data, skripsi, tesis, dan riset institusional tim AjiStat.' },
-  { year: '2025', title: 'Rebranding & Ekosistem Baru', desc: 'Akhir 2025 — logo, identitas visual, dan website baru diluncurkan. Multi-divisi (AjiStat, AjiBiz, AjiPR, AjiDigi, AjiLangua) mulai dioperasikan secara penuh.' },
-  { year: '2026', title: 'Resmi PT. Amanah Jñāna Insani', desc: 'Aji Institute resmi beroperasi di bawah PT. Amanah Jñāna Insani dengan struktur korporat, multi-program terintegrasi, dan ekosistem layanan profesional yang lengkap.' },
+  { year: '2015', title: 'Berawal sebagai Konsultan', desc: 'Berawal sebagai konsultan statistik dan riset personal — mendampingi mahasiswa dan peneliti secara langsung.' },
+  { year: '2022', title: 'Ekspansi Digital', desc: 'Melakukan ekspansi digital dan menyelenggarakan kelas secara online untuk peserta dari berbagai wilayah Indonesia.' },
+  { year: '2023', title: 'Pertumbuhan Komunitas', desc: 'Memperluas jangkauan layanan dengan pertumbuhan komunitas alumni dari berbagai universitas dan institusi.' },
+  { year: '2024', title: 'Lima Divisi Program', desc: 'Mengembangkan lima divisi program: AjiStat, AjiBiz, AjiPR, AjiDigi, dan AjiLangua — memperkuat posisi sebagai pusat pengembangan kompetensi lintas bidang.' },
+  { year: '2025', title: 'Identitas Korporat Baru', desc: 'Memperkuat identitas korporat sebagai Aji Institute di bawah PT. Amanah Jñāna Insani — dengan logo, website, dan ekosistem layanan profesional yang terintegrasi.' },
 ];
 
 
