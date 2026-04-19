@@ -17,6 +17,13 @@ function formatPrice(p: number) {
   }).format(p);
 }
 
+// Helper to ensure media URLs point to the main site if they are relative
+function getMediaUrl(url: string | undefined) {
+  if (!url) return '';
+  if (url.startsWith('http')) return url;
+  return `https://aji-institute.com${url.startsWith('/') ? '' : '/'}${url}`;
+}
+
 const TYPE_LABEL: Record<string, string> = {
   bootcamp: 'Bootcamp Intensif',
   'short-class': 'Short Class',
@@ -184,7 +191,7 @@ export default function ProgramDetailClient({ program }: { program: ApiProgram }
                     <p className="text-white/90 text-xs font-semibold tracking-wide uppercase">{videoLabel}</p>
                   </div>
                   <video
-                    src={program.demo_video_url}
+                    src={getMediaUrl(program.demo_video_url)}
                     controls
                     playsInline
                     className="w-full aspect-video object-cover"
