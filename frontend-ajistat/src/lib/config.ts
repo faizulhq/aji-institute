@@ -197,13 +197,38 @@ export function getProgramBySlug(slug: string): Program | undefined {
 // ─── Topics & Target Market ───────────────────────────────────────────────────
 
 export const TOPICS = [
-  'Validasi & Reliabilitas', 'MSI (Method of Successive Intervals)', 'Analisis Regresi',
-  'Korelasi', 'Design Experiment', 'SEM (Structural Equation Modeling)',
-  'Statistika Nonparametrik', 'Analisis Faktor', 'MDS & PCA', 'Cluster Analysis',
-  'Path Analysis', 'Service Quality', 'Time Series Analysis', 'Teknik Sampling',
-  'Statistik Deskriptif', 'Conjoint Analysis', 'SEM-PLS', 'SEM-AMOS',
-  'Uji Hipotesis', 'Mediasi & Moderasi', 'ANOVA', 'Uji Beda',
-  'NVivo (Kualitatif)', 'Content Analysis',
+  'Validitas & Reliabilitas',
+  'MSI',
+  'Analisis Regresi (Anreg)',
+  'Korelasi',
+  'Design Experiment',
+  'SEM (PLS/AMOS)',
+  'Statistika Nonparametrik',
+  'Analisis Faktor',
+  'MDS',
+  'PCA',
+  'Cluster Analysis',
+  'Path Analysis',
+  'Service Quality',
+  'Time Series',
+  'Teknik Sampling',
+  'Statistik Deskriptif',
+  'Conjoint Analysis',
+  'Uji Hipotesis',
+  'Mediasi & Moderasi',
+  'ANOVA',
+  'Uji Beda',
+  'NVivo (Kualitatif)',
+  'Content Analysis',
+];
+
+export const FIELDS = [
+  { name: 'Manajemen', sub: 'SDM, Pemasaran, Keuangan, Produksi', color: '#1B3A8C' },
+  { name: 'Kesehatan', sub: 'Kedokteran, Keperawatan, Kebidanan', color: '#059669' },
+  { name: 'MIPA', sub: 'Matematika, Biologi, Kimia, Fisika', color: '#0284C7' },
+  { name: 'Pertanian', sub: 'Agribisnis, Peternakan, Kehutanan', color: '#65A30D' },
+  { name: 'Komunikasi', sub: 'Media, Humas, Jurnalistik', color: '#D97706' },
+  { name: 'Psikologi', sub: 'Klinis, Industri, Pendidikan', color: '#7C3AED' },
 ];
 
 export const TARGET_MARKET = [

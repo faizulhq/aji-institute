@@ -22,7 +22,7 @@ const METHODS = [
   {
     step: '03',
     title: 'Pengolahan Data',
-    desc: 'Data Anda diproses oleh konsultan berpengalaman menggunakan software statistik yang sesuai (SPSS, SmartPLS, R, Python, NVivo, dll.) dengan standar akademik yang ketat.',
+    desc: 'Data Anda diproses oleh Tim Analis Data profesional secara in-house (bukan joki perorangan) menggunakan software statistik yang sesuai (SPSS, SmartPLS, R, Python, NVivo, dll.) dengan standar akademik yang ketat.',
     Icon: Settings2,
   },
   {
@@ -42,7 +42,7 @@ const METHODS = [
 const SERVICES = [
   {
     title: 'Analisis Kuantitatif',
-    items: ['Uji validitas & reliabilitas', 'Analisis regresi (linear, logistik, berganda)', 'Structural Equation Modeling (SEM-PLS, SEM-AMOS)', 'ANOVA, uji beda, uji hipotesis', 'Analisis panel data & time series (EViews, STATA)', 'Mediasi, moderasi & analisis jalur'],
+    items: ['Uji Validitas & Reliabilitas, MSI', 'Analisis Regresi (Anreg), ANOVA, Korelasi', 'SEM (SmartPLS, AMOS) & Path Analysis', 'Analisis Faktor, MDS, PCA, Cluster Analysis', 'Time Series, Data Panel & Service Quality', 'Design Experiment & Statistika Nonparametrik', 'Teknik Sampling, Statistik Deskriptif & Conj'],
     color: 'bg-blue-50 border-blue-100',
     badge: 'bg-blue-100 text-blue-700',
   },
@@ -70,7 +70,7 @@ const TARGET = [
 
 const GUARANTEES = [
   { Icon: Shield,    title: '100% Kerahasiaan', desc: 'Data dan informasi penelitian Anda sepenuhnya terjaga kerahasiaannya.' },
-  { Icon: Award,     title: 'Konsultan Berpengalaman', desc: 'Tim berpengalaman sejak 2015, melayani 5.000+ klien dari berbagai universitas.' },
+  { Icon: Award,     title: 'Tim Analis Profesional', desc: 'Dikerjakan langsung oleh tim analis data profesional in-house (bukan joki perorangan).' },
   { Icon: Clock,     title: 'Tepat Waktu', desc: 'Pengerjaan sesuai deadline yang disepakati, dengan update progres berkala.' },
   { Icon: RefreshCw, title: 'Revisi Included', desc: 'Revisi termasuk dalam paket hingga hasil sesuai kebutuhan Anda.' },
 ];

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { X, ChevronRight } from 'lucide-react';
-import { TOOLS, TOPICS, TARGET_MARKET, WA_LINK, BOOTCAMP_PROGRAMS, PRIVATE_PROGRAMS, SHORT_CLASS_PROGRAMS } from '@/lib/config';
+import { TOOLS, TOPICS, TARGET_MARKET, FIELDS, WA_LINK, BOOTCAMP_PROGRAMS, PRIVATE_PROGRAMS, SHORT_CLASS_PROGRAMS } from '@/lib/config';
 import type { ApiProgram } from '@/lib/types';
 
 function formatPrice(p: number) {
@@ -337,6 +337,28 @@ export default function AjiStatClient({ allPrograms }: { allPrograms: ApiProgram
           </div>
         </div>
         {activeTarget && <TargetModal item={activeTarget} onClose={() => setActiveTarget(null)} />}
+      </section>
+
+      {/* ─── RUMPUN ILMU ─── */}
+      <section className="py-16 bg-white border-t border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <p className="text-[#2348A8] text-sm font-semibold uppercase tracking-widest mb-2">Spesialisasi Bidang</p>
+            <h2 className="text-3xl font-black text-gray-900 mb-2">Melayani Berbagai Rumpun Ilmu</h2>
+            <p className="text-gray-500 text-sm max-w-xl mx-auto">Kami berpengalaman mengolah data dari berbagai disiplin akademik dengan karakteristik dan instrumen yang berbeda-beda.</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6">
+            {FIELDS.map((f) => (
+              <div key={f.name} className="bg-gray-50 rounded-2xl p-5 border border-gray-100 hover:border-[#162058]/20 hover:shadow-md transition-all flex flex-col items-center text-center">
+                <div className="w-12 h-12 rounded-full mb-3 flex items-center justify-center text-white font-black text-xl shadow-sm" style={{ backgroundColor: f.color }}>
+                  {f.name[0]}
+                </div>
+                <h3 className="font-black text-gray-900 text-base mb-1">{f.name}</h3>
+                <p className="text-gray-500 text-xs leading-relaxed">{f.sub}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* ─── TOPIK ─── */}
