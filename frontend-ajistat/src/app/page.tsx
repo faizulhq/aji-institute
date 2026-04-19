@@ -292,24 +292,6 @@ export default function AjiStatPage() {
         </div>
       </section>
 
-      {/* ─── TOPIK ─── */}
-      <section id="topik" className="py-16 bg-[#162058]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <p className="text-[#F0A500] text-sm font-semibold uppercase tracking-widest mb-2">Topik Statistika</p>
-            <h2 className="text-3xl font-black text-white mb-2">Cakupan Analisis yang Luas</h2>
-            <p className="text-white/50 text-sm max-w-lg mx-auto">Kami menguasai berbagai metode dan teknik analisis statistik — dari dasar hingga lanjutan.</p>
-          </div>
-          <div className="flex flex-wrap justify-center gap-2.5">
-            {TOPICS.map((t) => (
-              <span key={t} className="text-sm font-medium px-4 py-2 bg-white/8 border border-white/15 text-white/80 rounded-full hover:bg-[#F0A500]/15 hover:border-[#F0A500]/40 hover:text-[#F0A500] transition-all cursor-default">
-                {t}
-              </span>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ─── UNTUK SIAPA ─── */}
       <section id="target" className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -339,6 +321,24 @@ export default function AjiStatPage() {
           </div>
         </div>
         {activeTarget && <TargetModal item={activeTarget} onClose={() => setActiveTarget(null)} />}
+      </section>
+
+      {/* ─── TOPIK ─── */}
+      <section id="topik" className="py-16 bg-[#162058]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <p className="text-[#F0A500] text-sm font-semibold uppercase tracking-widest mb-2">Topik Statistika</p>
+            <h2 className="text-3xl font-black text-white mb-2">Cakupan Analisis yang Luas</h2>
+            <p className="text-white/50 text-sm max-w-lg mx-auto">Kami menguasai berbagai metode dan teknik analisis statistik — dari dasar hingga lanjutan.</p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-2.5">
+            {TOPICS.map((t) => (
+              <span key={t} className="text-sm font-medium px-4 py-2 bg-white/8 border border-white/15 text-white/80 rounded-full hover:bg-[#F0A500]/15 hover:border-[#F0A500]/40 hover:text-[#F0A500] transition-all cursor-default">
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* ─── SOFTWARE TOOLS ─── */}

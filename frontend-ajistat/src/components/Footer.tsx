@@ -5,7 +5,7 @@ const LAYANAN_LINKS = [
   { label: 'Bootcamp Intensif', href: '/bootcamp' },
   { label: 'Kelas Privat', href: '/private-class' },
   { label: 'Short Class', href: '/short-class' },
-  { label: 'Konsultasi Data', href: '/#layanan' },
+  { label: 'Konsultasi Data', href: '/konsultasi' },
 ];
 
 const COMPANY_LINKS = [

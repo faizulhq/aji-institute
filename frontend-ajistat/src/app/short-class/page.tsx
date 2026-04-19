@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Zap, Target, BookMarked, X } from 'lucide-react';
 import { WA_LINK, SHORT_CLASS_PROGRAMS } from '@/lib/config';
 
@@ -117,7 +118,7 @@ export default function ShortClassPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {SHORT_CLASS_PROGRAMS.map((p) => (
-              <div key={p.id} className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all">
+              <Link key={p.id} href={`/program/${p.slug}`} className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all block">
                 <div className="bg-gradient-to-r from-[#162058] to-[#2348A8] px-5 py-4">
                   <span className="text-[10px] font-bold uppercase tracking-wider text-white/60 bg-white/15 px-2 py-0.5 rounded-full">Short Class</span>
                   <h3 className="text-white font-black mt-2 text-sm leading-snug">{p.title}</h3>
@@ -130,13 +131,12 @@ export default function ShortClassPage() {
                       <p className="text-xs text-gray-400 line-through">{formatPrice(p.originalPrice)}</p>
                       <p className="font-black text-[#162058]">{formatPrice(p.price)}</p>
                     </div>
-                    <a href={WA_LINK(`Halo AjiStat, saya ingin mendaftar Short Class: ${p.title}`)} target="_blank" rel="noopener noreferrer"
-                      className="bg-[#162058] hover:bg-[#1B3A8C] text-white font-bold text-xs px-4 py-2 rounded-xl transition-colors">
-                      Daftar →
-                    </a>
+                    <span className="bg-[#162058] text-white font-bold text-xs px-4 py-2 rounded-xl">
+                      Lihat Detail →
+                    </span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
