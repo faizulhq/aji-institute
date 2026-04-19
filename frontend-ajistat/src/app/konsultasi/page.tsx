@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import {
   MessageCircle, Search, Settings2, BarChart2, CheckCircle,
-  GraduationCap, BookOpen, FlaskConical, Users, Building2,
   Shield, Clock, Award, RefreshCw,
 } from 'lucide-react';
 import { WA_LINK, CONTACT } from '@/lib/config';
@@ -39,40 +38,36 @@ const METHODS = [
   },
 ];
 
-const SERVICES = [
+const DELIVERABLES = [
   {
-    title: 'Analisis Kuantitatif',
-    items: ['Uji Validitas & Reliabilitas, MSI', 'Analisis Regresi (Anreg), ANOVA, Korelasi', 'SEM (SmartPLS, AMOS) & Path Analysis', 'Analisis Faktor, MDS, PCA, Cluster Analysis', 'Time Series, Data Panel & Service Quality', 'Design Experiment & Statistika Nonparametrik', 'Teknik Sampling, Statistik Deskriptif & Conj'],
-    color: 'bg-blue-50 border-blue-100',
-    badge: 'bg-blue-100 text-blue-700',
+    title: 'Output Software Asli',
+    desc: 'Anda akan menerima file output asli dari software yang digunakan (SPSS, SmartPLS, NVivo, dll) sebagai bukti pengolahan data yang valid.',
+    color: 'bg-blue-50 border-blue-100 text-blue-700',
   },
   {
-    title: 'Analisis Kualitatif',
-    items: ['Koding & kategorisasi data NVivo', 'Analisis tematik & naratif', 'Grounded theory & fenomenologi', 'Triangulasi data mixed methods', 'Studi kasus & analisis dokumen'],
-    color: 'bg-emerald-50 border-emerald-100',
-    badge: 'bg-emerald-100 text-emerald-700',
+    title: 'Laporan Interpretasi (Bab 4/5)',
+    desc: 'Kami menyusun interpretasi naratif dari angka-angka statistik menjadi kalimat akademis yang siap disisipkan ke laporan penelitian atau jurnal Anda.',
+    color: 'bg-emerald-50 border-emerald-100 text-emerald-700',
   },
   {
-    title: 'Metodologi & Penulisan',
-    items: ['Penyusunan bab metodologi penelitian', 'Pemilihan teknik analisis yang tepat', 'Interpretasi hasil & penulisan pembahasan', 'Editing laporan & penyesuaian format jurnal', 'Konsultasi proposal & kerangka riset'],
-    color: 'bg-amber-50 border-amber-100',
-    badge: 'bg-amber-100 text-amber-700',
+    title: 'Konsultasi Penjelasan Hasil',
+    desc: 'Sesi khusus bersama Tim Analis untuk membedah hasil olah data agar Anda paham, percaya diri, dan siap mempresentasikannya saat sidang/meeting.',
+    color: 'bg-amber-50 border-amber-100 text-amber-700',
   },
 ];
 
-const TARGET = [
-  { Icon: GraduationCap, label: 'Mahasiswa S1', desc: 'Skripsi, tugas akhir, laporan penelitian' },
-  { Icon: BookOpen,      label: 'Mahasiswa S2', desc: 'Tesis, penelitian magister' },
-  { Icon: FlaskConical,  label: 'Mahasiswa S3', desc: 'Disertasi, riset doktoral' },
-  { Icon: Users,         label: 'Dosen & Peneliti', desc: 'Penelitian ilmiah, pengabdian masyarakat' },
-  { Icon: Building2,     label: 'Instansi & Perusahaan', desc: 'Riset pasar, evaluasi program, data bisnis' },
+const FAQS = [
+  { q: 'Apakah kerahasiaan data saya terjamin?', a: 'Sangat terjamin. Kami memiliki kebijakan privasi yang ketat dan bersedia menandatangani Non-Disclosure Agreement (NDA) khusus untuk data instansi/perusahaan.' },
+  { q: 'Berapa biaya konsultasi dan olah datanya?', a: 'Biaya sangat bergantung pada tingkat kerumitan data, metode yang digunakan, dan deadline. Rata-rata proyek berkisar antara Rp 2.500.000 hingga Rp 5.000.000. Hubungi kami untuk Need Assessment dan penawaran detail.' },
+  { q: 'Berapa lama proses pengerjaannya?', a: 'Umumnya memakan waktu 3 hingga 14 hari kerja setelah data dinyatakan clean dan metode disepakati. Tersedia juga layanan kilat dengan penyesuaian biaya.' },
+  { q: 'Apakah ada garansi revisi?', a: 'Ya! Layanan kami mencakup garansi revisi interpretasi statistik jika terdapat masukan/koreksi dari dosen pembimbing atau reviewer jurnal.' },
 ];
 
 const GUARANTEES = [
-  { Icon: Shield,    title: '100% Kerahasiaan', desc: 'Data dan informasi penelitian Anda sepenuhnya terjaga kerahasiaannya.' },
-  { Icon: Award,     title: 'Tim Analis Profesional', desc: 'Dikerjakan langsung oleh tim analis data profesional in-house (bukan joki perorangan).' },
-  { Icon: Clock,     title: 'Tepat Waktu', desc: 'Pengerjaan sesuai deadline yang disepakati, dengan update progres berkala.' },
-  { Icon: RefreshCw, title: 'Revisi Included', desc: 'Revisi termasuk dalam paket hingga hasil sesuai kebutuhan Anda.' },
+  { Icon: Shield,    title: '100% Kerahasiaan (NDA)', desc: 'Data dan informasi penelitian Anda sepenuhnya terjaga privasinya.' },
+  { Icon: Award,     title: 'Tim Analis Profesional', desc: 'Dikerjakan langsung oleh tim analis data in-house (bukan joki perorangan).' },
+  { Icon: Clock,     title: 'Sesuai Deadline', desc: 'Pengerjaan transparan sesuai timeline yang disepakati bersama.' },
+  { Icon: RefreshCw, title: 'Garansi Revisi', desc: 'Dukungan revisi interpretasi untuk memastikan hasil diterima dengan baik.' },
 ];
 
 export default function KonsultasiPage() {
@@ -161,47 +156,39 @@ export default function KonsultasiPage() {
         </div>
       </section>
 
-      {/* LAYANAN */}
-      <section id="layanan" className="py-16 bg-gray-50">
+      {/* DELIVERABLES (Apa yang didapatkan) */}
+      <section id="deliverables" className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <p className="text-[#2348A8] text-sm font-semibold uppercase tracking-widest mb-2">Cakupan Layanan</p>
-            <h2 className="text-3xl font-black text-gray-900 mb-2">Apa yang Kami Kerjakan?</h2>
-            <p className="text-gray-500 text-sm">Layanan konsultasi data AjiStat mencakup seluruh kebutuhan analisis penelitian Anda.</p>
+            <p className="text-[#2348A8] text-sm font-semibold uppercase tracking-widest mb-2">Hasil Akhir (Deliverables)</p>
+            <h2 className="text-3xl font-black text-gray-900 mb-2">Apa yang Akan Anda Terima?</h2>
+            <p className="text-gray-500 text-sm">Kami tidak sekadar menyerahkan tabel angka, melainkan pemahaman utuh atas data Anda.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {SERVICES.map((s) => (
-              <div key={s.title} className={`rounded-2xl border p-6 ${s.color}`}>
-                <span className={`inline-block text-xs font-bold px-3 py-1 rounded-full mb-4 ${s.badge}`}>{s.title}</span>
-                <ul className="space-y-2.5">
-                  {s.items.map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm text-gray-700">
-                      <span className="text-[#162058] mt-0.5 shrink-0">▸</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+            {DELIVERABLES.map((d) => (
+              <div key={d.title} className={`rounded-2xl border p-6 flex flex-col ${d.color.replace('text-', '').replace('bg-', 'bg-').replace('border-', 'border-')}`}>
+                <h3 className={`font-black text-xl mb-3 ${d.color.split(' ').find(c => c.startsWith('text-'))}`}>{d.title}</h3>
+                <p className="text-gray-700 text-sm leading-relaxed">{d.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* UNTUK SIAPA */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* FAQ */}
+      <section className="py-16 bg-white border-t border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
-            <p className="text-[#2348A8] text-sm font-semibold uppercase tracking-widest mb-2">Untuk Siapa?</p>
-            <h2 className="text-3xl font-black text-gray-900 mb-2">Melayani Berbagai Kalangan</h2>
+            <p className="text-[#2348A8] text-sm font-semibold uppercase tracking-widest mb-2">Tanya Jawab</p>
+            <h2 className="text-3xl font-black text-gray-900 mb-2">Pertanyaan Seputar Konsultasi</h2>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-            {TARGET.map((t) => (
-              <div key={t.label} className="text-center p-5 rounded-2xl border border-gray-200 bg-gray-50 hover:shadow-md hover:-translate-y-1 transition-all">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#162058] to-[#2348A8] flex items-center justify-center mx-auto mb-3">
-                  <t.Icon className="w-6 h-6 text-white" />
-                </div>
-                <p className="font-black text-gray-900 text-sm mb-1">{t.label}</p>
-                <p className="text-gray-400 text-xs leading-snug">{t.desc}</p>
+          <div className="space-y-4">
+            {FAQS.map((faq, i) => (
+              <div key={i} className="bg-gray-50 rounded-2xl p-5 border border-gray-100">
+                <h4 className="font-bold text-gray-900 mb-2 text-base flex items-start gap-2">
+                  <span className="text-[#F0A500]">Q:</span> {faq.q}
+                </h4>
+                <p className="text-gray-600 text-sm leading-relaxed pl-6">{faq.a}</p>
               </div>
             ))}
           </div>

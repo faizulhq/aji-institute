@@ -258,47 +258,47 @@ export const FIELDS = [
 export const TARGET_MARKET = [
   {
     key: 's1', label: 'Mahasiswa S1', desc: 'Skripsi & tugas akhir', icon: 'S1',
-    packages: [
-      { name: 'Konsultasi Cepat', price: 'Mulai Rp 50.000', detail: 'Konsultasi singkat 1 jam via WA/Zoom untuk pertanyaan spesifik tentang metode atau hasil analisis.' },
-      { name: 'Short Class Statistik', price: 'Mulai Rp 75.000', detail: 'Kelas singkat 2–3 jam untuk menguasai satu software/topik, cocok sebelum sidang atau submit laporan.' },
-      { name: 'Paket Skripsi Lengkap', price: 'Mulai Rp 200.000', detail: 'Pendampingan menyeluruh dari pemilihan metode, olah data, interpretasi, hingga penulisan BAB IV & V.' },
+    solutions: [
+      { title: 'Klinik Metodologi & Desain', detail: 'Sesi konsultasi 1-on-1 bersama pakar untuk membedah masalah metode penelitian, merancang kuesioner, atau menentukan teknik sampling yang valid sebelum seminar proposal.' },
+      { title: 'Pendampingan Skripsi Kuantitatif', detail: 'Analisis data kompleks menggunakan SPSS/SmartPLS, dari uji asumsi/prasyarat hingga penyusunan interpretasi Bab 4 yang komprehensif.' },
+      { title: 'Persiapan Sidang (Short Class)', detail: 'Pelatihan intensif 1-on-1 untuk membaca dan memahami output software agar Anda siap dan percaya diri menjawab pertanyaan dosen penguji.' },
     ],
   },
   {
     key: 's2', label: 'Mahasiswa S2', desc: 'Tesis & penelitian magister', icon: 'S2',
-    packages: [
-      { name: 'Konsultasi Metodologi', price: 'Mulai Rp 100.000', detail: 'Konsultasi intensif untuk pemilihan metode yang tepat, desain penelitian, dan interpretasi hasil tesis.' },
-      { name: 'Kelas Privat SEM/PLS', price: 'Mulai Rp 150.000', detail: 'Pendampingan personal untuk menguasai SEM-PLS, SEM-AMOS, atau metode lanjutan lainnya.' },
-      { name: 'Paket Tesis Komprehensif', price: 'Mulai Rp 500.000', detail: 'Layanan lengkap dari reviu proposal hingga analisis final. Termasuk sesi tanya jawab tak terbatas selama proses.' },
+    solutions: [
+      { title: 'Konsultasi Metodologi Lanjut', detail: 'Pendampingan intensif untuk pemilihan metode tingkat lanjut (seperti SEM, Path Analysis, atau Regresi Data Panel) yang sesuai dengan kerangka konsep tesis.' },
+      { title: 'Olah Data Tesis Komprehensif', detail: 'Eksekusi analisis data oleh Tim Analis kami. Termasuk laporan interpretasi mendalam dan revisi jika ada masukan dari dosen pembimbing.' },
+      { title: 'Private Class Penguasaan Software', detail: 'Pembelajaran langsung berbasis proyek tesis Anda sendiri (misal: praktik langsung SEM-AMOS/SmartPLS menggunakan data Anda).' },
     ],
   },
   {
     key: 's3', label: 'Mahasiswa S3', desc: 'Disertasi & riset doktoral', icon: 'S3',
-    packages: [
-      { name: 'Konsultasi Expert', price: 'Mulai Rp 200.000', detail: 'Konsultasi mendalam dengan pakar statistik untuk desain riset doktoral yang kompleks dan valid.' },
-      { name: 'Pendampingan Disertasi', price: 'Negosiasi', detail: 'Program pendampingan jangka panjang dari awal hingga seminar hasil, termasuk persiapan publikasi jurnal.' },
-      { name: 'Mixed Methods Intensif', price: 'Mulai Rp 300.000', detail: 'Khusus riset campuran kuantitatif + kualitatif, termasuk NVivo, triangulasi data, dan penulisan hasil.' },
+    solutions: [
+      { title: 'Konsultasi Desain Eksperimen/Multivariat', detail: 'Diskusi tingkat ahli mengenai desain riset doktoral yang kompleks, memastikan validitas konstruk dan reliabilitas instrumen.' },
+      { title: 'Pendampingan Disertasi Jangka Panjang', detail: 'Layanan pendampingan penuh dari pengolahan data tahap awal, triangulasi (Mixed Methods), hingga persiapan publikasi jurnal internasional.' },
+      { title: 'Analisis Mixed Methods (NVivo + SEM)', detail: 'Pendekatan kuantitatif dan kualitatif sekaligus, menganalisis data wawancara mendalam serta pemodelan persamaan struktural.' },
     ],
   },
   {
     key: 'peneliti', label: 'Peneliti', desc: 'Riset akademik & publikasi', icon: 'RES',
-    packages: [
-      { name: 'Konsultasi Publikasi', price: 'Mulai Rp 150.000', detail: 'Bantuan analisis data untuk keperluan submit ke jurnal ilmiah nasional/internasional.' },
-      { name: 'Olah Data Mandiri', price: 'Mulai Rp 100.000', detail: 'Pendampingan olah data riset dengan software pilihan Anda, termasuk visualisasi dan laporan.' },
+    solutions: [
+      { title: 'Analisis Data Publikasi (Q1/Q2)', detail: 'Pengolahan data dengan standar rigoritas tinggi untuk memenuhi ekspektasi reviewer jurnal terindeks Scopus.' },
+      { title: 'Systematic Literature Review (SLR)', detail: 'Konsultasi dan pendampingan bibliometrik atau meta-analisis menggunakan VosViewer atau software sejenis.' },
     ],
   },
   {
     key: 'dosen', label: 'Dosen', desc: 'Penelitian & pengabdian', icon: 'DOC',
-    packages: [
-      { name: 'Workshop Singkat', price: 'Mulai Rp 200.000', detail: 'Workshop statistik 1 hari untuk tim dosen atau mahasiswa binaan. Bisa diselenggarakan di kampus.' },
-      { name: 'In-House Training', price: 'Hubungi Kami', detail: 'Pelatihan eksklusif di lingkungan kampus untuk dosen atau tim peneliti, disesuaikan kebutuhan institusi.' },
+    solutions: [
+      { title: 'Outsourcing Analisis Data', detail: 'Delegasikan pengolahan data hibah penelitian Anda kepada Tim Analis kami agar Anda dapat fokus pada substansi dan luaran riset.' },
+      { title: 'Visualisasi Data Interaktif', detail: 'Pembuatan grafik, dashboard, atau visualisasi publikasi untuk memperkuat argumen pada laporan akhir hibah/pengabdian.' },
     ],
   },
   {
     key: 'perusahaan', label: 'Perusahaan', desc: 'Riset pasar & data bisnis', icon: 'ORG',
-    packages: [
-      { name: 'Analisis Riset Pasar', price: 'Negosiasi', detail: 'Analisis data survei, customer satisfaction, atau riset pasar perusahaan Anda secara profesional.' },
-      { name: 'Corporate Training', price: 'Hubungi Kami', detail: 'Pelatihan analisis data untuk tim divisi riset/marketing perusahaan. Program bisa disesuaikan kebutuhan.' },
+    solutions: [
+      { title: 'Analisis Riset Pasar & HR', detail: 'Pengolahan survei kepuasan pelanggan (Service Quality), evaluasi kinerja karyawan, atau riset preferensi konsumen secara profesional.' },
+      { title: 'In-House Training (Corporate)', detail: 'Pelatihan analisis data khusus untuk staf divisi Research & Development (R&D) atau Marketing di perusahaan Anda.' },
     ],
   },
 ];

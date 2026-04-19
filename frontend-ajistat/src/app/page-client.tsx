@@ -22,25 +22,22 @@ function TargetModal({ item, onClose }: { item: TargetItem; onClose: () => void 
           <X className="w-4 h-4" />
         </button>
         <div className="mb-5">
-          <span className="inline-flex items-center gap-2 bg-[#162058]/10 text-[#162058] text-xs font-bold px-3 py-1 rounded-full mb-3">Paket untuk {item.label}</span>
+          <span className="inline-flex items-center gap-2 bg-[#162058]/10 text-[#162058] text-xs font-bold px-3 py-1 rounded-full mb-3">Solusi untuk {item.label}</span>
           <h3 className="text-2xl font-black text-gray-900">{item.label}</h3>
           <p className="text-gray-500 text-sm mt-1">{item.desc}</p>
         </div>
         <div className="space-y-3">
-          {item.packages.map((pkg) => (
-            <div key={pkg.name} className="border border-gray-200 rounded-2xl p-4 hover:border-[#162058]/30 hover:bg-gray-50 transition-all">
-              <div className="flex items-start justify-between gap-2 mb-2">
-                <p className="font-bold text-gray-900 text-sm">{pkg.name}</p>
-                <span className="text-[#162058] font-black text-sm shrink-0 bg-[#162058]/8 px-2 py-0.5 rounded-lg">{pkg.price}</span>
-              </div>
-              <p className="text-gray-500 text-xs leading-relaxed">{pkg.detail}</p>
+          {item.solutions.map((sol) => (
+            <div key={sol.title} className="border border-gray-200 rounded-2xl p-4 hover:border-[#162058]/30 hover:bg-gray-50 transition-all">
+              <p className="font-bold text-gray-900 text-sm mb-1">{sol.title}</p>
+              <p className="text-gray-500 text-xs leading-relaxed">{sol.detail}</p>
             </div>
           ))}
         </div>
-        <a href={WA_LINK(`Halo AjiStat, saya adalah ${item.label} dan ingin tanya paket layanan yang sesuai`)}
+        <a href={WA_LINK(`Halo AjiStat, saya adalah ${item.label} dan ingin konsultasi / melakukan Need Assessment terkait data penelitian saya`)}
           target="_blank" rel="noopener noreferrer"
-          className="mt-5 w-full flex items-center justify-center gap-2 bg-[#162058] hover:bg-[#1B3A8C] text-white font-bold py-3 rounded-xl transition-colors text-sm">
-          Tanyakan via WhatsApp
+          className="mt-5 w-full flex items-center justify-center gap-2 bg-[#162058] hover:bg-[#1B3A8C] text-white font-bold py-3 rounded-xl transition-colors text-sm shadow-md">
+          Mulai Need Assessment via WhatsApp
         </a>
       </div>
     </div>
@@ -357,24 +354,22 @@ export default function AjiStatClient({ allPrograms }: { allPrograms: ApiProgram
           <div className="text-center mb-10">
             <p className="text-[#2348A8] text-sm font-semibold uppercase tracking-widest mb-2">Untuk Siapa?</p>
             <h2 className="text-3xl font-black text-gray-900 mb-2">Melayani Berbagai Kalangan</h2>
-            <p className="text-gray-500 text-sm">Klik kartu untuk melihat paket & estimasi harga yang sesuai.</p>
+            <p className="text-gray-500 text-sm">Klik kartu untuk melihat solusi riset yang kami tawarkan.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {TARGET_MARKET.map((t) => (
               <button key={t.key} onClick={() => setActiveTarget(t)}
-                className="group border-2 border-gray-100 bg-white rounded-2xl p-6 text-left hover:border-[#162058]/30 hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer">
-                <div className="flex items-start justify-between mb-3">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#162058] to-[#2348A8] flex items-center justify-center text-white font-black text-sm">
-                    {t.icon}
-                  </div>
-                  <span className="text-[10px] font-bold text-[#2348A8] bg-[#2348A8]/10 px-2 py-0.5 rounded-full mt-1">
-                    {t.packages.length} paket tersedia
-                  </span>
+                className="group border-2 border-gray-100 bg-white rounded-2xl p-6 flex flex-col items-center text-center hover:border-[#162058]/30 hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#162058] to-[#2348A8] flex items-center justify-center text-white font-black text-lg mb-4 shadow-sm group-hover:scale-110 transition-transform">
+                  {t.icon}
                 </div>
-                <p className="font-black text-gray-900 text-lg mb-1 group-hover:text-[#162058] transition-colors">{t.label}</p>
-                <p className="text-gray-400 text-sm leading-snug mb-4">{t.desc}</p>
-                <div className="flex items-center gap-1.5 text-[#162058] font-bold text-sm">
-                  <span>Lihat Paket</span>
+                <h3 className="font-black text-gray-900 text-xl mb-1 group-hover:text-[#162058] transition-colors">{t.label}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed mb-4">{t.desc}</p>
+                <span className="text-[10px] font-bold text-[#2348A8] bg-[#2348A8]/10 px-3 py-1 rounded-full mb-5">
+                  {t.solutions.length} solusi riset
+                </span>
+                <div className="mt-auto flex items-center justify-center gap-1.5 text-[#162058] font-bold text-sm">
+                  <span>Lihat Solusi</span>
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
               </button>
