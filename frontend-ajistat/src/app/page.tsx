@@ -1,421 +1,311 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { BRAND, CONTACT, WA_LINK, API_BASE } from '@/lib/config';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
+import { X } from 'lucide-react';
+import { TOOLS, TOPICS, TARGET_MARKET, WA_LINK } from '@/lib/config';
 
-/* ──── Data ──── */
-const SERVICES = [
-  {
-    icon: '📊',
-    title: 'Konsultasi Data',
-    desc: 'Pendampingan profesional untuk kebutuhan olah data penelitian Anda — dari metodologi hingga interpretasi hasil yang siap dipresentasikan.',
-    tags: ['Kuantitatif', 'Kualitatif', 'Campuran'],
-    href: WA_LINK('Halo Tim AjiStat, saya ingin konsultasi olah data'),
-  },
-  {
-    icon: '🎓',
-    title: 'Kelas Privat',
-    desc: 'Pembelajaran 1-on-1 sesuai jadwal dan kebutuhan Anda. Langsung praktik software statistik dengan pendampingan intensif dari fasilitator expert.',
-    tags: ['Jadwal Fleksibel', '1-on-1', 'Praktik Langsung'],
-    href: WA_LINK('Halo Tim AjiStat, saya ingin mendaftar Kelas Privat'),
-  },
-  {
-    icon: '🚀',
-    title: 'Bootcamp',
-    desc: 'Program pelatihan intensif terstruktur. Pelajari satu software/metode secara mendalam dalam waktu singkat bersama komunitas peserta lainnya.',
-    tags: ['Intensif', 'Bersertifikat', 'Komunitas'],
-    href: WA_LINK('Halo Tim AjiStat, saya ingin info Bootcamp'),
-  },
-];
+/* ─── Target Market Modal ─── */
+type TargetItem = typeof TARGET_MARKET[0];
 
-const SOFTWARES = [
-  { icon: '📉', name: 'SPSS' },
-  { icon: '⚙️', name: 'SmartPLS' },
-  { icon: '🔷', name: 'AMOS' },
-  { icon: '🔵', name: 'LISREL' },
-  { icon: '📈', name: 'EViews' },
-  { icon: '🐍', name: 'Python' },
-  { icon: '🎯', name: 'R Studio' },
-  { icon: '🌿', name: 'NVivo' },
-  { icon: '📋', name: 'STATA' },
-  { icon: '🔬', name: 'Minitab' },
-  { icon: '📦', name: 'SAS' },
-  { icon: '🧮', name: 'JASP' },
-];
-
-const TOPICS = [
-  'Validasi & Reliabilitas', 'MSI (Method of Successive Intervals)', 'Analisis Regresi',
-  'Korelasi', 'Design Experiment', 'SEM (Structural Equation Modeling)',
-  'Statistika Nonparametrik', 'Analisis Faktor', 'MDS & PCA', 'Cluster Analysis',
-  'Path Analysis', 'Service Quality', 'Time Series Analysis', 'Teknik Sampling',
-  'Statistik Deskriptif', 'Conjoint Analysis', 'SEM-PLS', 'SEM-AMOS',
-  'Uji Hipotesis', 'Mediasi & Moderasi', 'ANOVA', 'Uji Beda',
-  'NVivo (Kualitatif)', 'Content Analysis',
-];
-
-const TARGET_MARKET = [
-  { emoji: '🎓', name: 'Mahasiswa S1', desc: 'Skripsi & tugas akhir' },
-  { emoji: '🎓', name: 'Mahasiswa S2', desc: 'Tesis & penelitian magister' },
-  { emoji: '🎓', name: 'Mahasiswa S3', desc: 'Disertasi & riset doktoral' },
-  { emoji: '🔬', name: 'Peneliti', desc: 'Riset akademik & publikasi' },
-  { emoji: '📚', name: 'Dosen', desc: 'Penelitian & pengabdian' },
-  { emoji: '🏢', name: 'Perusahaan', desc: 'Riset pasar & data bisnis' },
-];
-
-const STATS = [
-  { num: '5.000+', label: 'Klien Terbantu', icon: '🤝' },
-  { num: '10+', label: 'Software Dikuasai', icon: '💻' },
-  { num: '2015', label: 'Berpengalaman Sejak', icon: '📅' },
-  { num: '24 Jam', label: 'Siap Membantu', icon: '⚡' },
-];
-
-/* ──── Types ──── */
-interface Program {
-  id: number;
-  slug: string;
-  title: string;
-  type: string;
-  description: string;
-  price: number;
-  original_price: number;
-  brand: string;
+function TargetModal({ item, onClose }: { item: TargetItem; onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+      onClick={onClose}>
+      <div className="relative bg-white rounded-3xl shadow-2xl max-w-lg w-full p-7 z-10 max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}>
+        <button onClick={onClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors">
+          <X className="w-4 h-4" />
+        </button>
+        <div className="mb-5">
+          <span className="inline-flex items-center gap-2 bg-[#162058]/10 text-[#162058] text-xs font-bold px-3 py-1 rounded-full mb-3">
+            Paket untuk {item.label}
+          </span>
+          <h3 className="text-2xl font-black text-gray-900">{item.label}</h3>
+          <p className="text-gray-500 text-sm mt-1">{item.desc}</p>
+        </div>
+        <div className="space-y-3">
+          {item.packages.map((pkg) => (
+            <div key={pkg.name} className="border border-gray-200 rounded-2xl p-4 hover:border-[#162058]/30 hover:bg-gray-50 transition-all">
+              <div className="flex items-start justify-between gap-2 mb-2">
+                <p className="font-bold text-gray-900 text-sm">{pkg.name}</p>
+                <span className="text-[#162058] font-black text-sm shrink-0 bg-[#162058]/8 px-2 py-0.5 rounded-lg">{pkg.price}</span>
+              </div>
+              <p className="text-gray-500 text-xs leading-relaxed">{pkg.detail}</p>
+            </div>
+          ))}
+        </div>
+        <a href={WA_LINK(`Halo AjiStat, saya adalah ${item.label} dan ingin tanya paket layanan yang sesuai`)}
+          target="_blank" rel="noopener noreferrer"
+          className="mt-5 w-full flex items-center justify-center gap-2 bg-[#162058] hover:bg-[#1B3A8C] text-white font-bold py-3 rounded-xl transition-colors text-sm">
+          💬 Tanya Paket via WhatsApp
+        </a>
+      </div>
+    </div>
+  );
 }
 
-/* ──── Helper ──── */
-function formatPrice(p: number) {
-  return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(p);
+/* ─── Tool Modal ─── */
+type ToolItem = typeof TOOLS[0];
+
+function ToolModal({ tool, onClose }: { tool: ToolItem; onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+      onClick={onClose}>
+      <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 z-10"
+        onClick={(e) => e.stopPropagation()}>
+        <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center">
+          <X className="w-4 h-4" />
+        </button>
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-14 h-14 rounded-xl overflow-hidden flex items-center justify-center shadow-lg bg-white border border-gray-100">
+            {tool.logo ? (
+              <Image src={tool.logo} alt={tool.name} width={48} height={48} className="object-contain p-1" />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-white font-black text-lg" style={{ backgroundColor: tool.color }}>
+                {tool.name.slice(0, 2)}
+              </div>
+            )}
+          </div>
+          <div>
+            <h3 className="text-xl font-black text-gray-900">{tool.name}</h3>
+            <span className="text-xs font-semibold bg-[#1B3A8C]/10 text-[#1B3A8C] px-2 py-0.5 rounded-full">Tersedia di AjiStat</span>
+          </div>
+        </div>
+        <p className="text-gray-600 text-sm leading-relaxed mb-4">{tool.desc}</p>
+        <div className="bg-gray-50 rounded-xl p-4 mb-4">
+          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Digunakan untuk:</p>
+          <p className="text-gray-700 text-sm">{tool.useFor}</p>
+        </div>
+        <a href={WA_LINK(`Halo AjiStat, saya ingin belajar ${tool.name}`)} target="_blank" rel="noopener noreferrer"
+          className="w-full flex items-center justify-center gap-2 bg-[#1B3A8C] hover:bg-[#2348A8] text-white font-bold py-3 rounded-xl transition-colors text-sm">
+          Tanya Kelas {tool.name}
+        </a>
+      </div>
+    </div>
+  );
 }
 
-function typeLabel(t: string) {
-  const map: Record<string, string> = {
-    bootcamp: 'Bootcamp', 'short-class': 'Short Class', 'private-class': 'Kelas Privat',
-  };
-  return map[t] ?? t;
-}
-
-/* ──── Main Page ──── */
+/* ─── Main Page ─── */
 export default function AjiStatPage() {
-  const [programs, setPrograms] = useState<Program[]>([]);
-  const [form, setForm] = useState({ name: '', phone: '', service: '', topic: '', desc: '' });
-  const [sent, setSent] = useState(false);
-
-  useEffect(() => {
-    fetch(`${API_BASE}/api/programs/?brand=ajistat`)
-      .then((r) => r.json())
-      .then((data) => setPrograms(Array.isArray(data) ? data : data.results ?? []))
-      .catch(() => setPrograms([]));
-  }, []);
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    const msg = `Halo Tim AjiStat! Saya ingin konsultasi.
-Nama: ${form.name}
-WhatsApp: ${form.phone}
-Layanan: ${form.service}
-Topik/Software: ${form.topic}
-Detail: ${form.desc}`;
-    window.open(WA_LINK(msg), '_blank');
-    setSent(true);
-  }
+  const [activeTarget, setActiveTarget] = useState<TargetItem | null>(null);
+  const [activeTool, setActiveTool] = useState<ToolItem | null>(null);
 
   return (
     <>
-      {/* ─── NAVBAR ─── */}
-      <nav className="navbar">
-        <a href="#" className="navbar-brand">
-          <div className="navbar-logo-box">AS</div>
-          <div>
-            <div className="navbar-title">{BRAND.name}</div>
-            <div className="navbar-sub">by {BRAND.parent}</div>
-          </div>
-        </a>
-        <a href={WA_LINK('Halo AjiStat, saya ingin konsultasi')} target="_blank" rel="noopener noreferrer" className="navbar-wa">
-          <span>💬</span>
-          <span>Konsultasi Gratis</span>
-        </a>
-      </nav>
-
       {/* ─── HERO ─── */}
-      <section className="hero" id="beranda">
-        <div className="hero-orb hero-orb-1" />
-        <div className="hero-orb hero-orb-2" />
-        <div className="hero-orb hero-orb-3" />
-        <div className="hero-inner">
-          <div className="hero-badge">
-            <span className="hero-badge-dot" />
+      <div className="bg-[#162058] relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#F0A500] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#2348A8] rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+          <span className="inline-flex items-center gap-2 bg-[#F0A500]/20 border border-[#F0A500]/40 text-[#F0A500] text-xs font-semibold px-4 py-1.5 rounded-full mb-6">
             Divisi Statistik & Riset — Aji Institute
-          </div>
-          <h1 className="hero-h1">
+          </span>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-6 leading-tight tracking-tight">
             Konsultasi &<br />
-            <span>Olah Data Statistik</span><br />
-            <em>Profesional</em>
+            <span className="text-[#F0A500]">Olah Data Statistik</span><br />
+            <span className="text-white/70">Profesional</span>
           </h1>
-          <p className="hero-p">
-            AjiStat adalah mitra riset terpercaya Anda. Kami melayani pengolahan dan analisis data
-            penelitian kuantitatif &amp; kualitatif — untuk skripsi, tesis, disertasi, dan riset institusional.
+          <p className="text-white/70 text-lg leading-relaxed mb-10 max-w-2xl">
+            AjiStat adalah mitra riset terpercaya Anda. Kami melayani pengolahan dan analisis data penelitian
+            kuantitatif & kualitatif — untuk skripsi, tesis, disertasi, dan riset institusional.
           </p>
-          <div className="hero-ctas">
-            <a href={WA_LINK('Halo Tim AjiStat, saya ingin konsultasi olah data')} target="_blank" rel="noopener noreferrer" className="btn-primary">
-              💬 Konsultasi Sekarang
+          <div className="flex flex-wrap gap-4">
+            <a href={WA_LINK('Halo AjiStat, saya ingin konsultasi olah data')} target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-black px-8 py-4 rounded-2xl transition-colors text-sm shadow-xl">
+              Konsultasi Sekarang
             </a>
-            <a href="#program" className="btn-secondary">
-              🎯 Lihat Program
-            </a>
+            <Link href="#program"
+              className="inline-flex items-center gap-2 bg-white/10 border border-white/20 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-2xl transition-colors text-sm">
+              Lihat Program
+            </Link>
           </div>
         </div>
 
-        {/* Trust strip inside hero bg */}
-        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
-          <div className="trust-strip">
-            <div className="trust-strip-inner">
-              {['5.000+ Klien Terbantu', 'Respons dalam 24 Jam', 'Sejak 2015', '100% Kerahasiaan Data', 'Mahasiswa S1 — S3'].map((t) => (
-                <div className="trust-item" key={t}>
-                  <span className="trust-dot" />
-                  <span className="trust-text">{t}</span>
-                </div>
+        {/* Trust strip */}
+        <div className="relative border-t border-white/10 bg-white/5">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm text-white/60">
+              {['5.000+ Klien Terbantu', 'Respons dalam 24 Jam', 'Berpengalaman Sejak 2015', '100% Kerahasiaan Data', 'Mahasiswa S1 — S3'].map((t) => (
+                <span key={t} className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F0A500]" />
+                  {t}
+                </span>
               ))}
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* ─── STATS ─── */}
-      <section className="stats-section">
-        <div className="section-inner">
-          <div className="stats-grid">
-            {STATS.map((s) => (
-              <div className="stat-card" key={s.label}>
-                <div style={{ fontSize: '1.75rem', marginBottom: '0.5rem' }}>{s.icon}</div>
-                <div className="stat-num">{s.num}</div>
-                <div className="stat-label">{s.label}</div>
+      <section className="py-14 bg-gray-50 border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+            {[
+              { num: '5.000+', label: 'Klien Terbantu' },
+              { num: '10+', label: 'Software Dikuasai' },
+              { num: '2015', label: 'Berpengalaman Sejak' },
+              { num: '24 Jam', label: 'Siap Membantu' },
+            ].map((s) => (
+              <div key={s.label} className="bg-white rounded-2xl p-6 text-center border border-gray-200 shadow-sm">
+                <p className="text-3xl font-black text-[#162058] mb-1">{s.num}</p>
+                <p className="text-gray-500 text-xs font-medium">{s.label}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ─── SERVICES ─── */}
-      <section className="services-section" id="layanan">
-        <div className="section-inner">
-          <div className="section-header">
-            <div className="section-eyebrow">Layanan Kami</div>
-            <h2 className="section-h2">Solusi Lengkap untuk Riset Anda</h2>
-            <p className="section-p">Dari konsultasi awal hingga laporan final — kami dampingi setiap tahap penelitian Anda.</p>
+      {/* ─── LAYANAN ─── */}
+      <section id="layanan" className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-10">
+            <p className="text-[#2348A8] text-sm font-semibold uppercase tracking-widest mb-2">Layanan Kami</p>
+            <h2 className="text-3xl font-black text-gray-900 mb-2">Solusi Lengkap untuk Riset Anda</h2>
+            <p className="text-gray-500">Dari konsultasi awal hingga laporan final — kami dampingi setiap tahap penelitian Anda.</p>
           </div>
-          <div className="services-grid">
-            {SERVICES.map((s) => (
-              <div className="service-card" key={s.title}>
-                <div className="service-icon">{s.icon}</div>
-                <div className="service-title">{s.title}</div>
-                <div className="service-desc">{s.desc}</div>
-                <div className="service-tags">
-                  {s.tags.map((t) => <span className="service-tag" key={t}>{t}</span>)}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              {
+                title: 'Konsultasi Data',
+                subtitle: 'Pendampingan Riset',
+                desc: 'Pendampingan profesional untuk kebutuhan olah data penelitian Anda — dari metodologi hingga interpretasi hasil yang siap dipresentasikan.',
+                tags: ['Kuantitatif', 'Kualitatif', 'Campuran'],
+                href: WA_LINK('Halo AjiStat, saya ingin konsultasi data'),
+                cta: 'Mulai Konsultasi',
+              },
+              {
+                title: 'Kelas Privat',
+                subtitle: '1-on-1 Intensif',
+                desc: 'Pembelajaran 1-on-1 sesuai jadwal dan kebutuhan Anda. Langsung praktik software statistik dengan pendampingan intensif dari fasilitator expert.',
+                tags: ['Jadwal Fleksibel', '1-on-1', 'Praktik Langsung'],
+                href: '/private-class',
+                cta: 'Lihat Kelas Privat',
+              },
+              {
+                title: 'Bootcamp',
+                subtitle: 'Intensif 3–5 Hari',
+                desc: 'Program pelatihan intensif terstruktur 3–5 hari. Pelajari satu software atau metode secara mendalam bersama komunitas peserta lainnya.',
+                tags: ['Intensif', 'Bersertifikat', 'Komunitas'],
+                href: '/bootcamp',
+                cta: 'Lihat Bootcamp',
+              },
+            ].map((s) => (
+              <div key={s.title} className="border border-gray-200 rounded-2xl p-6 hover:shadow-lg hover:-translate-y-1 transition-all group">
+                <p className="text-[#2348A8] text-xs font-bold uppercase tracking-wider mb-1">{s.subtitle}</p>
+                <h3 className="text-xl font-black text-gray-900 mb-3">{s.title}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed mb-4">{s.desc}</p>
+                <div className="flex flex-wrap gap-1.5 mb-5">
+                  {s.tags.map((t) => (
+                    <span key={t} className="text-xs font-semibold px-2.5 py-1 bg-[#162058]/8 text-[#162058] rounded-full">{t}</span>
+                  ))}
                 </div>
-                <a href={s.href} target="_blank" rel="noopener noreferrer" className="service-cta">
-                  Daftar Sekarang →
-                </a>
+                {s.href.startsWith('http') ? (
+                  <a href={s.href} target="_blank" rel="noopener noreferrer"
+                    className="text-[#162058] font-bold text-sm hover:text-[#2348A8] transition-colors group-hover:underline">
+                    {s.cta} →
+                  </a>
+                ) : (
+                  <Link href={s.href} className="text-[#162058] font-bold text-sm hover:text-[#2348A8] transition-colors group-hover:underline">
+                    {s.cta} →
+                  </Link>
+                )}
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ─── SOFTWARE ─── */}
-      <section className="software-section" id="software">
-        <div className="section-inner">
-          <div className="section-header">
-            <div className="section-eyebrow">Software & Tools</div>
-            <h2 className="section-h2">Menguasai 12+ Software Statistik</h2>
-            <p className="section-p">Tim kami terlatih dan berpengalaman menggunakan software statistik terkemuka di bidang akademik dan profesional.</p>
+      {/* ─── SOFTWARE TOOLS ─── */}
+      <section id="software" className="py-16 bg-gray-50 border-y border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <p className="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-2">
+              Tools & Software yang Kami Kuasai
+            </p>
+            <p className="text-gray-500 text-xs">Klik logo untuk informasi lebih lanjut</p>
           </div>
-          <div className="software-grid">
-            {SOFTWARES.map((s) => (
-              <div className="software-card" key={s.name}>
-                <div className="software-icon">{s.icon}</div>
-                <div className="software-name">{s.name}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── TOPICS ─── */}
-      <section className="topics-section" id="topik">
-        <div className="section-inner">
-          <div className="section-header">
-            <div className="section-eyebrow" style={{ color: 'rgba(240,165,0,0.8)' }}>Topik Statistika</div>
-            <h2 className="section-h2">Cakupan Analisis yang Luas</h2>
-            <p className="section-p">Kami menguasai berbagai metode dan teknik analisis statistik — dari dasar hingga lanjutan.</p>
-          </div>
-          <div className="topics-grid">
-            {TOPICS.map((t) => (
-              <span className="topic-chip" key={t}>{t}</span>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── TARGET ─── */}
-      <section className="target-section" id="target">
-        <div className="section-inner">
-          <div className="section-header">
-            <div className="section-eyebrow">Untuk Siapa?</div>
-            <h2 className="section-h2">Melayani Berbagai Kalangan</h2>
-            <p className="section-p">AjiStat dirancang untuk membantu siapa saja yang membutuhkan analisis data yang akurat dan terpercaya.</p>
-          </div>
-          <div className="target-grid">
-            {TARGET_MARKET.map((t) => (
-              <div className="target-card" key={t.name}>
-                <div className="target-emoji">{t.emoji}</div>
-                <div className="target-name">{t.name}</div>
-                <div className="target-desc">{t.desc}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── PROGRAMS ─── */}
-      {programs.length > 0 && (
-        <section className="programs-section" id="program">
-          <div className="section-inner">
-            <div className="section-header">
-              <div className="section-eyebrow">Program AjiStat</div>
-              <h2 className="section-h2">Pilih Program yang Tepat</h2>
-              <p className="section-p">Berbagai program terstruktur untuk meningkatkan kemampuan analisis data Anda.</p>
-            </div>
-            <div className="programs-grid">
-              {programs.map((p) => (
-                <div className="program-card" key={p.id}>
-                  <div className="program-card-header">
-                    <span className="program-type-badge">{typeLabel(p.type)}</span>
-                    <div className="program-title">{p.title}</div>
-                  </div>
-                  <div className="program-card-body">
-                    <div className="program-desc">{p.description?.slice(0, 120)}...</div>
-                    <div className="program-meta">
-                      <div>
-                        {p.original_price > p.price && (
-                          <div className="program-orig">{formatPrice(p.original_price)}</div>
-                        )}
-                        <div className="program-price">{formatPrice(p.price)}</div>
-                      </div>
-                      <a href={WA_LINK(`Halo Tim AjiStat, saya tertarik dengan program: ${p.title}`)} target="_blank" rel="noopener noreferrer" className="program-cta">
-                        Daftar →
-                      </a>
+          <div className="flex flex-wrap justify-center gap-4">
+            {TOOLS.map((tool) => (
+              <button key={tool.name} onClick={() => setActiveTool(tool)}
+                className="group flex flex-col items-center gap-2 p-3 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-200 hover:-translate-y-1"
+                title={`Klik untuk info tentang ${tool.name}`}>
+                <div className="w-16 h-16 rounded-2xl overflow-hidden flex items-center justify-center shadow-md group-hover:scale-110 transition-all bg-white border border-gray-100">
+                  {tool.logo ? (
+                    <Image src={tool.logo} alt={tool.name} width={48} height={48} className="object-contain p-1" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-white font-black text-sm"
+                      style={{ backgroundColor: tool.color }}>
+                      {tool.name.length <= 4 ? tool.name : tool.name.slice(0, 3)}
                     </div>
-                  </div>
+                  )}
                 </div>
-              ))}
-            </div>
+                <span className="text-xs text-gray-500 group-hover:text-gray-800 font-medium transition-colors">{tool.name}</span>
+              </button>
+            ))}
           </div>
-        </section>
-      )}
+        </div>
+        {activeTool && <ToolModal tool={activeTool} onClose={() => setActiveTool(null)} />}
+      </section>
 
-      {/* ─── FORM ─── */}
-      <section className="form-section" id="konsultasi">
-        <div className="section-inner">
-          <div className="section-header">
-            <div className="section-eyebrow">Konsultasi Gratis</div>
-            <h2 className="section-h2">Ceritakan Kebutuhan Anda</h2>
-            <p className="section-p">Isi formulir berikut dan tim AjiStat akan menghubungi Anda melalui WhatsApp secepatnya.</p>
+      {/* ─── TOPIK ─── */}
+      <section id="topik" className="py-16 bg-[#162058]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <p className="text-[#F0A500] text-sm font-semibold uppercase tracking-widest mb-2">Topik Statistika</p>
+            <h2 className="text-3xl font-black text-white mb-2">Cakupan Analisis yang Luas</h2>
+            <p className="text-white/50 text-sm max-w-lg mx-auto">Kami menguasai berbagai metode dan teknik analisis statistik — dari dasar hingga lanjutan.</p>
           </div>
-          <div className="form-wrapper">
-            {sent ? (
-              <div className="form-success">
-                <div className="form-success-icon">✅</div>
-                <h3>Permintaan Terkirim!</h3>
-                <p>Klik tombol di bawah jika WhatsApp tidak otomatis terbuka.</p>
-                <a href={WA_LINK('Halo AjiStat, saya sudah mengisi form konsultasi di website.')} target="_blank" rel="noopener noreferrer"
-                  className="btn-primary" style={{ marginTop: '1.5rem', display: 'inline-flex', textDecoration: 'none' }}>
-                  💬 Buka WhatsApp
-                </a>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit}>
-                <div className="form-grid">
-                  <div className="form-group">
-                    <label className="form-label">Nama Lengkap</label>
-                    <input required type="text" className="form-input" placeholder="Nama Anda"
-                      value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Nomor WhatsApp</label>
-                    <input required type="tel" className="form-input" placeholder="08xx-xxxx-xxxx"
-                      value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Layanan yang Dibutuhkan</label>
-                    <select required className="form-select"
-                      value={form.service} onChange={(e) => setForm({ ...form, service: e.target.value })}>
-                      <option value="">-- Pilih Layanan --</option>
-                      <option>Konsultasi Data</option>
-                      <option>Kelas Privat</option>
-                      <option>Bootcamp</option>
-                      <option>Konsultasi Metodologi</option>
-                    </select>
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Software / Topik</label>
-                    <input type="text" className="form-input" placeholder="Contoh: SmartPLS, SEM, NVivo"
-                      value={form.topic} onChange={(e) => setForm({ ...form, topic: e.target.value })} />
-                  </div>
-                  <div className="form-group full">
-                    <label className="form-label">Ceritakan Kebutuhan Anda</label>
-                    <textarea required className="form-textarea"
-                      placeholder="Jelaskan topik penelitian, hambatan yang dihadapi, atau target jadwal Anda..."
-                      value={form.desc} onChange={(e) => setForm({ ...form, desc: e.target.value })} />
-                  </div>
-                </div>
-                <button type="submit" className="form-submit" style={{ marginTop: '1.5rem' }}>
-                  💬 Konsultasikan via WhatsApp
-                </button>
-              </form>
-            )}
+          <div className="flex flex-wrap justify-center gap-2.5">
+            {TOPICS.map((t) => (
+              <span key={t} className="text-sm font-medium px-4 py-2 bg-white/8 border border-white/15 text-white/80 rounded-full hover:bg-[#F0A500]/15 hover:border-[#F0A500]/40 hover:text-[#F0A500] transition-all cursor-default">
+                {t}
+              </span>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ─── FOOTER ─── */}
-      <footer className="footer">
-        <div className="footer-inner">
-          <div className="footer-top">
-            <div>
-              <div className="footer-brand-name">AjiStat</div>
-              <div className="footer-brand-sub">by Aji Institute — {BRAND.legalName}</div>
-              <div className="footer-brand-tagline">
-                Mitra riset terpercaya untuk mahasiswa, peneliti, dan profesional Indonesia.
-              </div>
-            </div>
-            <div className="footer-links">
-              <h4>Layanan</h4>
-              <ul>
-                <li><a href="#layanan">Konsultasi Data</a></li>
-                <li><a href="#layanan">Kelas Privat</a></li>
-                <li><a href="#layanan">Bootcamp</a></li>
-                <li><a href="#software">Software & Tools</a></li>
-              </ul>
-            </div>
-            <div className="footer-links">
-              <h4>Kontak</h4>
-              <ul>
-                <li><a href={`https://wa.me/${CONTACT.whatsapp}`} target="_blank" rel="noopener noreferrer">{CONTACT.whatsappDisplay}</a></li>
-                <li><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></li>
-                <li><a href="https://aji-institute.com" target="_blank" rel="noopener noreferrer">aji-institute.com</a></li>
-              </ul>
-            </div>
+      {/* ─── UNTUK SIAPA ─── */}
+      <section id="target" className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-10">
+            <p className="text-[#2348A8] text-sm font-semibold uppercase tracking-widest mb-2">Untuk Siapa?</p>
+            <h2 className="text-3xl font-black text-gray-900 mb-2">Melayani Berbagai Kalangan</h2>
+            <p className="text-gray-500 text-sm">Klik kartu untuk melihat paket & estimasi harga yang sesuai.</p>
           </div>
-          <hr className="footer-divider" />
-          <div className="footer-bottom">
-            <div className="footer-copy">
-              © {new Date().getFullYear()} AjiStat by Aji Institute — {BRAND.legalName}. Hak cipta dilindungi.
-            </div>
-            <a href={WA_LINK('Halo Tim AjiStat, saya ingin konsultasi')} target="_blank" rel="noopener noreferrer" className="footer-wa">
-              💬 {CONTACT.whatsappDisplay}
-            </a>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            {TARGET_MARKET.map((t) => (
+              <button key={t.key} onClick={() => setActiveTarget(t)}
+                className="group border border-gray-200 rounded-2xl p-5 text-center hover:border-[#162058]/40 hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer text-left">
+                <p className="font-black text-gray-900 text-sm mb-1 group-hover:text-[#162058] transition-colors">{t.label}</p>
+                <p className="text-gray-400 text-xs leading-snug mb-3">{t.desc}</p>
+                <span className="text-[10px] font-bold text-[#2348A8] bg-[#2348A8]/10 px-2 py-0.5 rounded-full">
+                  Lihat Paket →
+                </span>
+              </button>
+            ))}
           </div>
         </div>
-      </footer>
+        {activeTarget && <TargetModal item={activeTarget} onClose={() => setActiveTarget(null)} />}
+      </section>
+
+      {/* ─── CTA ─── */}
+      <section className="bg-[#F0A500] py-14">
+        <div className="max-w-3xl mx-auto text-center px-4">
+          <h2 className="text-2xl font-black text-[#162058] mb-3">Siap Mulai Riset Anda?</h2>
+          <p className="text-[#162058]/70 mb-6 text-sm">Hubungi tim AjiStat sekarang dan dapatkan konsultasi gratis untuk menentukan layanan terbaik.</p>
+          <a href={WA_LINK('Halo AjiStat, saya ingin konsultasi riset')} target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[#162058] hover:bg-[#1B3A8C] text-white font-black px-8 py-4 rounded-2xl transition-colors">
+            Konsultasi Gratis via WhatsApp
+          </a>
+        </div>
+      </section>
     </>
   );
 }
