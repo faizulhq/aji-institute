@@ -16,8 +16,9 @@ const SLIDES = [
     headline: 'Kuasai Statistika\n& Riset dengan AjiStat',
     subtext: 'SPSS, SmartPLS, NVivo, R, Python, AMOS, EViews, STATA — semua ada di sini. Dipandu langsung oleh pakar riset berpengalaman.',
     cta: 'Lihat Program AjiStat →',
-    ctaHref: '/program-ajistat',
-    cta2: 'Konsultasi Gratis',
+    ctaHref: 'https://ajistat.aji-institute.com',
+    ctaExternal: true,
+    cta2: 'Hubungi Kami',
     cta2Href: WA_LINK('Halo, saya ingin info program AjiStat'),
     chips: ['SPSS', 'SmartPLS', 'NVivo', 'R', 'Python', 'AMOS'],
     stats: [{ val: '10+', label: 'Tools' }, { val: '5', label: 'Format Layanan' }],
@@ -134,6 +135,7 @@ export function HeroSlider() {
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-3">
             <a href={slide.ctaHref}
+              {...((slide as { ctaExternal?: boolean }).ctaExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
               className="inline-flex items-center justify-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-black px-8 py-4 rounded-2xl text-base transition-all hover:scale-105 shadow-2xl">
               {slide.cta}
             </a>

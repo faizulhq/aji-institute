@@ -198,13 +198,14 @@ export default function AjiStatPage() {
             Divisi Statistik & Riset — Aji Institute
           </span>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-6 leading-tight tracking-tight">
-            Konsultasi &<br />
-            <span className="text-[#F0A500]">Olah Data Statistik</span><br />
-            <span className="text-white/70">Profesional</span>
+            Pusat Pelatihan &<br />
+            <span className="text-[#F0A500]">Riset Statistik</span><br />
+            <span className="text-white/70">Terpercaya</span>
           </h1>
           <p className="text-white/70 text-lg leading-relaxed mb-10 max-w-2xl">
-            AjiStat adalah mitra riset terpercaya Anda. Kami melayani pengolahan dan analisis data penelitian
-            kuantitatif & kualitatif — untuk skripsi, tesis, disertasi, dan riset institusional.
+            AjiStat adalah platform pelatihan statistik & pendampingan riset profesional —
+            dari Bootcamp, Kelas Privat, Short Class, hingga Konsultasi & Olah Data.
+            Untuk mahasiswa S1–S3, dosen, peneliti, dan institusi.
           </p>
           <div className="flex flex-wrap gap-4">
             <a href={WA_LINK('Halo AjiStat, saya ingin tanya layanan olah data')} target="_blank" rel="noopener noreferrer"
@@ -220,7 +221,7 @@ export default function AjiStatPage() {
         <div className="relative border-t border-white/10 bg-white/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm text-white/60">
-              {['5.000+ Klien Terbantu', 'Respons dalam 24 Jam', 'Berpengalaman Sejak 2015', '100% Kerahasiaan Data', 'Mahasiswa S1 — S3'].map((t) => (
+              {['5.000+ Klien Terbantu', 'Bootcamp · Privat · Short Class', 'Konsultasi & Olah Data', '10+ Software Statistik', 'Mahasiswa S1 — S3'].map((t) => (
                 <span key={t} className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#F0A500]" />{t}
                 </span>

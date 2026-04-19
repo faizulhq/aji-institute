@@ -33,7 +33,8 @@ export function VideoPreviewSection() {
                 className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-black px-6 py-3.5 rounded-2xl transition-all hover:scale-105 text-sm shadow-lg">
                 Daftar Sekarang <ArrowRight className="w-4 h-4" />
               </a>
-              <a href="/program-ajistat"
+              <a href="https://ajistat.aji-institute.com"
+                target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 border border-white/30 hover:border-white/60 text-white font-semibold px-6 py-3.5 rounded-2xl text-sm transition-all hover:bg-white/10">
                 Lihat Semua Program →
               </a>
