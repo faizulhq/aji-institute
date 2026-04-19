@@ -6,7 +6,7 @@ const LAYANAN_LINKS = [
   { label: 'Bootcamp Intensif',  href: '/bootcamp' },
   { label: 'Short Class',        href: '/short-class' },
   { label: 'Private Class',      href: '/private-class' },
-  { label: 'Konsultasi AjiStat', href: '/konsultasi' },
+  { label: 'AjiStat ↗', href: 'https://ajistat.aji-institute.com' },
   { label: 'In-House Training',  href: '/in-house-training' },
 ];
 

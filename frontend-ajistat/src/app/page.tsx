@@ -3,26 +3,26 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import { X } from 'lucide-react';
-import { TOOLS, TOPICS, TARGET_MARKET, WA_LINK } from '@/lib/config';
+import { X, ChevronRight } from 'lucide-react';
+import { TOOLS, TOPICS, TARGET_MARKET, WA_LINK, BOOTCAMP_PROGRAMS, PRIVATE_PROGRAMS, SHORT_CLASS_PROGRAMS } from '@/lib/config';
+import type { Program } from '@/lib/config';
+
+function formatPrice(p: number) {
+  return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(p);
+}
 
 /* ─── Target Market Modal ─── */
 type TargetItem = typeof TARGET_MARKET[0];
 
 function TargetModal({ item, onClose }: { item: TargetItem; onClose: () => void }) {
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-      onClick={onClose}>
-      <div className="relative bg-white rounded-3xl shadow-2xl max-w-lg w-full p-7 z-10 max-h-[90vh] overflow-y-auto"
-        onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={onClose}>
+      <div className="relative bg-white rounded-3xl shadow-2xl max-w-lg w-full p-7 z-10 max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+        <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors">
           <X className="w-4 h-4" />
         </button>
         <div className="mb-5">
-          <span className="inline-flex items-center gap-2 bg-[#162058]/10 text-[#162058] text-xs font-bold px-3 py-1 rounded-full mb-3">
-            Paket untuk {item.label}
-          </span>
+          <span className="inline-flex items-center gap-2 bg-[#162058]/10 text-[#162058] text-xs font-bold px-3 py-1 rounded-full mb-3">Paket untuk {item.label}</span>
           <h3 className="text-2xl font-black text-gray-900">{item.label}</h3>
           <p className="text-gray-500 text-sm mt-1">{item.desc}</p>
         </div>
@@ -40,7 +40,7 @@ function TargetModal({ item, onClose }: { item: TargetItem; onClose: () => void 
         <a href={WA_LINK(`Halo AjiStat, saya adalah ${item.label} dan ingin tanya paket layanan yang sesuai`)}
           target="_blank" rel="noopener noreferrer"
           className="mt-5 w-full flex items-center justify-center gap-2 bg-[#162058] hover:bg-[#1B3A8C] text-white font-bold py-3 rounded-xl transition-colors text-sm">
-          💬 Tanya Paket via WhatsApp
+          💬 Tanyakan via WhatsApp
         </a>
       </div>
     </div>
@@ -52,10 +52,8 @@ type ToolItem = typeof TOOLS[0];
 
 function ToolModal({ tool, onClose }: { tool: ToolItem; onClose: () => void }) {
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-      onClick={onClose}>
-      <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 z-10"
-        onClick={(e) => e.stopPropagation()}>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={onClose}>
+      <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 z-10" onClick={(e) => e.stopPropagation()}>
         <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center">
           <X className="w-4 h-4" />
         </button>
@@ -81,17 +79,111 @@ function ToolModal({ tool, onClose }: { tool: ToolItem; onClose: () => void }) {
         </div>
         <a href={WA_LINK(`Halo AjiStat, saya ingin belajar ${tool.name}`)} target="_blank" rel="noopener noreferrer"
           className="w-full flex items-center justify-center gap-2 bg-[#1B3A8C] hover:bg-[#2348A8] text-white font-bold py-3 rounded-xl transition-colors text-sm">
-          Tanya Kelas {tool.name}
+          Tanya Kelas {tool.name} via WA
         </a>
       </div>
     </div>
   );
 }
 
+/* ─── Service Modal (Bootcamp / Private / Short Class) ─── */
+interface ServiceModalProps {
+  title: string;
+  programs: Program[];
+  href: string;
+  onClose: () => void;
+}
+
+function ServiceModal({ title, programs, href, onClose }: ServiceModalProps) {
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={onClose}>
+      <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden z-10" onClick={(e) => e.stopPropagation()}>
+        <div className="bg-[#162058] px-5 py-4 flex items-center justify-between">
+          <div>
+            <p className="text-white/50 text-xs font-semibold uppercase tracking-wider">Program Tersedia</p>
+            <h3 className="text-white font-black text-base">{title}</h3>
+          </div>
+          <button onClick={onClose} className="text-white/50 hover:text-white w-8 h-8 rounded-full hover:bg-white/10 flex items-center justify-center transition-colors">
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+        <div className="p-4 space-y-2 max-h-72 overflow-y-auto">
+          {programs.map((p) => (
+            <Link key={p.id} href={`/program/${p.slug}`} onClick={onClose}
+              className="flex items-center justify-between gap-3 p-3 rounded-xl border border-gray-100 hover:border-[#162058]/25 hover:bg-gray-50 transition-all group">
+              <div className="flex-1 min-w-0">
+                <p className="text-gray-800 text-xs font-semibold leading-snug line-clamp-2 group-hover:text-[#162058] transition-colors">{p.title}</p>
+                <p className="text-gray-400 text-[10px] mt-0.5">{p.duration}</p>
+              </div>
+              <div className="text-right shrink-0">
+                <p className="text-[#162058] font-black text-xs">{formatPrice(p.price)}</p>
+                <p className="text-gray-300 text-[10px] line-through">{formatPrice(p.originalPrice)}</p>
+              </div>
+              <ChevronRight className="w-3.5 h-3.5 text-gray-300 group-hover:text-[#162058] transition-colors shrink-0" />
+            </Link>
+          ))}
+        </div>
+        <div className="px-4 pb-4 pt-1 border-t border-gray-100 flex items-center justify-between">
+          <p className="text-gray-400 text-xs">Menampilkan {programs.length} program</p>
+          <Link href={href} onClick={onClose}
+            className="text-[#162058] font-bold text-xs hover:underline flex items-center gap-1">
+            Lihat Selengkapnya <ChevronRight className="w-3 h-3" />
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── LAYANAN DATA ─── */
+type ServiceKey = 'konsultasi' | 'privat' | 'bootcamp' | 'shortclass';
+
+const LAYANAN = [
+  {
+    key: 'konsultasi' as ServiceKey,
+    subtitle: 'Pendampingan Riset',
+    title: 'Konsultasi & Olah Data',
+    desc: 'Pendampingan profesional untuk kebutuhan olah data penelitian Anda — dari metodologi hingga interpretasi hasil yang siap dipresentasikan.',
+    tags: ['Kuantitatif', 'Kualitatif', 'Campuran'],
+    waMsg: 'Halo AjiStat, saya ingin konsultasi olah data penelitian',
+  },
+  {
+    key: 'privat' as ServiceKey,
+    subtitle: '1-on-1 Intensif',
+    title: 'Kelas Privat',
+    desc: 'Pembelajaran 1-on-1 sesuai jadwal dan kebutuhan Anda. Langsung praktik software statistik dengan pendampingan intensif dari fasilitator expert.',
+    tags: ['Jadwal Fleksibel', '1-on-1', 'Praktik Langsung'],
+    href: '/private-class',
+  },
+  {
+    key: 'bootcamp' as ServiceKey,
+    subtitle: 'Intensif 3–5 Hari',
+    title: 'Bootcamp',
+    desc: 'Program pelatihan intensif terstruktur 3–5 hari. Pelajari satu software atau metode secara mendalam bersama komunitas peserta lainnya.',
+    tags: ['Intensif', 'Bersertifikat', 'Komunitas'],
+    href: '/bootcamp',
+  },
+  {
+    key: 'shortclass' as ServiceKey,
+    subtitle: 'Singkat & Padat',
+    title: 'Short Class',
+    desc: 'Kelas singkat 2–3 jam yang fokus pada satu topik statistik secara tuntas. Cocok untuk yang ingin menguasai teknik tertentu dengan cepat.',
+    tags: ['2–3 Jam', 'Terjangkau', 'Langsung Praktik'],
+    href: '/short-class',
+  },
+];
+
 /* ─── Main Page ─── */
 export default function AjiStatPage() {
   const [activeTarget, setActiveTarget] = useState<TargetItem | null>(null);
   const [activeTool, setActiveTool] = useState<ToolItem | null>(null);
+  const [activeService, setActiveService] = useState<ServiceKey | null>(null);
+
+  const serviceModalData: Record<Exclude<ServiceKey, 'konsultasi'>, { programs: Program[]; href: string }> = {
+    privat: { programs: PRIVATE_PROGRAMS, href: '/private-class' },
+    bootcamp: { programs: BOOTCAMP_PROGRAMS, href: '/bootcamp' },
+    shortclass: { programs: SHORT_CLASS_PROGRAMS, href: '/short-class' },
+  };
 
   return (
     <>
@@ -101,7 +193,6 @@ export default function AjiStatPage() {
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#F0A500] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#2348A8] rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
         </div>
-
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <span className="inline-flex items-center gap-2 bg-[#F0A500]/20 border border-[#F0A500]/40 text-[#F0A500] text-xs font-semibold px-4 py-1.5 rounded-full mb-6">
             Divisi Statistik & Riset — Aji Institute
@@ -116,9 +207,9 @@ export default function AjiStatPage() {
             kuantitatif & kualitatif — untuk skripsi, tesis, disertasi, dan riset institusional.
           </p>
           <div className="flex flex-wrap gap-4">
-            <a href={WA_LINK('Halo AjiStat, saya ingin konsultasi olah data')} target="_blank" rel="noopener noreferrer"
+            <a href={WA_LINK('Halo AjiStat, saya ingin tanya layanan olah data')} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-black px-8 py-4 rounded-2xl transition-colors text-sm shadow-xl">
-              Konsultasi Sekarang
+              Hubungi Kami via WhatsApp
             </a>
             <Link href="#layanan"
               className="inline-flex items-center gap-2 bg-white/10 border border-white/20 hover:bg-white/20 text-white font-bold px-8 py-4 rounded-2xl transition-colors text-sm">
@@ -126,15 +217,12 @@ export default function AjiStatPage() {
             </Link>
           </div>
         </div>
-
-        {/* Trust strip */}
         <div className="relative border-t border-white/10 bg-white/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex flex-wrap gap-x-8 gap-y-2 text-sm text-white/60">
               {['5.000+ Klien Terbantu', 'Respons dalam 24 Jam', 'Berpengalaman Sejak 2015', '100% Kerahasiaan Data', 'Mahasiswa S1 — S3'].map((t) => (
                 <span key={t} className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#F0A500]" />
-                  {t}
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F0A500]" />{t}
                 </span>
               ))}
             </div>
@@ -169,88 +257,39 @@ export default function AjiStatPage() {
             <h2 className="text-3xl font-black text-gray-900 mb-2">Solusi Lengkap untuk Riset Anda</h2>
             <p className="text-gray-500">Dari konsultasi awal hingga laporan final — kami dampingi setiap tahap penelitian Anda.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                title: 'Konsultasi Data',
-                subtitle: 'Pendampingan Riset',
-                desc: 'Pendampingan profesional untuk kebutuhan olah data penelitian Anda — dari metodologi hingga interpretasi hasil yang siap dipresentasikan.',
-                tags: ['Kuantitatif', 'Kualitatif', 'Campuran'],
-                href: WA_LINK('Halo AjiStat, saya ingin konsultasi data'),
-                cta: 'Mulai Konsultasi',
-              },
-              {
-                title: 'Kelas Privat',
-                subtitle: '1-on-1 Intensif',
-                desc: 'Pembelajaran 1-on-1 sesuai jadwal dan kebutuhan Anda. Langsung praktik software statistik dengan pendampingan intensif dari fasilitator expert.',
-                tags: ['Jadwal Fleksibel', '1-on-1', 'Praktik Langsung'],
-                href: '/private-class',
-                cta: 'Lihat Kelas Privat',
-              },
-              {
-                title: 'Bootcamp',
-                subtitle: 'Intensif 3–5 Hari',
-                desc: 'Program pelatihan intensif terstruktur 3–5 hari. Pelajari satu software atau metode secara mendalam bersama komunitas peserta lainnya.',
-                tags: ['Intensif', 'Bersertifikat', 'Komunitas'],
-                href: '/bootcamp',
-                cta: 'Lihat Bootcamp',
-              },
-            ].map((s) => (
-              <div key={s.title} className="border border-gray-200 rounded-2xl p-6 hover:shadow-lg hover:-translate-y-1 transition-all group">
-                <p className="text-[#2348A8] text-xs font-bold uppercase tracking-wider mb-1">{s.subtitle}</p>
-                <h3 className="text-xl font-black text-gray-900 mb-3">{s.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed mb-4">{s.desc}</p>
-                <div className="flex flex-wrap gap-1.5 mb-5">
-                  {s.tags.map((t) => (
-                    <span key={t} className="text-xs font-semibold px-2.5 py-1 bg-[#162058]/8 text-[#162058] rounded-full">{t}</span>
-                  ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {LAYANAN.map((s) => {
+              const isKonsultasi = s.key === 'konsultasi';
+              const content = (
+                <div className="border border-gray-200 rounded-2xl p-6 hover:shadow-lg hover:-translate-y-1 transition-all group h-full flex flex-col cursor-pointer">
+                  <p className="text-[#2348A8] text-xs font-bold uppercase tracking-wider mb-1">{s.subtitle}</p>
+                  <h3 className="text-xl font-black text-gray-900 mb-3">{s.title}</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed mb-4 flex-1">{s.desc}</p>
+                  <div className="flex flex-wrap gap-1.5 mb-5">
+                    {s.tags.map((t) => (
+                      <span key={t} className="text-xs font-semibold px-2.5 py-1 bg-[#162058]/8 text-[#162058] rounded-full">{t}</span>
+                    ))}
+                  </div>
+                  <span className="text-[#162058] font-bold text-sm group-hover:text-[#2348A8] transition-colors group-hover:underline">
+                    {isKonsultasi ? 'Hubungi via WhatsApp →' : `Lihat Program →`}
+                  </span>
                 </div>
-                {s.href.startsWith('http') ? (
-                  <a href={s.href} target="_blank" rel="noopener noreferrer"
-                    className="text-[#162058] font-bold text-sm hover:text-[#2348A8] transition-colors group-hover:underline">
-                    {s.cta} →
+              );
+              if (isKonsultasi) {
+                return (
+                  <a key={s.key} href={WA_LINK(s.waMsg)} target="_blank" rel="noopener noreferrer">
+                    {content}
                   </a>
-                ) : (
-                  <Link href={s.href} className="text-[#162058] font-bold text-sm hover:text-[#2348A8] transition-colors group-hover:underline">
-                    {s.cta} →
-                  </Link>
-                )}
-              </div>
-            ))}
+                );
+              }
+              return (
+                <button key={s.key} onClick={() => setActiveService(s.key)} className="text-left">
+                  {content}
+                </button>
+              );
+            })}
           </div>
         </div>
-      </section>
-
-      {/* ─── SOFTWARE TOOLS ─── */}
-      <section id="software" className="py-16 bg-gray-50 border-y border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <p className="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-2">
-              Tools & Software yang Kami Kuasai
-            </p>
-            <p className="text-gray-500 text-xs">Klik logo untuk informasi lebih lanjut</p>
-          </div>
-          <div className="flex flex-wrap justify-center gap-4">
-            {TOOLS.map((tool) => (
-              <button key={tool.name} onClick={() => setActiveTool(tool)}
-                className="group flex flex-col items-center gap-2 p-3 rounded-2xl hover:bg-white hover:shadow-lg transition-all duration-200 hover:-translate-y-1"
-                title={`Klik untuk info tentang ${tool.name}`}>
-                <div className="w-16 h-16 rounded-2xl overflow-hidden flex items-center justify-center shadow-md group-hover:scale-110 transition-all bg-white border border-gray-100">
-                  {tool.logo ? (
-                    <Image src={tool.logo} alt={tool.name} width={48} height={48} className="object-contain p-1" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-white font-black text-sm"
-                      style={{ backgroundColor: tool.color }}>
-                      {tool.name.length <= 4 ? tool.name : tool.name.slice(0, 3)}
-                    </div>
-                  )}
-                </div>
-                <span className="text-xs text-gray-500 group-hover:text-gray-800 font-medium transition-colors">{tool.name}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-        {activeTool && <ToolModal tool={activeTool} onClose={() => setActiveTool(null)} />}
       </section>
 
       {/* ─── TOPIK ─── */}
@@ -272,22 +311,29 @@ export default function AjiStatPage() {
       </section>
 
       {/* ─── UNTUK SIAPA ─── */}
-      <section id="target" className="py-16 bg-white">
+      <section id="target" className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-10">
+          <div className="text-center mb-10">
             <p className="text-[#2348A8] text-sm font-semibold uppercase tracking-widest mb-2">Untuk Siapa?</p>
             <h2 className="text-3xl font-black text-gray-900 mb-2">Melayani Berbagai Kalangan</h2>
             <p className="text-gray-500 text-sm">Klik kartu untuk melihat paket & estimasi harga yang sesuai.</p>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {TARGET_MARKET.map((t) => (
               <button key={t.key} onClick={() => setActiveTarget(t)}
-                className="group border border-gray-200 rounded-2xl p-5 text-center hover:border-[#162058]/40 hover:shadow-lg hover:-translate-y-1 transition-all cursor-pointer text-left">
-                <p className="font-black text-gray-900 text-sm mb-1 group-hover:text-[#162058] transition-colors">{t.label}</p>
-                <p className="text-gray-400 text-xs leading-snug mb-3">{t.desc}</p>
-                <span className="text-[10px] font-bold text-[#2348A8] bg-[#2348A8]/10 px-2 py-0.5 rounded-full">
-                  Lihat Paket →
-                </span>
+                className="group border-2 border-gray-100 bg-white rounded-2xl p-6 text-left hover:border-[#162058]/30 hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer">
+                <div className="flex items-start justify-between mb-3">
+                  <span className="text-4xl">{t.icon}</span>
+                  <span className="text-[10px] font-bold text-[#2348A8] bg-[#2348A8]/10 px-2 py-0.5 rounded-full mt-1">
+                    {t.packages.length} paket tersedia
+                  </span>
+                </div>
+                <p className="font-black text-gray-900 text-lg mb-1 group-hover:text-[#162058] transition-colors">{t.label}</p>
+                <p className="text-gray-400 text-sm leading-snug mb-4">{t.desc}</p>
+                <div className="flex items-center gap-1.5 text-[#162058] font-bold text-sm">
+                  <span>Lihat Paket</span>
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
               </button>
             ))}
           </div>
@@ -295,17 +341,57 @@ export default function AjiStatPage() {
         {activeTarget && <TargetModal item={activeTarget} onClose={() => setActiveTarget(null)} />}
       </section>
 
+      {/* ─── SOFTWARE TOOLS ─── */}
+      <section id="software" className="py-16 bg-white border-y border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <p className="text-[#2348A8] text-sm font-semibold uppercase tracking-widest mb-2">Tools & Software</p>
+            <h2 className="text-3xl font-black text-gray-900 mb-2">Software yang Kami Kuasai</h2>
+            <p className="text-gray-500 text-sm">Klik logo untuk informasi lebih lanjut</p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-4">
+            {TOOLS.map((tool) => (
+              <button key={tool.name} onClick={() => setActiveTool(tool)}
+                className="group flex flex-col items-center gap-2 p-3 rounded-2xl hover:bg-gray-50 hover:shadow-lg transition-all duration-200 hover:-translate-y-1"
+                title={`Klik untuk info tentang ${tool.name}`}>
+                <div className="w-16 h-16 rounded-2xl overflow-hidden flex items-center justify-center shadow-md group-hover:scale-110 transition-all bg-white border border-gray-100">
+                  {tool.logo ? (
+                    <Image src={tool.logo} alt={tool.name} width={48} height={48} className="object-contain p-1" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-white font-black text-sm" style={{ backgroundColor: tool.color }}>
+                      {tool.name.length <= 4 ? tool.name : tool.name.slice(0, 3)}
+                    </div>
+                  )}
+                </div>
+                <span className="text-xs text-gray-500 group-hover:text-gray-800 font-medium transition-colors">{tool.name}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+        {activeTool && <ToolModal tool={activeTool} onClose={() => setActiveTool(null)} />}
+      </section>
+
       {/* ─── CTA ─── */}
       <section className="bg-[#F0A500] py-14">
         <div className="max-w-3xl mx-auto text-center px-4">
           <h2 className="text-2xl font-black text-[#162058] mb-3">Siap Mulai Riset Anda?</h2>
-          <p className="text-[#162058]/70 mb-6 text-sm">Hubungi tim AjiStat sekarang dan dapatkan konsultasi gratis untuk menentukan layanan terbaik.</p>
-          <a href={WA_LINK('Halo AjiStat, saya ingin konsultasi riset')} target="_blank" rel="noopener noreferrer"
+          <p className="text-[#162058]/70 mb-6 text-sm">Hubungi tim AjiStat sekarang dan temukan layanan terbaik untuk kebutuhan riset Anda.</p>
+          <a href={WA_LINK('Halo AjiStat, saya ingin tanya layanan yang sesuai dengan kebutuhan riset saya')} target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 bg-[#162058] hover:bg-[#1B3A8C] text-white font-black px-8 py-4 rounded-2xl transition-colors">
-            Konsultasi Gratis via WhatsApp
+            Hubungi Kami via WhatsApp
           </a>
         </div>
       </section>
+
+      {/* ─── Service Modals ─── */}
+      {activeService && activeService !== 'konsultasi' && (
+        <ServiceModal
+          title={LAYANAN.find(l => l.key === activeService)!.title}
+          programs={serviceModalData[activeService as Exclude<ServiceKey, 'konsultasi'>].programs}
+          href={serviceModalData[activeService as Exclude<ServiceKey, 'konsultasi'>].href}
+          onClose={() => setActiveService(null)}
+        />
+      )}
     </>
   );
 }

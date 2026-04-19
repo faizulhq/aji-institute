@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { WA_LINK, CONTACT, BRAND } from '@/lib/config';
 
@@ -24,12 +23,17 @@ export function Footer() {
 
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl px-4 py-3 inline-block mb-4">
-              <Image src="/images/logo.png" alt="Aji Institute" width={160} height={48} className="h-10 w-auto" />
+            <div className="flex items-center gap-2.5 mb-4">
+              <div className="w-9 h-9 rounded-xl bg-[#F0A500] flex items-center justify-center shrink-0">
+                <span className="text-[#162058] font-black text-xs">AS</span>
+              </div>
+              <div>
+                <span className="text-white font-black text-lg leading-none block">AjiStat</span>
+                <span className="text-white/40 text-[10px] leading-none">by Aji Institute</span>
+              </div>
             </div>
-            <p className="text-[#F0A500] font-bold text-sm mb-1">AjiStat</p>
             <p className="text-white/50 text-sm leading-relaxed">
-              Divisi Statistik & Riset dari Aji Institute — mitra analisis data terpercaya untuk mahasiswa, peneliti, dan profesional.
+              Divisi Statistik &amp; Riset dari Aji Institute — mitra analisis data terpercaya untuk mahasiswa, peneliti, dan profesional.
             </p>
           </div>
 
@@ -79,9 +83,9 @@ export function Footer() {
               </li>
               <li className="leading-snug">{CONTACT.address}</li>
             </ul>
-            <a href={WA_LINK('Halo AjiStat, saya ingin konsultasi')} target="_blank" rel="noopener noreferrer"
+            <a href={WA_LINK('Halo AjiStat, saya ingin tanya layanan')} target="_blank" rel="noopener noreferrer"
               className="mt-6 inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold px-4 py-2.5 rounded-xl text-sm transition-colors">
-              Konsultasi Gratis
+              Hubungi via WhatsApp
             </a>
           </div>
         </div>
@@ -89,7 +93,10 @@ export function Footer() {
         {/* Bottom */}
         <div className="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-white/30 text-xs">
-            © {new Date().getFullYear()} AjiStat by {BRAND.legalName}. All rights reserved.
+            © {new Date().getFullYear()} AjiStat — Bagian dari{' '}
+            <a href="https://aji-institute.com" target="_blank" rel="noopener noreferrer" className="hover:text-white/60 transition-colors">
+              Aji Institute
+            </a>{' '}({BRAND.legalName}). All rights reserved.
           </p>
           <p className="text-white/20 text-xs">Dibuat untuk memajukan riset Indonesia</p>
         </div>

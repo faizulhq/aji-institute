@@ -76,7 +76,7 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <a href={WA_LINK('Halo AjiStat, saya ingin konsultasi data')} target="_blank" rel="noopener noreferrer"
             className="hidden sm:flex items-center gap-1.5 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] text-xs font-bold px-4 py-2 rounded-xl transition-colors">
-            Konsultasi Gratis
+            Hubungi Kami
           </a>
           <button onClick={() => setMobileOpen(!mobileOpen)}
             className="md:hidden p-2 rounded-lg text-white/75 hover:text-white hover:bg-white/10 transition-colors">
@@ -103,7 +103,7 @@ export function Navbar() {
             <div className="pt-3 border-t border-white/10">
               <a href={WA_LINK('Halo AjiStat, saya ingin konsultasi')} target="_blank" rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 w-full bg-[#F0A500] text-[#162058] font-bold py-2.5 rounded-xl text-sm">
-                Konsultasi Gratis via WhatsApp
+                Hubungi Kami via WhatsApp
               </a>
             </div>
           </div>

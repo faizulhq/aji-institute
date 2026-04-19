@@ -19,7 +19,7 @@ const LAYANAN_LINKS = [
   { label: 'Private Class',     href: '/private-class' },
   { label: 'Short Class',       href: '/short-class' },
   { label: 'Workshop',          href: '/workshop' },
-  { label: 'Konsultasi AjiStat', href: '/konsultasi' },
+  { label: 'AjiStat ↗', href: 'https://ajistat.aji-institute.com', external: true },
   { label: 'In-House Training', href: '/in-house-training' },
 ];
 
@@ -146,14 +146,23 @@ export function Navbar() {
 
               {layananOpen && (
                 <div className="absolute top-full left-0 mt-2 w-52 bg-[#0d1632] border border-white/15 rounded-2xl shadow-2xl py-2 z-50">
-                  {LAYANAN_LINKS.map((item) => (
-                    <Link key={item.href} href={item.href}
-                      onClick={() => setLayananOpen(false)}
-                      className={cn('flex items-center gap-3 px-4 py-2.5 text-sm transition-colors',
-                        pathname === item.href ? 'text-[#4A72D4] bg-white/8' : 'text-white/65 hover:text-white hover:bg-white/8')}>
-                      {item.label}
-                    </Link>
-                  ))}
+                  {LAYANAN_LINKS.map((item) =>
+                    'external' in item && item.external ? (
+                      <a key={item.href} href={item.href} target="_blank" rel="noopener noreferrer"
+                        onClick={() => setLayananOpen(false)}
+                        className={cn('flex items-center gap-3 px-4 py-2.5 text-sm transition-colors text-white/65 hover:text-white hover:bg-white/8')}>
+                        {item.label}
+                      </a>
+                    ) : (
+                      <Link key={item.href} href={item.href}
+                        onClick={() => setLayananOpen(false)}
+                        className={cn('flex items-center gap-3 px-4 py-2.5 text-sm transition-colors',
+                          pathname === item.href ? 'text-[#4A72D4] bg-white/8' : 'text-white/65 hover:text-white hover:bg-white/8')}>
+                        {item.label}
+                      </Link>
+                    )
+                  )}
+
                 </div>
               )}
             </div>
