@@ -1,4 +1,9 @@
 import Link from 'next/link';
+import {
+  MessageCircle, Search, Settings2, BarChart2, CheckCircle,
+  GraduationCap, BookOpen, FlaskConical, Users, Building2,
+  Shield, Clock, Award, RefreshCw,
+} from 'lucide-react';
 import { WA_LINK, CONTACT } from '@/lib/config';
 
 const METHODS = [
@@ -6,31 +11,31 @@ const METHODS = [
     step: '01',
     title: 'Konsultasi Awal',
     desc: 'Anda menceritakan kebutuhan riset — jenis penelitian, software yang digunakan, deadline, dan permasalahan yang dihadapi. Kami mendengarkan dan memberikan gambaran awal solusinya.',
-    icon: '💬',
+    Icon: MessageCircle,
   },
   {
     step: '02',
     title: 'Need Assessment',
     desc: 'Tim AjiStat menganalisis kebutuhan Anda secara mendalam — metodologi penelitian, jenis data, teknik analisis yang tepat, serta estimasi waktu pengerjaan.',
-    icon: '🔍',
+    Icon: Search,
   },
   {
     step: '03',
     title: 'Pengolahan Data',
     desc: 'Data Anda diproses oleh konsultan berpengalaman menggunakan software statistik yang sesuai (SPSS, SmartPLS, R, Python, NVivo, dll.) dengan standar akademik yang ketat.',
-    icon: '⚙️',
+    Icon: Settings2,
   },
   {
     step: '04',
     title: 'Interpretasi & Pelaporan',
     desc: 'Hasil analisis dijelaskan secara sistematis — bukan sekadar output software, tapi pemahaman mendalam tentang temuan dan maknanya untuk penelitian Anda.',
-    icon: '📊',
+    Icon: BarChart2,
   },
   {
     step: '05',
     title: 'Revisi & Pendampingan',
     desc: 'Kami mendampingi hingga laporan siap dipresentasikan atau diajukan ke pembimbing. Revisi termasuk dalam layanan untuk memastikan hasil maksimal.',
-    icon: '✅',
+    Icon: CheckCircle,
   },
 ];
 
@@ -56,18 +61,18 @@ const SERVICES = [
 ];
 
 const TARGET = [
-  { icon: '🎓', label: 'Mahasiswa S1', desc: 'Skripsi, tugas akhir, laporan penelitian' },
-  { icon: '📖', label: 'Mahasiswa S2', desc: 'Tesis, penelitian magister' },
-  { icon: '🔬', label: 'Mahasiswa S3', desc: 'Disertasi, riset doktoral' },
-  { icon: '👨‍🏫', label: 'Dosen & Peneliti', desc: 'Penelitian ilmiah, pengabdian masyarakat' },
-  { icon: '🏢', label: 'Instansi & Perusahaan', desc: 'Riset pasar, evaluasi program, data bisnis' },
+  { Icon: GraduationCap, label: 'Mahasiswa S1', desc: 'Skripsi, tugas akhir, laporan penelitian' },
+  { Icon: BookOpen,      label: 'Mahasiswa S2', desc: 'Tesis, penelitian magister' },
+  { Icon: FlaskConical,  label: 'Mahasiswa S3', desc: 'Disertasi, riset doktoral' },
+  { Icon: Users,         label: 'Dosen & Peneliti', desc: 'Penelitian ilmiah, pengabdian masyarakat' },
+  { Icon: Building2,     label: 'Instansi & Perusahaan', desc: 'Riset pasar, evaluasi program, data bisnis' },
 ];
 
 const GUARANTEES = [
-  { title: '100% Kerahasiaan', desc: 'Data dan informasi penelitian Anda sepenuhnya terjaga kerahasiaannya.' },
-  { title: 'Konsultan Berpengalaman', desc: 'Tim berpengalaman sejak 2015, melayani 5.000+ klien dari berbagai universitas.' },
-  { title: 'Tepat Waktu', desc: 'Pengerjaan sesuai deadline yang disepakati, dengan update progres berkala.' },
-  { title: 'Revisi Included', desc: 'Revisi termasuk dalam paket hingga hasil sesuai kebutuhan Anda.' },
+  { Icon: Shield,    title: '100% Kerahasiaan', desc: 'Data dan informasi penelitian Anda sepenuhnya terjaga kerahasiaannya.' },
+  { Icon: Award,     title: 'Konsultan Berpengalaman', desc: 'Tim berpengalaman sejak 2015, melayani 5.000+ klien dari berbagai universitas.' },
+  { Icon: Clock,     title: 'Tepat Waktu', desc: 'Pengerjaan sesuai deadline yang disepakati, dengan update progres berkala.' },
+  { Icon: RefreshCw, title: 'Revisi Included', desc: 'Revisi termasuk dalam paket hingga hasil sesuai kebutuhan Anda.' },
 ];
 
 export default function KonsultasiPage() {
@@ -137,13 +142,12 @@ export default function KonsultasiPage() {
             </p>
           </div>
           <div className="relative">
-            {/* Connector line */}
             <div className="absolute left-8 top-8 bottom-8 w-0.5 bg-gradient-to-b from-[#162058] to-[#F0A500] hidden md:block" />
             <div className="space-y-6">
               {METHODS.map((m) => (
                 <div key={m.step} className="relative flex gap-6 items-start">
-                  <div className="shrink-0 w-16 h-16 rounded-2xl bg-[#162058] flex flex-col items-center justify-center z-10 shadow-lg">
-                    <span className="text-xl">{m.icon}</span>
+                  <div className="shrink-0 w-16 h-16 rounded-2xl bg-[#162058] flex flex-col items-center justify-center z-10 shadow-lg gap-1">
+                    <m.Icon className="w-5 h-5 text-white" />
                     <span className="text-[#F0A500] text-[10px] font-black">{m.step}</span>
                   </div>
                   <div className="flex-1 bg-gray-50 rounded-2xl p-5 border border-gray-100 hover:shadow-md transition-shadow">
@@ -193,7 +197,9 @@ export default function KonsultasiPage() {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
             {TARGET.map((t) => (
               <div key={t.label} className="text-center p-5 rounded-2xl border border-gray-200 bg-gray-50 hover:shadow-md hover:-translate-y-1 transition-all">
-                <div className="text-4xl mb-3">{t.icon}</div>
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#162058] to-[#2348A8] flex items-center justify-center mx-auto mb-3">
+                  <t.Icon className="w-6 h-6 text-white" />
+                </div>
                 <p className="font-black text-gray-900 text-sm mb-1">{t.label}</p>
                 <p className="text-gray-400 text-xs leading-snug">{t.desc}</p>
               </div>
@@ -212,6 +218,9 @@ export default function KonsultasiPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {GUARANTEES.map((g) => (
               <div key={g.title} className="bg-white/8 border border-white/15 rounded-2xl p-5">
+                <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center mb-3">
+                  <g.Icon className="w-5 h-5 text-[#F0A500]" />
+                </div>
                 <p className="text-[#F0A500] font-black mb-2">{g.title}</p>
                 <p className="text-white/60 text-sm leading-relaxed">{g.desc}</p>
               </div>
