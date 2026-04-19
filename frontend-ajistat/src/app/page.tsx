@@ -40,7 +40,7 @@ function TargetModal({ item, onClose }: { item: TargetItem; onClose: () => void 
         <a href={WA_LINK(`Halo AjiStat, saya adalah ${item.label} dan ingin tanya paket layanan yang sesuai`)}
           target="_blank" rel="noopener noreferrer"
           className="mt-5 w-full flex items-center justify-center gap-2 bg-[#162058] hover:bg-[#1B3A8C] text-white font-bold py-3 rounded-xl transition-colors text-sm">
-          💬 Tanyakan via WhatsApp
+          Tanyakan via WhatsApp
         </a>
       </div>
     </div>
@@ -271,15 +271,15 @@ export default function AjiStatPage() {
                     ))}
                   </div>
                   <span className="text-[#162058] font-bold text-sm group-hover:text-[#2348A8] transition-colors group-hover:underline">
-                    {isKonsultasi ? 'Hubungi via WhatsApp →' : `Lihat Program →`}
+                    {isKonsultasi ? 'Selengkapnya →' : `Lihat Program →`}
                   </span>
                 </div>
               );
               if (isKonsultasi) {
                 return (
-                  <a key={s.key} href={WA_LINK(s.waMsg)} target="_blank" rel="noopener noreferrer">
+                  <Link key={s.key} href="/konsultasi">
                     {content}
-                  </a>
+                  </Link>
                 );
               }
               return (
@@ -305,7 +305,9 @@ export default function AjiStatPage() {
               <button key={t.key} onClick={() => setActiveTarget(t)}
                 className="group border-2 border-gray-100 bg-white rounded-2xl p-6 text-left hover:border-[#162058]/30 hover:shadow-xl hover:-translate-y-1 transition-all cursor-pointer">
                 <div className="flex items-start justify-between mb-3">
-                  <span className="text-4xl">{t.icon}</span>
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#162058] to-[#2348A8] flex items-center justify-center text-white font-black text-sm">
+                    {t.icon}
+                  </div>
                   <span className="text-[10px] font-bold text-[#2348A8] bg-[#2348A8]/10 px-2 py-0.5 rounded-full mt-1">
                     {t.packages.length} paket tersedia
                   </span>

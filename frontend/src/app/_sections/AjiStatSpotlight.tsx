@@ -4,11 +4,11 @@ import { ArrowRight } from 'lucide-react';
 import { TOOLS, WA_LINK } from '@/lib/config';
 
 const FORMAT_BELAJAR = [
-  { fmt: 'Bootcamp', desc: 'Intensif 3–5 hari, materi mendalam', href: '/bootcamp' },
-  { fmt: 'Private Class', desc: 'Jadwal fleksibel, 1-on-1 mentor', href: '/private-class' },
-  { fmt: 'Short Class', desc: 'Topik spesifik, 2–4 jam per sesi', href: '/short-class' },
-  { fmt: 'Workshop', desc: 'Hands-on praktik dengan dataset nyata', href: '/workshop' },
-  { fmt: 'Konsultasi', desc: 'Pendampingan riset personal', href: '/konsultasi' },
+  { fmt: 'Bootcamp', desc: 'Intensif 3–5 hari, materi mendalam', href: 'https://ajistat.aji-institute.com/bootcamp' },
+  { fmt: 'Private Class', desc: 'Jadwal fleksibel, 1-on-1 mentor', href: 'https://ajistat.aji-institute.com/private-class' },
+  { fmt: 'Short Class', desc: 'Topik spesifik, 2–4 jam per sesi', href: 'https://ajistat.aji-institute.com/short-class' },
+  { fmt: 'Workshop', desc: 'Hands-on praktik dengan dataset nyata', href: 'https://ajistat.aji-institute.com' },
+  { fmt: 'Konsultasi', desc: 'Pendampingan riset personal', href: 'https://ajistat.aji-institute.com/konsultasi' },
 ];
 
 const STATS_AJISTAT = [
@@ -58,14 +58,15 @@ export function AjiStatSpotlight() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3">
-                <a href="/program-ajistat"
+                <a href="https://ajistat.aji-institute.com"
+                  target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-black px-7 py-3.5 rounded-xl transition-all hover:scale-105">
                   Lihat Semua Program AjiStat <ArrowRight className="w-4 h-4" />
                 </a>
-                <a href={WA_LINK('Halo, saya ingin konsultasi program AjiStat')}
+                <a href={WA_LINK('Halo, saya ingin tanya tentang program AjiStat')}
                   target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 border border-white/30 hover:border-white/60 text-white font-semibold px-7 py-3.5 rounded-xl transition-all hover:bg-white/10">
-                  Konsultasi Gratis
+                  Hubungi Kami
                 </a>
               </div>
             </div>
@@ -75,14 +76,15 @@ export function AjiStatSpotlight() {
               <p className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-4">Format Belajar Tersedia</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {FORMAT_BELAJAR.map((item) => (
-                  <Link key={item.fmt} href={item.href}
+                  <a key={item.fmt} href={item.href}
+                    target="_blank" rel="noopener noreferrer"
                     className="flex items-start gap-3 bg-white/10 hover:bg-white/20 border border-white/15 rounded-xl p-4 transition-all group">
                     <span className="w-2 h-2 rounded-full bg-[#4A72D4] mt-1.5 shrink-0" />
                     <div>
                       <p className="text-white font-bold text-sm group-hover:text-[#F0A500] transition-colors">{item.fmt}</p>
                       <p className="text-white/50 text-xs">{item.desc}</p>
                     </div>
-                  </Link>
+                  </a>
                 ))}
                 {/* Stats card */}
                 <div className="flex items-center justify-around bg-[#F0A500]/20 border border-[#F0A500]/30 rounded-xl p-4">

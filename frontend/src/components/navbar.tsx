@@ -19,7 +19,7 @@ const LAYANAN_LINKS = [
   { label: 'Private Class',     href: '/private-class' },
   { label: 'Short Class',       href: '/short-class' },
   { label: 'Workshop',          href: '/workshop' },
-  { label: 'AjiStat ↗', href: 'https://ajistat.aji-institute.com', external: true },
+  { label: 'Konsultasi AjiStat', href: 'https://ajistat.aji-institute.com', external: true },
   { label: 'In-House Training', href: '/in-house-training' },
 ];
 

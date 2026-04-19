@@ -196,7 +196,7 @@ export default function ProgramDetailClient({ program }: { program: Program }) {
         </div>
       </div>
 
-      {/* Mobile bar */}
+      {/* MOBILE BAR */}
       <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-gray-100 shadow-2xl px-4 py-3 flex items-center gap-3">
         <div className="flex-1">
           <p className="text-[#162058] font-black text-base leading-none">{formatPrice(program.price)}</p>
@@ -212,7 +212,44 @@ export default function ProgramDetailClient({ program }: { program: Program }) {
         </a>
       </div>
 
-      {/* CONTENT */}
+      {/* VIDEO PREVIEW */}
+      {program.previewVideo && (
+        <section className="bg-[#0d1632] relative overflow-hidden">
+          <div className="absolute inset-0 opacity-[0.04]"
+            style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+          <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+              <div>
+                <span className="inline-block text-xs font-bold text-[#F0A500] bg-[#F0A500]/10 border border-[#F0A500]/30 px-4 py-1.5 rounded-full mb-5 uppercase tracking-widest">
+                  Cuplikan Sesi
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-black text-white leading-tight mb-4">
+                  Lihat Bagaimana Kami Mengajar
+                </h2>
+                <p className="text-white/65 leading-relaxed mb-6 text-sm">
+                  Intip cuplikan sesi langsung {program.title} — bagaimana materi yang kompleks kami sajikan dengan jelas, terstruktur, dan langsung bisa dipraktikkan.
+                </p>
+                <a href={WA_LINK(`Halo AjiStat, saya tertarik bergabung program ${program.title} setelah melihat cuplikan`)}
+                  target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-black px-6 py-3 rounded-xl transition-colors text-sm">
+                  Daftar Sekarang via WhatsApp
+                </a>
+              </div>
+              <div className="flex justify-center">
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black w-full max-w-sm" style={{ aspectRatio: '9/16' }}>
+                  <video src={program.previewVideo} autoPlay muted loop playsInline className="w-full h-full object-cover" />
+                  <div className="absolute bottom-4 left-4 bg-[#F0A500] text-[#162058] rounded-xl px-3 py-2 shadow-xl">
+                    <p className="text-[10px] font-bold uppercase tracking-wide">{TYPE_LABEL[program.type] ?? 'Program'}</p>
+                    <p className="text-sm font-black leading-tight">AjiStat</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 pb-28 lg:pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2 space-y-10">
