@@ -56,7 +56,7 @@ export default function AjiLinguaPage() {
     queryFn: () => programsApi.list().then((r) => r.data),
   });
 
-  const ajiLinguaFilter = (p: Program) => p.tags.some((t) => ['ajilingua', 'ajilangua'].includes(t.toLowerCase()));
+  const ajiLinguaFilter = (p: Program) => p.tags.some((t) => t.toLowerCase() === 'ajilingua');
 
   return (
     <>

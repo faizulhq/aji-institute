@@ -56,7 +56,7 @@ export default function AjiAIPage() {
     queryFn: () => programsApi.list().then((r) => r.data),
   });
 
-  const ajiAIFilter = (p: Program) => p.tags.some((t) => ['ajiai', 'ajidigi'].includes(t.toLowerCase()));
+  const ajiAIFilter = (p: Program) => p.tags.some((t) => t.toLowerCase() === 'ajiai');
 
   return (
     <>

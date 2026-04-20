@@ -16,9 +16,9 @@ class Program(models.Model):
     BRAND_CHOICES = [
         ('ajistat',  'AjiStat — Statistika & Riset'),
         ('ajibiz',   'AjiBiz — Bisnis & Kewirausahaan'),
-        ('ajipr',    'AjiPR — Public Relations & Komunikasi'),
-        ('ajidigi',  'AjiDigi — Digital Marketing'),
-        ('ajilangua','AjiLangua — Bahasa & Komunikasi'),
+        ('ajicomm',  'AjiComm — Public Relations & Komunikasi'),
+        ('ajiai',    'AjiAI — Digital Marketing & AI'),
+        ('ajilingua','AjiLingua — Bahasa & Komunikasi'),
     ]
 
     title = models.CharField(max_length=255)
