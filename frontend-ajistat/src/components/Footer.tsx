@@ -12,7 +12,9 @@ const COMPANY_LINKS = [
   { label: 'Tentang Aji Institute', href: 'https://aji-institute.com/tentang' },
   { label: 'Blog & Artikel', href: 'https://aji-institute.com/blog' },
   { label: 'AjiBiz', href: 'https://aji-institute.com/program-ajibiz' },
-  { label: 'AjiDigi', href: 'https://aji-institute.com/program-ajidigi' },
+  { label: 'AjiComm', href: 'https://aji-institute.com/program-ajicomm' },
+  { label: 'AjiAI', href: 'https://aji-institute.com/program-ajiai' },
+  { label: 'AjiLingua', href: 'https://aji-institute.com/program-ajilingua' },
 ];
 
 export function Footer() {

@@ -4,10 +4,10 @@ const API_BASE =
   process.env.NEXT_PUBLIC_API_URL ?? 'https://api.aji-institute.com';
 
 // Filter program yang termasuk divisi AjiStat
-// (tidak punya tag divisi lain: ajibiz, ajipr, ajidigi, ajilangua)
+// (tidak punya tag divisi lain: ajibiz, ajicomm, ajiai, ajilingua)
 const AJISTAT_FILTER = (p: ApiProgram) =>
   !p.tags.some((t) =>
-    ['ajibiz', 'ajipr', 'ajidigi', 'ajilangua'].includes(t.toLowerCase())
+    ['ajibiz', 'ajicomm', 'ajiai', 'ajilingua'].includes(t.toLowerCase())
   );
 
 // ─── Fetch list program ────────────────────────────────────────────────────────
