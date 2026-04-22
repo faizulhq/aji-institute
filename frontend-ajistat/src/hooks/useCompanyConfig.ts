@@ -30,8 +30,8 @@ export function useCompanyConfig() {
         const res = await fetch(`${API_BASE}/api/cms/config/`);
         if (res.ok) {
           const json = await res.json();
-          if (json.data) {
-            setConfig(json.data);
+          if (json && json.whatsapp) {
+            setConfig(json);
           }
         }
       } catch (error) {
