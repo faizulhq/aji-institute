@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { CheckCircle, MessageSquare, BarChart3, Database, FileText, PieChart, Users, Building, Laptop, Target, Award, Building2 } from 'lucide-react';
-import { WA_LINK } from '@/lib/config';
+import { WA_LINK, CONTACT } from '@/lib/config';
+import { useCompanyConfig } from '@/hooks/useCompanyConfig';
 
 const SERVICES = [
   'Konsultasi statistik dan metodologi penelitian',
@@ -26,17 +27,28 @@ const TARGET_LAYANAN = [
 export default function KonsultasiPage() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', programType: '', software: '', desc: '' });
   const [sent, setSent] = useState(false);
+  const { config } = useCompanyConfig();
+
+  // Build WA URL applying the CMS template if configured
+  const buildWAUrl = (fallbackMessage: string) => {
+    const phone = config.whatsapp || CONTACT.whatsapp;
+    const template = (config as { whatsapp_template?: string }).whatsapp_template;
+    const message = template
+      ? template.replace(/{divisi}/g, 'AjiStat by Aji Institute')
+      : fallbackMessage;
+    return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  };
 
   const handleSubmit = (e: React.FormEvent) => { 
     e.preventDefault(); 
-    // Format message to WhatsApp
-    const message = `Halo Tim AjiStat! Saya ingin berkonsultasi mengenai olah data/riset.
+    // Format message to WhatsApp (used as fallback if no template in CMS)
+    const fallbackMessage = `Halo Tim AjiStat by Aji Institute! Saya ingin berkonsultasi mengenai olah data/riset.
 Nama: ${form.name}
 Email: ${form.email}
 Kebutuhan Layanan: ${form.programType}
 Software yang dibutuhkan: ${form.software}
 Detail / Topik Riset: ${form.desc}`;
-    window.open(WA_LINK(message), '_blank');
+    window.open(buildWAUrl(fallbackMessage), '_blank');
     setSent(true); 
   };
 
@@ -224,7 +236,7 @@ Detail / Topik Riset: ${form.desc}`;
               </div>
               <p className="font-black text-gray-900 text-2xl mb-2">Permintaan Berhasil Dibuat!</p>
               <p className="text-gray-600 mb-6">Klik tombol di bawah ini jika WhatsApp tidak otomatis terbuka untuk melanjutkan pengiriman pesan ke tim kami.</p>
-              <button onClick={() => window.open(WA_LINK('Halo, saya sudah mengisi form konsultasi di website.'), '_blank')} className="bg-emerald-600 text-white font-bold px-8 py-3 rounded-xl hover:bg-emerald-700">Lanjutkan ke WhatsApp</button>
+              <a href={buildWAUrl('Halo, saya sudah mengisi form konsultasi di website AjiStat by Aji Institute.')} target="_blank" rel="noopener noreferrer" className="inline-block bg-emerald-600 text-white font-bold px-8 py-3 rounded-xl hover:bg-emerald-700">Lanjutkan ke WhatsApp</a>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="bg-white border border-gray-100 shadow-xl rounded-3xl p-8 space-y-6">
