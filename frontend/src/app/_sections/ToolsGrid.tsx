@@ -3,9 +3,22 @@
 import Image from 'next/image';
 import { X } from 'lucide-react';
 import { useState } from 'react';
-import { TOOLS, WA_LINK } from '@/lib/config';
+import { WA_LINK } from '@/lib/config';
+import { useQuery } from '@tanstack/react-query';
+import { cmsApi } from '@/lib/api';
 
-type ToolType = typeof TOOLS[0];
+// Fallback TOOLS for types and default
+const FALLBACK_TOOLS = [
+  { name: 'SPSS', desc: 'Software statistik paling populer untuk ilmu sosial', useFor: 'Uji deskriptif, regresi', color: '#1B3A8C', logo: '' }
+];
+
+type ToolType = {
+  name: string;
+  description: string;
+  use_for: string;
+  color: string;
+  image?: string;
+};
 
 function ToolModal({ tool, onClose }: { tool: ToolType; onClose: () => void }) {
   return (
@@ -18,8 +31,8 @@ function ToolModal({ tool, onClose }: { tool: ToolType; onClose: () => void }) {
         </button>
         <div className="flex items-center gap-4 mb-4">
           <div className="w-14 h-14 rounded-xl overflow-hidden flex items-center justify-center shadow-lg bg-white border border-gray-100">
-            {tool.logo ? (
-              <Image src={tool.logo} alt={tool.name} width={48} height={48} className="object-contain p-1" />
+            {tool.image ? (
+              <Image src={tool.image} alt={tool.name} width={48} height={48} className="object-contain p-1" />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-white font-black text-lg"
                 style={{ backgroundColor: tool.color }}>
@@ -34,10 +47,10 @@ function ToolModal({ tool, onClose }: { tool: ToolType; onClose: () => void }) {
             </span>
           </div>
         </div>
-        <p className="text-gray-600 text-sm leading-relaxed mb-4">{tool.desc}</p>
+        <p className="text-gray-600 text-sm leading-relaxed mb-4">{tool.description}</p>
         <div className="bg-gray-50 rounded-xl p-4">
           <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Digunakan untuk:</p>
-          <p className="text-gray-700 text-sm">{tool.useFor}</p>
+          <p className="text-gray-700 text-sm">{tool.use_for}</p>
         </div>
         <a href={WA_LINK(`Halo, saya ingin belajar ${tool.name} di AjiStat`)}
           target="_blank" rel="noopener noreferrer"
@@ -52,6 +65,19 @@ function ToolModal({ tool, onClose }: { tool: ToolType; onClose: () => void }) {
 export function ToolsGrid() {
   const [activeTool, setActiveTool] = useState<ToolType | null>(null);
 
+  const { data: dbTools } = useQuery({
+    queryKey: ['cms', 'tools'],
+    queryFn: async () => {
+      const res = await cmsApi.tools();
+      return res.data as ToolType[];
+    },
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const displayTools = dbTools && dbTools.length > 0 ? dbTools : [];
+
+  if (displayTools.length === 0) return null;
+
   return (
     <section id="blog" className="py-16 bg-gray-50 border-y border-gray-100 scroll-mt-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -62,7 +88,7 @@ export function ToolsGrid() {
           <p className="text-gray-500 text-xs">Klik logo untuk informasi lebih lanjut</p>
         </div>
         <div className="flex flex-wrap justify-center gap-4">
-          {TOOLS.map((tool) => (
+          {displayTools.map((tool) => (
             <button
               key={tool.name}
               onClick={() => setActiveTool(tool)}
@@ -70,8 +96,8 @@ export function ToolsGrid() {
               title={`Klik untuk info tentang ${tool.name}`}
             >
               <div className="w-16 h-16 rounded-2xl overflow-hidden flex items-center justify-center shadow-md group-hover:scale-110 transition-all bg-white border border-gray-100">
-                {tool.logo ? (
-                  <Image src={tool.logo} alt={tool.name} width={48} height={48} className="object-contain p-1" />
+                {tool.image ? (
+                  <Image src={tool.image} alt={tool.name} width={48} height={48} className="object-contain p-1" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-white font-black text-sm"
                     style={{ backgroundColor: tool.color }}>

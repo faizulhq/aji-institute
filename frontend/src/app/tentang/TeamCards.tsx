@@ -1,17 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import { X } from 'lucide-react';
+import { X, Loader2 } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { cmsApi } from '@/lib/api';
 
 type TeamMember = {
   name: string;
   role: string;
   initials: string;
   desc: string;
-  tags: string[];
-  detail: string;
-  accent: string;
-  accentLight: string;
+  accent_color: string;
+  accent_light: string;
+  image?: string;
+  is_ceo: boolean;
 };
 
 const TEAM: TeamMember[] = [
@@ -21,10 +23,9 @@ const TEAM: TeamMember[] = [
     initials: 'ST',
     accent: '#1B3A8C',
     accentLight: '#EEF2FF',
-    desc: 'Berpengalaman dalam analisis data SPSS, SmartPLS, AMOS, R, dan Python untuk riset akademik dan industri.',
+    desc: 'Bekerja di bawah supervisi langsung dari Lead Expert Aji Pamoso untuk analisis data riset akademik dan industri.',
     tags: ['SPSS', 'SmartPLS', 'R Studio', 'Python', 'AMOS', 'Metodologi Riset'],
-    detail:
-      'Tim AjiStat terdiri dari para konsultan statistik dan peneliti berpengalaman yang telah mendampingi lebih dari 5.000 mahasiswa, akademisi, dan peneliti di seluruh Indonesia. Spesialisasi kami mencakup analisis data kuantitatif, uji validitas & reliabilitas, analisis regresi, SEM-PLS, hingga penulisan laporan ilmiah yang terstandar.',
+    detail: 'Tim AjiStat terdiri dari para konsultan statistik dan peneliti berpengalaman yang bekerja secara langsung di bawah supervisi ketat Lead Expert Aji Pamoso. Kami telah mendampingi lebih dari 5.000 mahasiswa, akademisi, dan peneliti di seluruh Indonesia. Spesialisasi kami mencakup analisis data kuantitatif, uji validitas & reliabilitas, analisis regresi, SEM-PLS, hingga penulisan laporan ilmiah yang terstandar.',
   },
   {
     name: 'Tim Fasilitator AjiBiz',
@@ -75,28 +76,64 @@ const TEAM: TeamMember[] = [
 export function TeamCards() {
   const [selected, setSelected] = useState<TeamMember | null>(null);
 
+  const { data: dbTeams, isLoading } = useQuery({
+    queryKey: ['cms', 'teams'],
+    queryFn: async () => {
+      const res = await cmsApi.teams();
+      // Filter out CEO, only keep non-CEO
+      const allTeams = res.data as TeamMember[];
+      return allTeams.filter(t => !t.is_ceo);
+    },
+    staleTime: 1000 * 60 * 5, // cache 5 menit
+  });
+
+  // Fallback to local TEAM if api fails/empty
+  const displayTeams = dbTeams && dbTeams.length > 0 
+    ? dbTeams 
+    : TEAM.map(t => ({
+        ...t,
+        accent_color: t.accent,
+        accent_light: t.accentLight,
+        tags: t.tags.join(','),
+        is_ceo: false
+      })) as TeamMember[];
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center py-20">
+        <Loader2 className="w-8 h-8 text-[#1B3A8C] animate-spin" />
+      </div>
+    );
+  }
+
   return (
     <>
       {/* Cards — flex so last row centers automatically */}
       <div className="flex flex-wrap justify-center gap-5">
-        {TEAM.map((member) => (
+        {displayTeams.map((member) => (
           <button
             key={member.name}
             onClick={() => setSelected(member)}
             className="group text-left bg-white border border-gray-100 rounded-2xl p-6 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]"
-            style={{ '--tw-ring-color': member.accent } as React.CSSProperties}
+            style={{ '--tw-ring-color': member.accent_color } as React.CSSProperties}
           >
             {/* Top row */}
             <div className="flex items-start justify-between mb-5">
-              <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center text-sm font-bold"
-                style={{ backgroundColor: member.accentLight, color: member.accent }}
-              >
-                {member.initials}
-              </div>
+              {member.image ? (
+                <div className="w-14 h-14 rounded-xl overflow-hidden shadow-sm shrink-0">
+                  <img src={member.image} alt={member.name} className="w-full h-full object-cover object-top" />
+                </div>
+              ) : (
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center text-sm font-bold shrink-0"
+                  style={{ backgroundColor: member.accent_light, color: member.accent_color }}
+                >
+                  {member.initials}
+                </div>
+              )}
               <span
                 className="text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                style={{ color: member.accent }}
+                style={{ color: member.accent_color }}
               >
                 Lihat Detail →
               </span>
@@ -104,7 +141,7 @@ export function TeamCards() {
 
             {/* Content */}
             <h3 className="font-semibold text-gray-900 text-sm mb-1">{member.name}</h3>
-            <p className="text-xs font-medium mb-3" style={{ color: member.accent }}>
+            <p className="text-xs font-medium mb-3" style={{ color: member.accent_color }}>
               {member.role}
             </p>
             <p className="text-gray-500 text-xs leading-relaxed line-clamp-2">{member.desc}</p>
@@ -112,7 +149,7 @@ export function TeamCards() {
             {/* Bottom accent line */}
             <div
               className="mt-5 h-0.5 w-8 rounded-full group-hover:w-full transition-all duration-300"
-              style={{ backgroundColor: member.accent }}
+              style={{ backgroundColor: member.accent_color }}
             />
           </button>
         ))}
@@ -130,7 +167,7 @@ export function TeamCards() {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Accent header bar */}
-            <div className="h-1.5 w-full" style={{ backgroundColor: selected.accent }} />
+            <div className="h-1.5 w-full" style={{ backgroundColor: selected.accent_color }} />
 
             <div className="p-7">
               {/* Close */}
@@ -143,15 +180,21 @@ export function TeamCards() {
 
               {/* Avatar + name */}
               <div className="flex items-center gap-4 mb-5">
-                <div
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center text-lg font-bold shrink-0"
-                  style={{ backgroundColor: selected.accentLight, color: selected.accent }}
-                >
-                  {selected.initials}
-                </div>
+                {selected.image ? (
+                  <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-sm shrink-0 border-2" style={{ borderColor: selected.accent_light }}>
+                    <img src={selected.image} alt={selected.name} className="w-full h-full object-cover object-top" />
+                  </div>
+                ) : (
+                  <div
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center text-lg font-bold shrink-0"
+                    style={{ backgroundColor: selected.accent_light, color: selected.accent_color }}
+                  >
+                    {selected.initials}
+                  </div>
+                )}
                 <div>
                   <h3 className="font-bold text-gray-900 text-base">{selected.name}</h3>
-                  <p className="text-sm font-medium" style={{ color: selected.accent }}>
+                  <p className="text-sm font-medium" style={{ color: selected.accent_color }}>
                     {selected.role}
                   </p>
                 </div>
@@ -162,11 +205,11 @@ export function TeamCards() {
 
               {/* Tags */}
               <div className="flex flex-wrap gap-2">
-                {selected.tags.map((tag) => (
+                {(selected.tags && typeof selected.tags === 'string' ? selected.tags.split(',') : (selected.tags || [])).map((tag) => (
                   <span
                     key={tag}
                     className="text-xs font-medium px-3 py-1 rounded-full"
-                    style={{ backgroundColor: selected.accentLight, color: selected.accent }}
+                    style={{ backgroundColor: selected.accent_light, color: selected.accent_color }}
                   >
                     {tag}
                   </span>

@@ -5,6 +5,7 @@ import { Providers } from '@/components/providers';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
 import { AnnouncementBar } from '@/components/AnnouncementBar';
+import { CompanyConfigProvider } from '@/components/CompanyConfigProvider';
 import { BRAND } from '@/lib/config';
 
 const openSans = Open_Sans({
@@ -45,15 +46,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="id" className={`${openSans.variable} ${ubuntu.variable}`}>
       <body className="font-sans antialiased bg-white text-gray-900">
         <Providers>
-          <AnnouncementBar />
-          <Navbar />
-          <main
-            className="min-h-screen transition-[padding-top] duration-200"
-            style={{ paddingTop: 'calc(4.5rem + var(--ann-h, 0px))' }}
-          >
-            {children}
-          </main>
-          <Footer />
+          <CompanyConfigProvider>
+            <AnnouncementBar />
+            <Navbar />
+            <main
+              className="min-h-screen transition-[padding-top] duration-200"
+              style={{ paddingTop: 'calc(4.5rem + var(--ann-h, 0px))' }}
+            >
+              {children}
+            </main>
+            <Footer />
+          </CompanyConfigProvider>
         </Providers>
       </body>
     </html>

@@ -11,8 +11,8 @@ if not _secret:
     _secret = 'django-ajistat-secret-key-change-in-production-2026'
 SECRET_KEY = _secret
 
-# Production: DEBUG=False by default, bisa di-override via env
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+# Local: DEBUG=True by default, bisa di-override via env
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = [
     'aji-institute.com',
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'apps.users',
     'apps.programs',
     'apps.orders',
+    'apps.cms',
 ]
 
 MIDDLEWARE = [

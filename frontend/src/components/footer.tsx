@@ -1,6 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { PROGRAMS, WA_LINK } from '@/lib/config';
+import { useCompanyConfig } from '@/hooks/useCompanyConfig';
 
 const LAYANAN_LINKS = [
   { label: 'Bootcamp Intensif',  href: '/bootcamp' },
@@ -17,6 +20,9 @@ const COMPANY_LINKS = [
 ];
 
 export function Footer() {
+  const { config } = useCompanyConfig();
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="bg-gradient-to-b from-[#162058] to-[#0d1632] border-t-4 border-[#4A72D4]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
@@ -82,19 +88,19 @@ export function Footer() {
             <p className="text-white font-semibold text-sm mb-4">Kontak</p>
             <ul className="space-y-3 text-sm text-white/50">
               <li>
-              <a href="https://wa.me/6285992905592"
+              <a href={`https://wa.me/${config.whatsapp}`}
                 target="_blank" rel="noopener noreferrer"
                 className="hover:text-white transition-colors">
-                +62 859-9290-5592
+                {config.whatsapp_display}
               </a>
               </li>
               <li>
-                <a href="mailto:info@aji-institute.id"
+                <a href={`mailto:${config.email}`}
                   className="hover:text-white transition-colors">
-                  info@aji-institute.id
+                  {config.email}
                 </a>
               </li>
-              <li className="leading-snug">Kompleks Bandung Indah Raya Blok C7 No.1,<br/>Kel. Mekarjaya, Kec. Rancasari, Bandung</li>
+              <li className="leading-snug whitespace-pre-line">{config.address}</li>
             </ul>
             <a href={WA_LINK('Halo Aji Institute, saya ingin bertanya')}
               target="_blank" rel="noopener noreferrer"
@@ -107,7 +113,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-white/30 text-xs">
-            2026 Aji Institute by PT. Amanah Jnana Insani. All rights reserved.
+            {currentYear} Aji Institute by PT. Amanah Jnana Insani. All rights reserved.
           </p>
           <p className="text-white/20 text-xs">
             Dibuat untuk memajukan pendidikan Indonesia

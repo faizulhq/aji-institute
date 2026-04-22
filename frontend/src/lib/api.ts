@@ -89,6 +89,15 @@ export const announcementsApi = {
   active: () => api.get('/announcements/'),
 };
 
+// ─── CMS ──────────────────────────────────────────────────────
+export const cmsApi = {
+  config: () => api.get('/cms/config/'),
+  teams: () => api.get('/cms/teams/'),
+  banners: () => api.get('/cms/banners/'),
+  testimonials: () => api.get('/cms/testimonials/'),
+  tools: () => api.get('/cms/tools/'),
+};
+
 // ─── Cart ─────────────────────────────────────────────────────
 export const cartApi = {
   get: () => api.get('/cart/'),

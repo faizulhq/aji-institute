@@ -55,14 +55,43 @@ export function HeroSlider() {
   const [paused, setPaused] = useState(false);
   const [activeTag, setActiveTag] = useState<string | null>(null);
 
+  const { data: dbBannersData } = useQuery({
+    queryKey: ['cms', 'banners'],
+    queryFn: async () => {
+      const res = await cmsApi.banners();
+      return res.data;
+    },
+    staleTime: 1000 * 60 * 5,
+  });
+
   const { data: allProgramsData } = useQuery({
     queryKey: ['programs', 'all-tags'],
     queryFn: () => programsApi.list().then(r => r.data),
   });
   const allPrograms: Program[] = Array.isArray(allProgramsData?.data) ? allProgramsData.data : [];
 
-  const next = useCallback(() => setActive((a) => (a + 1) % SLIDES.length), []);
-  const prev = () => setActive((a) => (a - 1 + SLIDES.length) % SLIDES.length);
+  // Parse DB banners or fallback
+  const displaySlides = dbBannersData && dbBannersData.length > 0
+    ? dbBannersData.map((b: any) => ({
+        image: b.image,
+        headline: b.title,
+        subtext: b.subtitle,
+        cta: b.cta_text,
+        ctaHref: b.cta_link,
+        ctaExternal: b.cta_external,
+        cta2: b.cta2_text,
+        cta2Href: b.cta2_link,
+        chips: b.chips ? b.chips.split(',').map((c: string) => c.trim()) : [],
+        stats: b.stats ? b.stats.split(',').map((s: string) => {
+          const parts = s.split('|');
+          return { val: parts[0]?.trim() || '', label: parts[1]?.trim() || '' };
+        }) : [],
+        overlay: b.overlay_gradient,
+      }))
+    : SLIDES;
+
+  const next = useCallback(() => setActive((a) => (a + 1) % displaySlides.length), [displaySlides.length]);
+  const prev = () => setActive((a) => (a - 1 + displaySlides.length) % displaySlides.length);
 
   useEffect(() => {
     if (paused) return;
@@ -70,7 +99,9 @@ export function HeroSlider() {
     return () => clearInterval(t);
   }, [paused, next]);
 
-  const slide = SLIDES[active];
+  const slide = displaySlides[active] || displaySlides[0];
+
+  if (!slide) return null;
 
   return (
     <section
@@ -159,7 +190,7 @@ export function HeroSlider() {
 
       {/* Dots */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2.5 z-20">
-        {SLIDES.map((_, i) => (
+        {displaySlides.map((_, i) => (
           <button key={i} onClick={() => setActive(i)} aria-label={`Slide ${i + 1}`}
             className={cn('h-2.5 rounded-full transition-all duration-300', i === active ? 'w-10 bg-[#F0A500]' : 'w-2.5 bg-white/40 hover:bg-white/70')} />
         ))}

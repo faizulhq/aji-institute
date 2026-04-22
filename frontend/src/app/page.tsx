@@ -11,6 +11,7 @@ import { ProgramGridSection, FeaturedPrograms } from './_sections/FeaturedProgra
 import { KonsultasiPreview, CtaKerjaSama }      from './_sections/KonsultasiPreview';
 import { ToolsGrid }             from './_sections/ToolsGrid';
 import { VideoPreviewSection }   from './_sections/VideoPreviewSection';
+import { TestimonialsSection }   from './_sections/TestimonialsSection';
 
 export default function HomePage() {
   return (
@@ -23,6 +24,7 @@ export default function HomePage() {
       <VideoPreviewSection />
       <KonsultasiPreview />
       <ToolsGrid />
+      <TestimonialsSection />
       <CtaKerjaSama />
     </>
   );

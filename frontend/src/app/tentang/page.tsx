@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { CheckCircle, Target, Eye, MessageCircle } from 'lucide-react';
 import { WA_LINK } from '@/lib/config';
 import { CompanyStats } from './CompanyStats';
+import { CEOProfile } from './CEOProfile';
 import { TeamCards } from './TeamCards';
 
 export const metadata: Metadata = {
@@ -179,6 +180,9 @@ export default function TentangPage() {
           </div>
         </div>
       </section>
+
+      {/* Kepemimpinan / CEO */}
+      <CEOProfile />
 
       {/* Tim — Elegant Cards with Modal */}
       <section className="py-20 bg-gray-50">
