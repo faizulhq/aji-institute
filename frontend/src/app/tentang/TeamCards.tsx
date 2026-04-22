@@ -16,7 +16,7 @@ type TeamMember = {
   accentLight?: string;
   image?: string;
   is_ceo?: boolean;
-  tags?: string[];
+  tags?: string[] | string;
   detail?: string;
 };
 
@@ -98,7 +98,7 @@ export function TeamCards() {
         ...t,
         accent_color: t.accent,
         accent_light: t.accentLight,
-        tags: t.tags.join(','),
+        tags: t.tags,
         is_ceo: false
       })) as TeamMember[];
 
@@ -209,7 +209,7 @@ export function TeamCards() {
 
               {/* Tags */}
               <div className="flex flex-wrap gap-2">
-                {(selected.tags && typeof selected.tags === 'string' ? selected.tags.split(',') : (selected.tags || [])).map((tag) => (
+                {(Array.isArray(selected.tags) ? selected.tags : (typeof selected.tags === 'string' ? selected.tags.split(',') : [])).map((tag) => (
                   <span
                     key={tag}
                     className="text-xs font-medium px-3 py-1 rounded-full"
