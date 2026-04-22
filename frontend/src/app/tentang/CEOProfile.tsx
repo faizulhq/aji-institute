@@ -84,19 +84,19 @@ export function CEOProfile() {
                 <div>
                   <h4 className="text-gray-900 font-bold mb-1">PhD Candidate</h4>
                   <p className="text-gray-600 text-sm leading-relaxed">
-                    Department of Social and Behavioural Science, Faculty of Applied Social Sciences (FSSG), Universiti Sultan Zainal Abidin (UniSZA), Gong Badak Campus, Terengganu Darul Iman, Malaysia.
+                    Department of Social and Behavioural Science, Faculty of Applied Social Sciences.
                   </p>
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-[#1B3A8C]/10 flex items-center justify-center shrink-0 mt-1">
                   <span className="text-[#1B3A8C] font-bold text-sm">02</span>
                 </div>
                 <div>
-                  <h4 className="text-gray-900 font-bold mb-1">Dosen Akademik</h4>
+                  <h4 className="text-gray-900 font-bold mb-1">Praktisi</h4>
                   <p className="text-gray-600 text-sm leading-relaxed">
-                    Lecturer in the Department of Industrial Engineering, Faculty of Industrial Engineering, Telkom University, Bandung Regency, Indonesia.
+                    Praktisi bidang marketing riset, metodologi, statistik, kewirausahaan dan penelitian operasional.
                   </p>
                 </div>
               </div>
