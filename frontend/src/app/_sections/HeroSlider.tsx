@@ -134,7 +134,7 @@ export function HeroSlider() {
 
           {/* Chips */}
           <div className="flex flex-wrap gap-2 mb-8 items-center">
-            {slide.chips.map((c) => {
+            {slide.chips.map((c: string) => {
               const toolMatch = TOOLS.find(t => t.name === c || (c === 'R' && t.name === 'R / RStudio'));
               if (toolMatch?.logo) {
                 return (
@@ -155,7 +155,7 @@ export function HeroSlider() {
 
           {/* Stats */}
           <div className="flex gap-6 mb-8">
-            {slide.stats.map((s) => (
+            {slide.stats.map((s: { val: string; label: string }) => (
               <div key={s.label}>
                 <p className="text-3xl font-black text-[#F0A500]">{s.val}</p>
                 <p className="text-white/60 text-xs">{s.label}</p>
@@ -190,7 +190,7 @@ export function HeroSlider() {
 
       {/* Dots */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2.5 z-20">
-        {displaySlides.map((_, i) => (
+        {displaySlides.map((_: any, i: number) => (
           <button key={i} onClick={() => setActive(i)} aria-label={`Slide ${i + 1}`}
             className={cn('h-2.5 rounded-full transition-all duration-300', i === active ? 'w-10 bg-[#F0A500]' : 'w-2.5 bg-white/40 hover:bg-white/70')} />
         ))}
