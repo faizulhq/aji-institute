@@ -10,10 +10,14 @@ type TeamMember = {
   role: string;
   initials: string;
   desc: string;
-  accent_color: string;
-  accent_light: string;
+  accent_color?: string;
+  accent_light?: string;
+  accent?: string;
+  accentLight?: string;
   image?: string;
-  is_ceo: boolean;
+  is_ceo?: boolean;
+  tags?: string[];
+  detail?: string;
 };
 
 const TEAM: TeamMember[] = [
