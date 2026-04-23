@@ -51,13 +51,13 @@ function getDivisionKey(member: TeamMember): string {
 const TEAM_FALLBACK: TeamMember[] = [
   {
     name: 'Aji Pamoso, S.Si, M.T',
-    role: 'Founder & CEO Aji Institute | Lead Expert AjiStat',
+    role: 'CEO & Aji Institute | Lead Expert AjiStat',
     initials: 'AP',
     accent_color: BRAND.color,
     accent_light: BRAND.bg,
     image: '/images/team/foto-aji-pamoso.jpeg',
     desc: 'Praktisi bidang marketing riset, metodologi, statistik, kewirausahaan dan penelitian operasional.',
-    detail: 'Aji Pamoso, S.Si, M.T adalah Founder & CEO Aji Institute sekaligus Lead Expert AjiStat. Beliau adalah praktisi bidang marketing riset, metodologi, statistik, kewirausahaan, dan penelitian operasional yang telah mendampingi ribuan mahasiswa, peneliti, dan institusi di seluruh Indonesia.',
+    detail: 'Aji Pamoso, S.Si, M.T adalah CEO Aji Institute sekaligus Lead Expert AjiStat. Beliau adalah praktisi bidang marketing riset, metodologi, statistik, kewirausahaan, dan penelitian operasional yang telah mendampingi ribuan mahasiswa, peneliti, dan institusi di seluruh Indonesia.',
     tags: ['SPSS', 'SmartPLS', 'R Studio', 'Python', 'AMOS', 'Metodologi Riset'],
     is_ceo: false,
   },
@@ -141,53 +141,46 @@ function TeamCard({ member, onOpen }: { member: TeamMember; onOpen: () => void }
   return (
     <button
       onClick={onOpen}
-      className="group text-left bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]"
+      className="group text-left bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)] flex flex-col"
       style={{ '--tw-ring-color': BRAND.color } as React.CSSProperties}
     >
-      {/* Brand color bar at top */}
-      <div className="h-1 bg-[#1B3A8C]" />
-
-      <div className="p-6">
-        {/* Division badge + Lihat arrow */}
-        <div className="flex items-center justify-between mb-4">
-          <DivisionBadge member={member} />
-          <span className="text-xs font-semibold text-[#2348A8] opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-            Lihat Detail →
-          </span>
-        </div>
-
-        {/* Avatar + name row */}
-        <div className="flex items-center gap-3 mb-4">
-          {member.image ? (
-            <div
-              className="w-14 h-14 rounded-xl overflow-hidden shadow-sm shrink-0 border-2"
-              style={{ borderColor: BRAND.border }}
-            >
-              <img
-                src={member.image}
-                alt={member.name}
-                className="w-full h-full object-cover object-top"
-              />
-            </div>
-          ) : (
-            <div
-              className="w-12 h-12 rounded-xl flex items-center justify-center text-sm font-bold shrink-0"
-              style={{ backgroundColor: BRAND.bg, color: BRAND.color }}
-            >
-              {member.initials}
-            </div>
-          )}
-          <div className="min-w-0">
-            <h3 className="font-semibold text-gray-900 text-sm leading-tight line-clamp-2">{member.name}</h3>
-            <p className="text-xs font-medium mt-0.5 line-clamp-1 text-[#2348A8]">{member.role}</p>
+      {/* Image at Top */}
+      <div className="relative w-full aspect-[4/3] bg-[#EEF2FF] shrink-0 border-b border-gray-100 overflow-hidden">
+        {member.image ? (
+          <img
+            src={member.image}
+            alt={member.name}
+            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-4xl font-bold text-[#1B3A8C] opacity-20">
+            {member.initials}
           </div>
+        )}
+        
+        {/* Floating badge */}
+        <div className="absolute top-4 right-4 z-10 shadow-sm">
+          <DivisionBadge member={member} />
+        </div>
+      </div>
+
+      <div className="p-6 flex-1 flex flex-col">
+        {/* Name & Role */}
+        <div className="mb-4">
+          <h3 className="font-semibold text-gray-900 text-lg leading-tight line-clamp-2">{member.name}</h3>
+          <p className="text-sm font-medium mt-1.5 line-clamp-2 text-[#2348A8]">{member.role}</p>
         </div>
 
         {/* Description */}
-        <p className="text-gray-500 text-xs leading-relaxed line-clamp-2">{getDesc(member)}</p>
+        <p className="text-gray-500 text-sm leading-relaxed line-clamp-3 mb-6 flex-1">{getDesc(member)}</p>
 
-        {/* Accent underline */}
-        <div className="mt-5 h-0.5 w-8 rounded-full bg-[#1B3A8C] group-hover:w-full transition-all duration-300" />
+        {/* See details link */}
+        <div className="mt-auto flex items-center justify-between">
+           <div className="h-0.5 w-8 rounded-full bg-[#1B3A8C] group-hover:w-16 transition-all duration-300" />
+           <span className="text-xs font-semibold text-[#2348A8] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+             Lihat Detail →
+           </span>
+        </div>
       </div>
     </button>
   );
@@ -199,51 +192,51 @@ function TeamModal({ member, onClose }: { member: TeamMember; onClose: () => voi
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ backgroundColor: 'rgba(10,20,50,0.55)', backdropFilter: 'blur(6px)' }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6"
+      style={{ backgroundColor: 'rgba(10,20,50,0.65)', backdropFilter: 'blur(8px)' }}
       onClick={onClose}
     >
       <div
-        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden"
+        className="relative bg-white rounded-2xl shadow-2xl w-full max-w-4xl overflow-hidden flex flex-col sm:flex-row max-h-[95vh] sm:max-h-[85vh] animate-in fade-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="h-1.5 bg-[#1B3A8C]" />
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-20 w-8 h-8 flex items-center justify-center rounded-full bg-black/10 hover:bg-black/20 text-gray-800 transition-colors sm:bg-gray-100 sm:hover:bg-gray-200 sm:text-gray-600"
+        >
+          <X className="w-5 h-5" />
+        </button>
 
-        <div className="p-7">
-          <button
-            onClick={onClose}
-            className="absolute top-5 right-5 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
-          >
-            <X className="w-4 h-4 text-gray-500" />
-          </button>
+        {/* Left Side: Portrait Image */}
+        <div className="sm:w-[45%] shrink-0 bg-[#EEF2FF] relative h-72 sm:h-auto overflow-hidden">
+          {member.image ? (
+            <img src={member.image} alt={member.name} className="absolute inset-0 w-full h-full object-cover object-top" />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center text-7xl font-bold text-[#1B3A8C] opacity-20">
+              {member.initials}
+            </div>
+          )}
+          {/* Gradient Overlay for mobile readability if close button overlaps */}
+          <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/20 to-transparent sm:hidden" />
+        </div>
 
-          <div className="mb-4">
+        {/* Right Side: Content */}
+        <div className="p-6 sm:p-10 sm:w-[55%] overflow-y-auto flex flex-col">
+          <div className="mb-6 inline-block">
             <DivisionBadge member={member} />
           </div>
 
-          {/* Avatar + name */}
-          <div className="flex items-center gap-4 mb-5">
-            {member.image ? (
-              <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-sm shrink-0 border-2 border-[#c7d2fe]">
-                <img src={member.image} alt={member.name} className="w-full h-full object-cover object-top" />
-              </div>
-            ) : (
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-lg font-bold shrink-0 bg-[#EEF2FF] text-[#1B3A8C]">
-                {member.initials}
-              </div>
-            )}
-            <div>
-              <h3 className="font-bold text-gray-900 text-base">{member.name}</h3>
-              <p className="text-sm font-medium text-[#2348A8]">{member.role}</p>
-            </div>
+          <h3 className="font-bold text-gray-900 text-2xl sm:text-3xl mb-2 leading-tight">{member.name}</h3>
+          <p className="text-base sm:text-lg font-medium text-[#2348A8] mb-8">{member.role}</p>
+
+          <div className="prose prose-sm sm:prose-base prose-blue text-gray-600 leading-relaxed mb-8 whitespace-pre-line">
+            {member.detail || getDesc(member)}
           </div>
 
-          <p className="text-gray-600 text-sm leading-relaxed mb-6">{member.detail || getDesc(member)}</p>
-
           {tags.length > 0 && (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mt-auto pt-4 border-t border-gray-100">
               {tags.map((tag) => (
-                <span key={tag} className="text-xs font-medium px-3 py-1 rounded-full bg-[#EEF2FF] text-[#1B3A8C] border border-[#c7d2fe]">
+                <span key={tag} className="text-xs font-medium px-3.5 py-1.5 rounded-full bg-[#EEF2FF] text-[#1B3A8C] border border-[#c7d2fe]">
                   {tag.trim()}
                 </span>
               ))}
