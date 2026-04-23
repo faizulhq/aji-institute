@@ -51,7 +51,7 @@ function getDivisionKey(member: TeamMember): string {
 const TEAM_FALLBACK: TeamMember[] = [
   {
     name: 'Aji Pamoso, S.Si, M.T',
-    role: 'CEO & Aji Institute | Lead Expert AjiStat',
+    role: 'CEO Aji Institute | Lead Expert AjiStat',
     initials: 'AP',
     accent_color: BRAND.color,
     accent_light: BRAND.bg,

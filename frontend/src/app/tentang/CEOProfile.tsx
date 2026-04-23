@@ -18,7 +18,7 @@ export function CEOProfile() {
   // Fallback to local
   const ceo = dbTeams || {
     name: 'Aji Pamoso, S.Si, M.T',
-    role: 'Founder & CEO Aji Institute | Lead Expert AjiStat',
+    role: 'CEO Aji Institute | Lead Expert AjiStat',
     image: '/images/team/foto-aji-pamoso.jpeg',
     detail: 'PhD Candidate|Department of Social and Behavioural Science, Faculty of Applied Social Sciences.\nPraktisi|Praktisi bidang marketing riset, metodologi, statistik, kewirausahaan dan penelitian operasional.'
   };
