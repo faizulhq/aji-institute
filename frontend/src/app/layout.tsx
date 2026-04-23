@@ -69,9 +69,41 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'EducationalOrganization',
+  name: 'Aji Institute',
+  alternateName: 'PT. Amanah Jñāna Insani',
+  url: 'https://aji-institute.com',
+  logo: 'https://aji-institute.com/og-image.png',
+  description: 'Platform pelatihan, pengembangan kompetensi, dan konsultasi profesional — AjiStat, AjiBiz, AjiComm, AjiAI, AjiLingua.',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Kompleks Bandung Indah Raya Blok C7 No.1',
+    addressLocality: 'Bandung',
+    addressCountry: 'ID',
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: '+62-851-9556-4668',
+    contactType: 'customer service',
+    availableLanguage: 'Indonesian',
+  },
+  sameAs: [
+    'https://www.instagram.com/ajiinstitute.id',
+    'https://ajistat.aji-institute.com',
+  ],
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="id" className={`${openSans.variable} ${ubuntu.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="font-sans antialiased bg-white text-gray-900">
         <Providers>
           <CompanyConfigProvider>

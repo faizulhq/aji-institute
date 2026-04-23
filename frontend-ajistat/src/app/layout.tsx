@@ -67,9 +67,41 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'EducationalOrganization',
+  name: 'AjiStat',
+  parentOrganization: { '@type': 'Organization', name: 'Aji Institute' },
+  url: 'https://ajistat.aji-institute.com',
+  logo: 'https://ajistat.aji-institute.com/og-image.png',
+  description: 'Mitra riset statistik terpercaya untuk 5.000+ klien akademik dan profesional. Konsultasi, bootcamp, short class, dan private class SPSS, SmartPLS, R, Python, NVivo.',
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: '+62-851-9556-4668',
+    contactType: 'customer service',
+    availableLanguage: 'Indonesian',
+  },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Layanan AjiStat',
+    itemListElement: [
+      { '@type': 'Offer', itemOffered: { '@type': 'Course', name: 'Bootcamp Statistika' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Course', name: 'Short Class Statistika' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Course', name: 'Private Class Statistika' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Konsultasi & Jasa Olah Data' } },
+    ],
+  },
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="id" className={`${openSans.variable} ${ubuntu.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="font-sans antialiased bg-white text-gray-900">
         <CompanyConfigProvider>
           <Navbar />
