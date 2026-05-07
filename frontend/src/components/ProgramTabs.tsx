@@ -38,7 +38,7 @@ const FORMAT_TABS = [
 ];
 
 const PROGRAM_TABS = [
-  { key: 'ajistat', label: 'AjiStat', filter: (p: Program) => !p.tags.some((t) => ['ajibiz','ajicomm','ajiai','ajilingua'].includes(t.toLowerCase())) },
+  { key: 'ajistat', label: 'AjiStat', filter: (p: Program) => p.brand !== 'aji-institute' && !p.tags.some((t) => ['ajibiz','ajicomm','ajiai','ajilingua'].includes(t.toLowerCase())) },
   { key: 'ajibiz', label: 'AjiBiz', filter: (p: Program) => p.tags.some((t) => t.toLowerCase() === 'ajibiz') },
   { key: 'ajicomm', label: 'AjiComm', filter: (p: Program) => p.tags.some((t) => t.toLowerCase() === 'ajicomm') },
   { key: 'ajiai', label: 'AjiAI', filter: (p: Program) => p.tags.some((t) => t.toLowerCase() === 'ajiai') },
@@ -98,6 +98,7 @@ export function ProgramTabsByFormat({ programFilter, queryKey }: {
       const arr = r.data?.data ?? r.data;
       return (Array.isArray(arr) ? arr : []) as Program[];
     }),
+    staleTime: 1000 * 60 * 5, // cache 5 menit
   });
 
   const all = (raw ?? []).filter(programFilter);
@@ -149,6 +150,7 @@ export function ProgramTabsByProgram({ formatFilter, queryKey }: {
       const arr = r.data?.data ?? r.data;
       return (Array.isArray(arr) ? arr : []) as Program[];
     }),
+    staleTime: 1000 * 60 * 5, // cache 5 menit
   });
 
   const allByFormat = (raw ?? []).filter((p) => p.type?.toLowerCase() === formatFilter);

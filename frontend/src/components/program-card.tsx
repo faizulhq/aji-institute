@@ -15,9 +15,11 @@ const TYPE_CONFIG = {
 
 /**
  * Deteksi apakah program ini milik AjiStat.
- * Program AjiStat = punya tag 'ajistat' ATAU tidak punya tag divisi lain sama sekali.
+ * Program AjiStat = punya tag 'ajistat' ATAU tidak punya tag divisi lain.
+ * KECUALI: brand aji-institute → selalu internal (bukan AjiStat).
  */
-function isAjiStatProgram(tags: string[]): boolean {
+function isAjiStatProgram(tags: string[], brand?: string): boolean {
+  if (brand === 'aji-institute') return false;
   const t = tags.map((s) => s.toLowerCase());
   const otherDivisions = ['ajibiz', 'ajicomm', 'ajiai', 'ajilingua'];
   return t.includes('ajistat') || !t.some((tag) => otherDivisions.includes(tag));
@@ -29,20 +31,17 @@ export function ProgramCard({ program }: Props) {
     ? Math.round((1 - program.price / program.original_price) * 100)
     : null;
 
-  // AjiStat → redirect ke ajistat.aji-institute.com; lainnya → internal
-  const isAjiStat = isAjiStatProgram(program.tags);
+  // aji-institute brand → internal; AjiStat → ajistat.aji-institute.com; lainnya → internal
+  const isAjiStat = isAjiStatProgram(program.tags, program.brand);
   const cardHref = isAjiStat
     ? `https://ajistat.aji-institute.com/program/${program.slug}`
     : `/program/${program.slug}`;
   const isExternal = isAjiStat;
 
-  return (
-    <a
-      href={cardHref}
-      target={isExternal ? '_blank' : '_self'}
-      rel={isExternal ? 'noopener noreferrer' : undefined}
-      className="group flex flex-col bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden"
-    >
+  const cardClassName = "group flex flex-col bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden";
+
+  const cardContent = (
+    <>
       {/* Color Banner */}
       <div
         className="relative h-36 flex items-end justify-between px-5 pb-4"
@@ -103,10 +102,12 @@ export function ProgramCard({ program }: Props) {
               <span>{program.schedule}</span>
             </div>
           )}
-          <div className="flex items-center gap-2 text-xs text-gray-500">
+          {program.facilitator_name && (
+            <div className="flex items-center gap-2 text-xs text-gray-500">
               <Users className="w-3.5 h-3.5 text-[#2348A8] shrink-0" />
-              <span>Aji Pamoso, S.Si, M.T</span>
+              <span>{program.facilitator_name}</span>
             </div>
+          )}
         </div>
 
         {/* Price + CTA */}
@@ -123,10 +124,26 @@ export function ProgramCard({ program }: Props) {
             </div>
           </div>
           <div className="flex items-center gap-1 text-sm font-semibold text-[#2348A8] group-hover:gap-2 transition-all">
-            {isAjiStat ? 'Lihat di AjiStat' : 'Lihat'} <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            {isAjiStat ? 'Lihat di AjiStat' : 'Lihat Detail'} <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
           </div>
         </div>
       </div>
-    </a>
+    </>
+  );
+
+  // External → <a> with target _blank; Internal → <Link> for SPA navigation
+  if (isExternal) {
+    return (
+      <a href={cardHref} target="_blank" rel="noopener noreferrer" className={cardClassName}>
+        {cardContent}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={cardHref} className={cardClassName}>
+      {cardContent}
+    </Link>
   );
 }
+

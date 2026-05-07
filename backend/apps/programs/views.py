@@ -27,6 +27,10 @@ class ProgramListView(APIView):
         if ptype:
             qs = qs.filter(type=ptype)
 
+        brand = request.query_params.get('brand')
+        if brand:
+            qs = qs.filter(brand=brand)
+
         search = request.query_params.get('search', '').strip()
         if search:
             qs = qs.filter(

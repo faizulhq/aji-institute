@@ -8,7 +8,7 @@ class ProgramListSerializer(serializers.ModelSerializer):
         model = Program
         fields = (
             'id', 'title', 'slug', 'type', 'status',
-            'price', 'original_price', 'tags',
+            'price', 'original_price', 'tags', 'brand',
             'duration', 'schedule', 'facilitator_name',
             'thumbnail_color', 'is_featured',
         )

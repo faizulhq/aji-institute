@@ -1,8 +1,30 @@
 'use client';
 
 import { useState } from 'react';
-import { ArrowRight, Building2, CheckCircle, Presentation, Users, Briefcase, Handshake, MapPin, FileText, X } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
+import { ArrowRight, Building2, CheckCircle, Presentation, Users, Briefcase, Handshake, MapPin, FileText, X, Calendar, Clock, Tag } from 'lucide-react';
 import { WA_LINK } from '@/lib/config';
+
+const API = process.env.NEXT_PUBLIC_API_URL && process.env.NEXT_PUBLIC_API_URL !== '/api'
+  ? process.env.NEXT_PUBLIC_API_URL
+  : 'https://api.aji-institute.com';
+
+interface AjiProgram {
+  id: number;
+  title: string;
+  slug: string;
+  type: string;
+  description: string;
+  price: string;
+  status: string;
+  duration: string;
+  schedule: string;
+  tags: string[];
+  curriculum: string[];
+  facilitator_name: string;
+  thumbnail_color: string;
+}
 
 const KERJASAMA = [
   { icon: Building2, title: 'In-House Training', desc: 'Pelatihan internal khusus untuk instansi, perusahaan, sekolah, atau kampus dengan kurikulum yang dapat disesuaikan (custom).' },
@@ -214,6 +236,9 @@ export default function InHouseTrainingPage() {
         </div>
       </section>
 
+      {/* PROGRAM AJI INSTITUTE LANGSUNG */}
+      <AjiDirectPrograms />
+
       {/* CTA TERAKHIR */}
       <section className="py-24 bg-white text-center">
         <div className="max-w-2xl mx-auto px-4">
@@ -249,5 +274,137 @@ export default function InHouseTrainingPage() {
       )}
       <HeroKeunggulanModal item={activeHeroCard} onClose={() => setActiveHeroCard(null)} />
     </>
+  );
+}
+
+// ─── Section Program Aji Institute Langsung ───────────────────────────────
+function AjiDirectPrograms() {
+  const { data, isLoading } = useQuery<AjiProgram[]>({
+    queryKey: ['aji-institute-open-class'],
+    queryFn: () =>
+      fetch(`${API}/api/programs/?brand=aji-institute`)
+        .then((r) => r.ok ? r.json() : { data: [] })
+        .then((json) => {
+          const arr = json.data ?? json;
+          return Array.isArray(arr) ? arr : [];
+        }),
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const programs = data ?? [];
+
+  if (!isLoading && programs.length === 0) return null;
+
+  const STATUS_LABEL: Record<string, string> = {
+    upcoming: 'Akan Datang',
+    ongoing: 'Sedang Berlangsung',
+    recorded: 'Rekaman Tersedia',
+  };
+  const STATUS_COLOR: Record<string, string> = {
+    upcoming: '#F0A500',
+    ongoing: '#16a34a',
+    recorded: '#6366f1',
+  };
+  const TYPE_LABEL: Record<string, string> = {
+    bootcamp: 'Bootcamp',
+    'short-class': 'Short Class',
+    'private-class': 'Private Class',
+  };
+
+  return (
+    <section className="py-20 bg-white border-t border-gray-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-14">
+          <span className="inline-block bg-[#162058]/10 text-[#162058] text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest mb-4">
+            Open Class
+          </span>
+          <h2 className="text-3xl font-black text-gray-900 mb-4">
+            Kelas Terbuka Aji Institute
+          </h2>
+          <p className="text-gray-500 max-w-2xl mx-auto">
+            Program yang dibuka untuk umum oleh Aji Institute — lintas bidang, cocok untuk siapapun tanpa harus terikat divisi tertentu.
+          </p>
+        </div>
+
+        {isLoading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="bg-gray-100 animate-pulse rounded-2xl h-64" />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {programs.map((p) => (
+              <Link
+                key={p.id}
+                href={`/program/${p.slug}`}
+                className="group bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden flex flex-col"
+              >
+                {/* Header warna */}
+                <div
+                  className="h-2 w-full"
+                  style={{ backgroundColor: p.thumbnail_color || '#162058' }}
+                />
+                <div className="p-6 flex-1 flex flex-col">
+                  {/* Badge tipe + status */}
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-[10px] font-black px-2.5 py-1 rounded-full bg-[#162058] text-white uppercase tracking-wide">
+                      {TYPE_LABEL[p.type] ?? p.type}
+                    </span>
+                    {p.status && (
+                      <span
+                        className="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide"
+                        style={{ backgroundColor: `${STATUS_COLOR[p.status]}22`, color: STATUS_COLOR[p.status] }}
+                      >
+                        {STATUS_LABEL[p.status] ?? p.status}
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 className="font-black text-gray-900 text-lg leading-tight mb-2 group-hover:text-[#162058] transition-colors">
+                    {p.title}
+                  </h3>
+                  <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2 flex-1">
+                    {p.description}
+                  </p>
+
+                  {/* Meta info */}
+                  <div className="space-y-1.5 mb-5">
+                    {p.duration && (
+                      <div className="flex items-center gap-2 text-xs text-gray-500">
+                        <Clock className="w-3.5 h-3.5" />
+                        <span>{p.duration}</span>
+                      </div>
+                    )}
+                    {p.schedule && (
+                      <div className="flex items-center gap-2 text-xs text-gray-500">
+                        <Calendar className="w-3.5 h-3.5" />
+                        <span>{p.schedule}</span>
+                      </div>
+                    )}
+                    {p.facilitator_name && (
+                      <div className="flex items-center gap-2 text-xs text-gray-500">
+                        <Tag className="w-3.5 h-3.5" />
+                        <span>{p.facilitator_name}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Harga + CTA */}
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <span className="font-black text-[#162058] text-lg">
+                      {Number(p.price) === 0 ? 'Gratis' : `Rp ${Number(p.price).toLocaleString('id-ID')}`}
+                    </span>
+                    <span className="flex items-center gap-1 text-[#162058] text-sm font-semibold group-hover:gap-2 transition-all">
+                      Daftar <ArrowRight className="w-4 h-4" />
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
   );
 }

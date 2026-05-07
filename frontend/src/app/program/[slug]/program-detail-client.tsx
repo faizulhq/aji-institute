@@ -96,27 +96,29 @@ const LEARNING_MATERIALS = [
 ];
 
 // ── Facilitator card ─────────────────────────────────────────────
-function FacilitatorCard() {
+function FacilitatorCard({ program }: { program: Program }) {
+  const name = program.facilitator_name || 'Tim Aji Institute';
+  const title = program.facilitator_title || 'Fasilitator & Instruktur Aji Institute';
+  const bio = program.facilitator_bio || 'Praktisi aktif dan pengajar berpengalaman yang siap membimbing Anda secara personal dan profesional.';
+  const avatar = program.facilitator_avatar || name.slice(0, 2).toUpperCase();
+
   return (
     <section>
       <h2 className="text-xl font-bold text-gray-900 mb-5">👨‍🏫 Pemateri / Pengajar</h2>
       <div className="flex items-start gap-5 bg-gradient-to-br from-[#162058]/5 to-[#2348A8]/5 border border-[#2348A8]/15 rounded-2xl p-5">
         {/* Avatar */}
         <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#162058] to-[#2348A8] flex items-center justify-center text-white text-xl font-black shrink-0 shadow-lg">
-          AP
+          {avatar}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-1">
-            <p className="font-black text-gray-900 text-base">Aji Pamoso, S.Si, M.T</p>
+            <p className="font-black text-gray-900 text-base">{name}</p>
             <span className="inline-flex items-center gap-1 text-[10px] font-bold bg-[#F0A500]/20 text-[#C8870A] px-2 py-0.5 rounded-full border border-[#F0A500]/30">
               <GraduationCap className="w-3 h-3" /> Fasilitator Terverifikasi
             </span>
           </div>
-          <p className="text-[#2348A8] text-xs font-semibold mb-2">Fasilitator &amp; Instruktur Aji Institute</p>
-          <p className="text-gray-600 text-sm leading-relaxed">
-            Praktisi aktif dan pengajar berpengalaman di bidang statistik, riset kuantitatif, dan analisis data.
-            Telah membantu ribuan mahasiswa dan peneliti dari berbagai universitas di seluruh Indonesia menuntaskan riset mereka.
-          </p>
+          <p className="text-[#2348A8] text-xs font-semibold mb-2">{title}</p>
+          <p className="text-gray-600 text-sm leading-relaxed">{bio}</p>
         </div>
       </div>
     </section>
@@ -402,7 +404,7 @@ export default function ProgramDetailPage() {
           <div className="lg:col-span-2 space-y-10">
 
             {/* ─── Fasilitator / Pemateri ─── */}
-            <FacilitatorCard />
+            {program.facilitator_name && <FacilitatorCard program={program} />}
 
             {/* ─── MATERI & FILE PEMBELAJARAN (dipindah ke atas jadwal) ─── */}
             <section>
@@ -545,12 +547,44 @@ export default function ProgramDetailPage() {
             <section>
               <h2 className="text-xl font-bold text-gray-900 mb-5">🎯 Untuk Siapa Program Ini?</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {[
-                  'Mahasiswa S1, S2, dan S3 yang sedang mengerjakan skripsi/tesis/disertasi',
-                  'Dosen dan peneliti yang ingin meningkatkan kompetensi analisis data',
-                  'Praktisi dan profesional yang membutuhkan keterampilan riset berbasis data',
-                  'Pemula yang ingin mulai belajar statistik dan analisis data dari nol',
-                ].map((item) => (
+                {((): string[] => {
+                  const tags = program.tags.map(t => t.toLowerCase());
+                  const isNvivo = tags.includes('nvivo') || tags.includes('kualitatif');
+                  const isBiz = tags.includes('ajibiz') || tags.includes('bisnis');
+                  const isDigital = tags.includes('ajiai') || tags.includes('digital');
+                  const isLangua = tags.includes('ajilingua') || tags.includes('bahasa');
+                  if (isNvivo) return [
+                    'Mahasiswa S1–S3 yang menggunakan metode penelitian kualitatif',
+                    'Dosen dan peneliti yang ingin menguasai analisis data kualitatif',
+                    'Praktisi yang butuh tools profesional untuk riset kualitatif',
+                    'Siapapun yang ingin belajar NVIVO dari dasar hingga mahir',
+                  ];
+                  if (isBiz) return [
+                    'Wirausahawan dan pelaku UMKM yang ingin mengembangkan bisnis',
+                    'Manajer dan profesional yang ingin tingkatkan kompetensi manajemen',
+                    'Mahasiswa yang ingin memulai bisnis atau magang profesional',
+                    'Organisasi yang ingin mengoptimalkan strategi bisnis',
+                  ];
+                  if (isDigital) return [
+                    'Pelaku usaha yang ingin meningkatkan penjualan via digital',
+                    'Marketer dan kreator konten yang ingin strategi lebih efektif',
+                    'Mahasiswa yang ingin masuk industri digital marketing',
+                    'Tim marketing perusahaan yang butuh upgrade skill digital',
+                  ];
+                  if (isLangua) return [
+                    'Mahasiswa yang ingin lulus IELTS/TOEFL dengan skor tinggi',
+                    'Dosen dan peneliti yang ingin publikasi di jurnal internasional',
+                    'Profesional yang butuh English for business dan presentasi',
+                    'Siapapun yang ingin meningkatkan kemampuan English akademik',
+                  ];
+                  // Default (AjiStat)
+                  return [
+                    'Mahasiswa S1, S2, dan S3 yang sedang mengerjakan skripsi/tesis/disertasi',
+                    'Dosen dan peneliti yang ingin meningkatkan kompetensi analisis data',
+                    'Praktisi dan profesional yang membutuhkan keterampilan riset berbasis data',
+                    'Pemula yang ingin mulai belajar statistik dan analisis data dari nol',
+                  ];
+                })().map((item) => (
                   <div key={item} className="flex items-start gap-3 bg-blue-50 border border-blue-100 rounded-xl p-4">
                     <CheckCircle className="w-4 h-4 text-[#2348A8] shrink-0 mt-0.5" />
                     <p className="text-gray-700 text-sm">{item}</p>

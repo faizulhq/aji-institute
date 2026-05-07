@@ -7,10 +7,10 @@ from .models import Program, Testimonial, BlogArticle, Announcement
 class ProgramAdmin(admin.ModelAdmin):
     # ── Kolom yang tampil di halaman daftar program ──────────────
     list_display = (
-        'title', 'type', 'status', 'price_display',
+        'title', 'brand', 'type', 'status', 'price_display',
         'is_featured', 'facilitator_name', 'created_at'
     )
-    list_filter = ('type', 'status', 'is_featured')
+    list_filter = ('brand', 'type', 'status', 'is_featured')
     search_fields = ('title', 'facilitator_name', 'tags', 'slug')
     prepopulated_fields = {'slug': ('title',)}
     readonly_fields = ('created_at',)
@@ -18,7 +18,7 @@ class ProgramAdmin(admin.ModelAdmin):
     # ── Urutan kolom di form edit ────────────────────────────────
     fieldsets = (
         ('Informasi Utama', {
-            'fields': ('title', 'slug', 'type', 'status', 'is_featured')
+            'fields': ('title', 'slug', 'brand', 'type', 'status', 'is_featured')
         }),
         ('Harga', {
             'fields': ('price', 'original_price')

@@ -9,7 +9,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
     () =>
       new QueryClient({
         defaultOptions: {
-          queries: { staleTime: 60 * 1000, retry: 1 },
+          queries: {
+            staleTime: 1000 * 60 * 5,   // data dianggap fresh selama 5 menit
+            gcTime:    1000 * 60 * 30,  // data di cache selama 30 menit setelah unmount
+            retry: 1,
+          },
         },
       })
   );

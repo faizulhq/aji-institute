@@ -16,6 +16,7 @@ export interface Program {
   facilitator_avatar?: string;
   thumbnail_color: string;
   is_featured: boolean;
+  brand?: 'aji-institute' | 'ajistat' | 'ajibiz' | 'ajicomm' | 'ajiai' | 'ajilingua';
   // Detail only
   description?: string;
   curriculum?: string[];

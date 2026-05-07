@@ -14,6 +14,7 @@ class Program(models.Model):
         ('recorded', 'Rekaman Tersedia'),
     ]
     BRAND_CHOICES = [
+        ('aji-institute', 'Aji Institute — Layanan Langsung'),
         ('ajistat',  'AjiStat — Statistika & Riset'),
         ('ajibiz',   'AjiBiz — Bisnis & Kewirausahaan'),
         ('ajicomm',  'AjiComm — Public Relations & Komunikasi'),

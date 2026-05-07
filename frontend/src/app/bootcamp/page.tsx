@@ -1,9 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { Users, Award, BookOpen, Star, X } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
+import { Users, Award, BookOpen, Star, X, ArrowRight, Clock, Calendar, Tag } from 'lucide-react';
 import { ProgramTabsByProgram } from '@/components/ProgramTabs';
 import { WA_LINK } from '@/lib/config';
+import type { Program } from '@/lib/types';
+
+const API = process.env.NEXT_PUBLIC_API_URL && process.env.NEXT_PUBLIC_API_URL !== '/api'
+  ? process.env.NEXT_PUBLIC_API_URL
+  : 'https://api.aji-institute.com';
 
 const KEUNGGULAN = [
   {
@@ -117,6 +124,9 @@ export default function BootcampPage() {
         </div>
       </div>
 
+      {/* ─── SECTION: PROGRAM LANGSUNG AJI INSTITUTE ─── */}
+      <AjiInstituteFeatured formatFilter="bootcamp" />
+
       {/* ─── TABS PER PROGRAM ─── */}
       <section className="py-14 bg-gray-50 min-h-[60vh]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -144,5 +154,139 @@ export default function BootcampPage() {
 
       <KeunggulanModal item={activeKeunggulan} onClose={() => setActiveKeunggulan(null)} />
     </>
+  );
+}
+
+// ─── Section Program Langsung Aji Institute ───────────────────────────
+function AjiInstituteFeatured({ formatFilter }: { formatFilter: string }) {
+  const { data, isLoading } = useQuery<Program[]>({
+    queryKey: ['aji-institute-programs', formatFilter],
+    queryFn: () =>
+      fetch(`${API}/api/programs/?brand=aji-institute`)
+        .then((r) => r.ok ? r.json() : { data: [] })
+        .then((json) => {
+          const arr: Program[] = json.data ?? json;
+          return Array.isArray(arr)
+            ? arr.filter((p) => p.type?.toLowerCase() === formatFilter)
+            : [];
+        }),
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const programs = data ?? [];
+
+  if (!isLoading && programs.length === 0) return null;
+
+  const STATUS_LABEL: Record<string, string> = {
+    upcoming: 'Akan Datang',
+    ongoing: 'Sedang Berlangsung',
+    recorded: 'Rekaman Tersedia',
+  };
+  const STATUS_COLOR: Record<string, string> = {
+    upcoming: '#F0A500',
+    ongoing: '#16a34a',
+    recorded: '#6366f1',
+  };
+
+  return (
+    <section className="bg-gradient-to-br from-[#0d1632] via-[#162058] to-[#1B3A8C] py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
+          <div>
+            <span className="inline-flex items-center gap-2 bg-[#F0A500]/20 border border-[#F0A500]/40 text-[#F0A500] text-xs font-bold px-4 py-1.5 rounded-full mb-4 uppercase tracking-widest">
+              Open Class
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-black text-white mb-2">
+              Kelas Terbuka Aji Institute
+            </h2>
+            <p className="text-white/60 text-sm max-w-xl">
+              Program yang dibuka untuk umum oleh Aji Institute — lintas bidang,
+              cocok untuk siapapun tanpa harus terikat divisi tertentu.
+            </p>
+          </div>
+        </div>
+
+        {/* Cards */}
+        {isLoading ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="bg-white/10 animate-pulse rounded-2xl h-72" />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {programs.map((p) => (
+              <Link
+                key={p.id}
+                href={`/program/${p.slug}`}
+                className="group bg-white/5 border border-white/15 hover:bg-white/10 hover:border-[#F0A500]/50 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#F0A500]/10 flex flex-col"
+              >
+                {/* Top accent */}
+                <div className="h-1 w-full bg-gradient-to-r from-[#F0A500] to-[#F0A500]/40" />
+
+                <div className="p-6 flex-1 flex flex-col">
+                  {/* Badge status */}
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-[10px] font-black px-2.5 py-1 rounded-full bg-[#F0A500] text-[#162058] uppercase tracking-wide">
+                      Bootcamp
+                    </span>
+                    {p.status && (
+                      <span
+                        className="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide"
+                        style={{ backgroundColor: `${STATUS_COLOR[p.status]}30`, color: STATUS_COLOR[p.status] }}
+                      >
+                        {STATUS_LABEL[p.status] ?? p.status}
+                      </span>
+                    )}
+                  </div>
+
+                  <h3 className="font-black text-white text-lg leading-tight mb-2 group-hover:text-[#F0A500] transition-colors">
+                    {p.title}
+                  </h3>
+                  {p.description && (
+                    <p className="text-white/50 text-sm leading-relaxed mb-4 line-clamp-2 flex-1">
+                      {p.description}
+                    </p>
+                  )}
+
+                  {/* Meta */}
+                  <div className="space-y-1.5 mb-5">
+                    {p.duration && (
+                      <div className="flex items-center gap-2 text-xs text-white/50">
+                        <Clock className="w-3.5 h-3.5" />
+                        <span>{p.duration}</span>
+                      </div>
+                    )}
+                    {p.schedule && (
+                      <div className="flex items-center gap-2 text-xs text-white/50">
+                        <Calendar className="w-3.5 h-3.5" />
+                        <span>{p.schedule}</span>
+                      </div>
+                    )}
+                    {p.facilitator_name && (
+                      <div className="flex items-center gap-2 text-xs text-white/50">
+                        <Tag className="w-3.5 h-3.5" />
+                        <span>{p.facilitator_name}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Price + CTA */}
+                  <div className="flex items-center justify-between pt-4 border-t border-white/10">
+                    <span className="font-black text-[#F0A500] text-xl">
+                      {Number(p.price) === 0 ? 'Gratis' : `Rp ${Number(p.price).toLocaleString('id-ID')}`}
+                    </span>
+                    <span className="flex items-center gap-1 text-white text-sm font-semibold group-hover:gap-2 group-hover:text-[#F0A500] transition-all">
+                      Daftar <ArrowRight className="w-4 h-4" />
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
