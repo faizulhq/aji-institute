@@ -18,6 +18,9 @@ db.sqlite3
 !backend/staticfiles/
 !backend/staticfiles/**
 
+# Media uploads (managed by Django admin, not git)
+backend/media/
+
 # Next.js (Frontend)
 frontend/.next/
 !frontend/.next/standalone/
