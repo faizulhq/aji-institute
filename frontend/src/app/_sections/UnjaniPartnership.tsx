@@ -107,7 +107,7 @@ export function UnjaniPartnership() {
 
               {/* CTA */}
               <a
-                href={WA_LINK('Halo Aji Institute, saya ingin info program kerjasama UNJANI (Bootcamp Praktikum NVIVO). Bisa bantu?')}
+                href={WA_LINK('Halo Aji Institute, saya ingin info program kerjasama (Bootcamp Praktikum NVIVO). Bisa bantu?')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-8 inline-flex items-center gap-2 bg-[#1E6B2E] hover:bg-[#155623] text-white font-bold px-5 py-3 rounded-xl text-sm transition-colors self-start"
@@ -156,25 +156,25 @@ export function UnjaniPartnership() {
                   <div className="p-5 flex flex-col justify-between h-full">
 
                     <div>
-                      <p className="text-[#1E6B2E] text-[10px] font-bold uppercase tracking-wider mb-1">FISIP HI UNJANI</p>
+                      <p className="text-[#1E6B2E] text-[16px] font-bold uppercase tracking-wider mb-1">FISIP HI UNJANI</p>
                       <h4 className="text-white font-black text-sm leading-tight mb-3 line-clamp-2">
                         {featured?.title ?? 'Bootcamp Praktikum NVIVO'}
                       </h4>
                       <div className="space-y-1.5">
                         {featured?.duration && (
-                          <div className="flex items-center gap-1.5 text-[11px] text-white/50">
+                          <div className="flex items-center gap-1.5 text-[14px] text-white/50">
                             <Clock className="w-3 h-3 text-[#F0A500]" />
                             <span>{featured.duration}</span>
                           </div>
                         )}
                         {featured?.schedule && (
-                          <div className="flex items-center gap-1.5 text-[11px] text-white/50">
+                          <div className="flex items-center gap-1.5 text-[14px] text-white/50">
                             <Calendar className="w-3 h-3 text-[#F0A500]" />
                             <span>{featured.schedule}</span>
                           </div>
                         )}
                         {featured?.facilitator_name && (
-                          <div className="flex items-center gap-1.5 text-[11px] text-white/50">
+                          <div className="flex items-center gap-1.5 text-[14px] text-white/50">
                             <GraduationCap className="w-3 h-3 text-[#F0A500]" />
                             <span>{featured.facilitator_name}</span>
                           </div>
@@ -182,7 +182,7 @@ export function UnjaniPartnership() {
                       </div>
                     </div>
 
-                    <div className="mt-4 pt-4 border-t border-white/10">
+                    {/* <div className="mt-4 pt-4 border-t border-white/10">
                       <p className="text-[#F0A500] font-black text-base mb-3">
                         {!featured || Number(featured.price) === 0
                           ? 'Hubungi Admin'
@@ -203,7 +203,7 @@ export function UnjaniPartnership() {
                           Daftar <ArrowRight className="w-3 h-3" />
                         </Link>
                       )}
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
