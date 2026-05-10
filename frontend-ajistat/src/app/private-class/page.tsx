@@ -23,10 +23,10 @@ function ProgramCard({ p }: { p: ApiProgram }) {
   return (
     <Link href={`/program/${p.slug}`}
       className="group flex flex-col bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-      <div className="h-32 relative flex items-center justify-center overflow-hidden"
+      <div className="relative aspect-video w-full overflow-hidden"
         style={{ backgroundColor: p.thumbnail_color || '#162058' }}>
         {p.image ? (
-          <img src={p.image.startsWith('http') ? p.image : `${API_BASE}${p.image}`} alt={p.title} className="w-full h-full object-cover" />
+          <img src={p.image.startsWith('http') ? p.image : `${API_BASE}${p.image}`} alt={p.title} className="w-full h-full object-cover object-top" />
         ) : (
           <>
             <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '16px 16px' }} />

@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { Users, Award, BookOpen, Star, X, ArrowRight, Clock, Calendar, Tag } from 'lucide-react';
 import { ProgramTabsByProgram } from '@/components/ProgramTabs';
+import { ProgramCardBanner } from '@/components/ProgramCardBanner';
 import { WA_LINK } from '@/lib/config';
 import type { Program } from '@/lib/types';
 
@@ -124,8 +125,9 @@ export default function BootcampPage() {
         </div>
       </div>
 
-      {/* ─── SECTION: PROGRAM LANGSUNG AJI INSTITUTE ─── */}
-      <AjiInstituteFeatured formatFilter="bootcamp" />
+      {/* ─── SECTION: OPEN CLASS (ATAS) — Aji Institute & UNJANI bersebelahan ─── */}
+      <OpenClassSideBySide />
+
 
       {/* ─── TABS PER PROGRAM ─── */}
       <section className="py-14 bg-gray-50 min-h-[60vh]">
@@ -157,135 +159,199 @@ export default function BootcampPage() {
   );
 }
 
-// ─── Section Program Langsung Aji Institute ───────────────────────────
-function AjiInstituteFeatured({ formatFilter }: { formatFilter: string }) {
-  const { data, isLoading } = useQuery<Program[]>({
-    queryKey: ['aji-institute-programs', formatFilter],
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+import Image from 'next/image';
+
+const isUnjaniProgram = (p: Program) =>
+  p.tags?.some((t: string) => ['unjani', 'fisip', 'hi', 'praktikum'].includes(t.toLowerCase())) ||
+  p.slug?.toLowerCase().includes('unjani') ||
+  p.slug?.toLowerCase().includes('praktikum') ||
+  p.title?.toLowerCase().includes('unjani') ||
+  p.title?.toLowerCase().includes('fisip');
+
+const STATUS_LABEL: Record<string, string> = {
+  upcoming: 'Akan Datang',
+  ongoing: 'Sedang Berlangsung',
+  recorded: 'Rekaman Tersedia',
+};
+const STATUS_COLOR: Record<string, string> = {
+  upcoming: '#F0A500',
+  ongoing: '#16a34a',
+  recorded: '#6366f1',
+};
+
+// ─── ✏️  UBAH UKURAN CARD DI SINI ──────────────────────────────────────────
+const CARD_CONFIG = {
+  // ↓ Tinggi gambar flyer di dalam card (pixel). Contoh: 160, 200, 240, 300
+  imageHeight: 350,
+
+  // ↓ Tinggi MINIMAL area teks/info di bawah gambar (pixel). Contoh: 160, 180, 200
+  infoMinHeight: 0,
+
+  // ↓ Lebar MAKSIMAL setiap card. Contoh: '320px', '380px', '100%' (penuh kolom)
+  cardMaxWidth: '100%',
+
+  // ↓ Lebar MAKSIMAL tiap KOLOM (kiri/kanan). Contoh: '480px', '520px', '100%'
+  colMaxWidth: '520px',
+};
+// ──────────────────────────────────────────────────────────────────────
+
+function ProgramCard({ p, dark = true }: { p: Program; dark?: boolean }) {
+  return (
+    <Link
+      href={`/program/${p.slug}`}
+      style={{ maxWidth: CARD_CONFIG.cardMaxWidth }}
+      className={`group rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 flex flex-col w-full ${
+        dark
+          ? 'bg-white/5 border border-white/15 hover:bg-white/10 hover:border-[#F0A500]/50 hover:shadow-xl'
+          : 'bg-white border border-gray-100 hover:shadow-xl shadow-sm'
+      }`}
+    >
+      {p.image ? (
+        <div className="relative w-full overflow-hidden shrink-0" style={{ height: CARD_CONFIG.imageHeight }}>
+          <Image
+            src={p.image.startsWith('http') ? p.image : `${API}${p.image}`}
+            alt={p.title} fill
+            className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+          />
+          <div className="absolute top-2 left-2 flex gap-1.5">
+            <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#F0A500] text-[#162058] uppercase shadow">Bootcamp</span>
+            {p.status && (
+              <span className="text-[9px] font-bold px-2 py-0.5 rounded-full uppercase shadow"
+                style={{ backgroundColor: `${STATUS_COLOR[p.status]}dd`, color: '#fff' }}>
+                {STATUS_LABEL[p.status] ?? p.status}
+              </span>
+            )}
+          </div>
+        </div>
+      ) : (
+        /* Template banner dinamis jika tidak ada gambar */
+        <ProgramCardBanner program={p} />
+      )}
+      <div className="p-4 flex-1 flex flex-col justify-between" style={{ minHeight: CARD_CONFIG.infoMinHeight }}>
+        <div>
+          {!p.image && (
+            <div className="flex gap-1.5 mb-2">
+              <span className="text-[9px] font-black px-2 py-0.5 rounded-full bg-[#F0A500] text-[#162058] uppercase">Bootcamp</span>
+              {p.status && (
+                <span className="text-[9px] font-bold px-2 py-0.5 rounded-full uppercase"
+                  style={{ backgroundColor: `${STATUS_COLOR[p.status]}25`, color: STATUS_COLOR[p.status] }}>
+                  {STATUS_LABEL[p.status] ?? p.status}
+                </span>
+              )}
+            </div>
+          )}
+          <h3 className={`font-black text-sm leading-tight mb-1.5 group-hover:text-[#F0A500] transition-colors ${ dark ? 'text-white' : 'text-gray-900' }`}>{p.title}</h3>
+          <div className={`space-y-0.5 mb-3 text-xs ${ dark ? 'text-white/50' : 'text-gray-400' }`}>
+            {p.duration && <div className="flex items-center gap-1.5"><Clock className="w-3 h-3" />{p.duration}</div>}
+            {p.schedule && <div className="flex items-center gap-1.5"><Calendar className="w-3 h-3" />{p.schedule}</div>}
+            {p.facilitator_name && <div className="flex items-center gap-1.5"><Tag className="w-3 h-3" />{p.facilitator_name}</div>}
+          </div>
+        </div>
+        <div className={`flex items-center justify-between pt-2.5 border-t mt-auto ${ dark ? 'border-white/10' : 'border-gray-100' }`}>
+          <span className="font-black text-[#F0A500] text-base">
+            {Number(p.price) === 0 ? 'Hubungi Admin' : `Rp ${Number(p.price).toLocaleString('id-ID')}`}
+          </span>
+          <span className={`flex items-center gap-1 text-xs font-semibold group-hover:gap-2 group-hover:text-[#F0A500] transition-all ${ dark ? 'text-white/70' : 'text-gray-500' }`}>
+            Daftar <ArrowRight className="w-3 h-3" />
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+// ─── COMBINED: Aji Institute + UNJANI bersebelahan (atas) ────────────────────
+function OpenClassSideBySide() {
+  const { data: allData, isLoading } = useQuery<Program[]>({
+    queryKey: ['aji-institute-openclass-combined'],
     queryFn: () =>
       fetch(`${API}/api/programs/?brand=aji-institute`)
         .then((r) => r.ok ? r.json() : { data: [] })
         .then((json) => {
           const arr: Program[] = json.data ?? json;
-          return Array.isArray(arr)
-            ? arr.filter((p) => p.type?.toLowerCase() === formatFilter)
-            : [];
+          return Array.isArray(arr) ? arr.filter((p) => p.type?.toLowerCase() === 'bootcamp') : [];
         }),
     staleTime: 1000 * 60 * 5,
   });
 
-  const programs = data ?? [];
-
-  if (!isLoading && programs.length === 0) return null;
-
-  const STATUS_LABEL: Record<string, string> = {
-    upcoming: 'Akan Datang',
-    ongoing: 'Sedang Berlangsung',
-    recorded: 'Rekaman Tersedia',
-  };
-  const STATUS_COLOR: Record<string, string> = {
-    upcoming: '#F0A500',
-    ongoing: '#16a34a',
-    recorded: '#6366f1',
-  };
+  const regularPrograms = (allData ?? []).filter((p) => !isUnjaniProgram(p));
+  const unjaniPrograms  = (allData ?? []).filter((p) =>  isUnjaniProgram(p));
 
   return (
-    <section className="bg-gradient-to-br from-[#0d1632] via-[#162058] to-[#1B3A8C] py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
-          <div>
-            <span className="inline-flex items-center gap-2 bg-[#F0A500]/20 border border-[#F0A500]/40 text-[#F0A500] text-xs font-bold px-4 py-1.5 rounded-full mb-4 uppercase tracking-widest">
-              Open Class
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-white mb-2">
-              Kelas Terbuka Aji Institute
-            </h2>
-            <p className="text-white/60 text-sm max-w-xl">
-              Program yang dibuka untuk umum oleh Aji Institute — lintas bidang,
-              cocok untuk siapapun tanpa harus terikat divisi tertentu.
-            </p>
+    <section className="relative bg-gradient-to-br from-[#0d1632] via-[#162058] to-[#1B3A8C] py-10 overflow-hidden">
+      {/* Dekorasi */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#F0A500]/5 rounded-full blur-3xl -translate-y-1/3 translate-x-1/3" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#2348A8]/20 rounded-full blur-3xl translate-y-1/3 -translate-x-1/3" />
+        <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-8">
+
+          {/* ─── KIRI: Kelas Terbuka Aji Institute ─── */}
+          <div style={{ maxWidth: CARD_CONFIG.colMaxWidth }}>
+            <div className="mb-5">
+              <span className="inline-flex items-center gap-2 bg-[#F0A500]/20 border border-[#F0A500]/40 text-[#F0A500] text-xs font-bold px-3 py-1 rounded-full mb-2 uppercase tracking-widest">
+                Open Class
+              </span>
+              <h2 className="text-lg font-black text-white mb-1">Kelas Terbuka Aji Institute</h2>
+              <p className="text-white/50 text-xs">Program bootcamp untuk umum.</p>
+            </div>
+            {isLoading ? (
+              <div className="space-y-4">{[1, 2].map((i) => <div key={i} className="bg-white/10 animate-pulse rounded-2xl h-56" />)}</div>
+            ) : regularPrograms.length === 0 ? (
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-8 text-center">
+                <p className="text-white/30 text-sm">Belum ada program saat ini</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {regularPrograms.map((p) => <ProgramCard key={p.id} p={p} dark={true} />)}
+              </div>
+            )}
           </div>
+
+          {/* ─── KANAN: Kerjasama UNJANI ─── */}
+          <div style={{ maxWidth: CARD_CONFIG.colMaxWidth }}>
+            {/* Header dengan logo UNJANI */}
+            <div className="flex items-center gap-3 mb-5">
+              <div className="flex-1">
+                <span className="inline-flex items-center gap-2 bg-[#1E6B2E]/30 border border-[#1E6B2E]/40 text-[#4ade80] text-xs font-bold px-3 py-1 rounded-full mb-2 uppercase tracking-widest">
+                  Kerjasama UNJANI
+                </span>
+                <h2 className="text-lg font-black text-white mb-1">Bootcamp × UNJANI</h2>
+                <p className="text-white/50 text-xs">Program kolaborasi FISIP HI UNJANI.</p>
+              </div>
+              {/* Logo UNJANI kecil di header */}
+              <div className="bg-white/10 border border-white/20 rounded-xl p-1.5 shrink-0">
+                <Image src="/images/Logo_Unjani.png" alt="UNJANI" width={28} height={28} className="object-contain" />
+              </div>
+            </div>
+            {isLoading ? (
+              <div className="space-y-4">{[1].map((i) => <div key={i} className="bg-white/10 animate-pulse rounded-2xl h-56" />)}</div>
+            ) : unjaniPrograms.length === 0 ? (
+              <div className="bg-[#1E6B2E]/10 border border-[#1E6B2E]/25 rounded-2xl p-8 text-center">
+                <Image src="/images/Logo_Unjani.png" alt="UNJANI" width={40} height={40} className="mx-auto opacity-40 mb-3" />
+                <p className="text-white/30 text-sm">Belum ada program kerjasama saat ini</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {unjaniPrograms.map((p) => (
+                  <div key={p.id} className="relative">
+                    {/* Badge kerjasama di atas card */}
+                    <div className="absolute -top-2 right-3 z-10 flex items-center gap-1.5 bg-[#1E6B2E] border border-[#2D9B44] rounded-full px-3 py-1">
+                      <Image src="/images/Logo_Unjani.png" alt="UNJANI" width={14} height={14} className="object-contain" />
+                      <span className="text-[9px] text-white font-bold uppercase tracking-widest">× UNJANI</span>
+                    </div>
+                    <ProgramCard p={p} dark={true} />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
         </div>
-
-        {/* Cards */}
-        {isLoading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white/10 animate-pulse rounded-2xl h-72" />
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {programs.map((p) => (
-              <Link
-                key={p.id}
-                href={`/program/${p.slug}`}
-                className="group bg-white/5 border border-white/15 hover:bg-white/10 hover:border-[#F0A500]/50 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#F0A500]/10 flex flex-col"
-              >
-                {/* Top accent */}
-                <div className="h-1 w-full bg-gradient-to-r from-[#F0A500] to-[#F0A500]/40" />
-
-                <div className="p-6 flex-1 flex flex-col">
-                  {/* Badge status */}
-                  <div className="flex items-center gap-2 mb-4">
-                    <span className="text-[10px] font-black px-2.5 py-1 rounded-full bg-[#F0A500] text-[#162058] uppercase tracking-wide">
-                      Bootcamp
-                    </span>
-                    {p.status && (
-                      <span
-                        className="text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide"
-                        style={{ backgroundColor: `${STATUS_COLOR[p.status]}30`, color: STATUS_COLOR[p.status] }}
-                      >
-                        {STATUS_LABEL[p.status] ?? p.status}
-                      </span>
-                    )}
-                  </div>
-
-                  <h3 className="font-black text-white text-lg leading-tight mb-2 group-hover:text-[#F0A500] transition-colors">
-                    {p.title}
-                  </h3>
-                  {p.description && (
-                    <p className="text-white/50 text-sm leading-relaxed mb-4 line-clamp-2 flex-1">
-                      {p.description}
-                    </p>
-                  )}
-
-                  {/* Meta */}
-                  <div className="space-y-1.5 mb-5">
-                    {p.duration && (
-                      <div className="flex items-center gap-2 text-xs text-white/50">
-                        <Clock className="w-3.5 h-3.5" />
-                        <span>{p.duration}</span>
-                      </div>
-                    )}
-                    {p.schedule && (
-                      <div className="flex items-center gap-2 text-xs text-white/50">
-                        <Calendar className="w-3.5 h-3.5" />
-                        <span>{p.schedule}</span>
-                      </div>
-                    )}
-                    {p.facilitator_name && (
-                      <div className="flex items-center gap-2 text-xs text-white/50">
-                        <Tag className="w-3.5 h-3.5" />
-                        <span>{p.facilitator_name}</span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Price + CTA */}
-                  <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                    <span className="font-black text-[#F0A500] text-xl">
-                      {Number(p.price) === 0 ? 'Gratis' : `Rp ${Number(p.price).toLocaleString('id-ID')}`}
-                    </span>
-                    <span className="flex items-center gap-1 text-white text-sm font-semibold group-hover:gap-2 group-hover:text-[#F0A500] transition-all">
-                      Daftar <ArrowRight className="w-4 h-4" />
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
       </div>
     </section>
   );

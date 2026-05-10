@@ -12,6 +12,7 @@ import { KonsultasiPreview, CtaKerjaSama }      from './_sections/KonsultasiPrev
 import { ToolsGrid }             from './_sections/ToolsGrid';
 import { VideoPreviewSection }   from './_sections/VideoPreviewSection';
 import { TestimonialsSection }   from './_sections/TestimonialsSection';
+import { UnjaniPartnership }     from './_sections/UnjaniPartnership';
 
 export default function HomePage() {
   return (
@@ -21,6 +22,7 @@ export default function HomePage() {
       <StatsStrip />
       <ProgramGridSection />
       <FeaturedPrograms />
+      <UnjaniPartnership />
       <VideoPreviewSection />
       <KonsultasiPreview />
       <ToolsGrid />
