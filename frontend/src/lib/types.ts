@@ -15,11 +15,13 @@ export interface Program {
   facilitator_bio?: string;
   facilitator_avatar?: string;
   thumbnail_color: string;
+  image?: string | null;
   is_featured: boolean;
   brand?: 'aji-institute' | 'ajistat' | 'ajibiz' | 'ajicomm' | 'ajiai' | 'ajilingua';
   // Detail only
   description?: string;
   curriculum?: string[];
+  rundown?: { day: string; time: string; label: string; note: string }[];
   demo_video_url?: string;
   testimonials?: Testimonial[];
 }

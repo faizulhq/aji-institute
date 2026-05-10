@@ -10,8 +10,8 @@ class CompanyConfig(models.Model):
     whatsapp_template = models.TextField(
         blank=True,
         null=True,
-        help_text="Gunakan {divisi} untuk nama divisi otomatis. Kosongkan untuk format default.",
-        default="Halo Tim *{divisi}*,\n\nSaya tertarik untuk mendapatkan informasi lebih lanjut terkait layanan yang tersedia.\n\nBerikut data saya:\nNama:\nJurusan/Fakultas/Universitas:\nLembaga/Instansi:\nKebutuhan (konsultasi/bootcamp/kelas private/dll):\n\nMohon informasinya. Terima kasih."
+        help_text="Gunakan {divisi} untuk nama divisi otomatis, dan {konteks} untuk niat/judul otomatis. Kosongkan untuk format default.",
+        default="Halo Tim *{divisi}*,\n\n{konteks}\n\nBerikut data saya:\nNama:\nJurusan/Fakultas/Universitas:\nLembaga/Instansi:\nKebutuhan (konsultasi/bootcamp/kelas private/dll):\n\nMohon informasinya. Terima kasih."
     )
     footer_description = models.TextField(
         default="Aji Institute adalah lembaga pelatihan dan konsultasi riset, metodologi, dan manajemen terpadu yang membantu individu dan korporasi.",

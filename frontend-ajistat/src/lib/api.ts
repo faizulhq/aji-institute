@@ -3,11 +3,7 @@ import type { ApiProgram } from './types';
 const API_BASE =
   process.env.NEXT_PUBLIC_API_URL ?? 'https://api.aji-institute.com';
 
-// Filter program yang termasuk divisi AjiStat
-const AJISTAT_FILTER = (p: ApiProgram) =>
-  !p.tags.some((t) =>
-    ['ajibiz', 'ajicomm', 'ajiai', 'ajilingua'].includes(t.toLowerCase())
-  );
+const AJISTAT_FILTER = (p: ApiProgram) => p.brand === 'ajistat';
 
 /** Fetch dengan timeout (default 8 detik) agar build tidak hang */
 async function fetchWithTimeout(url: string, timeoutMs = 8000): Promise<Response> {

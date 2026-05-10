@@ -4,10 +4,14 @@ import { SHORT_CLASS_PROGRAMS } from '@/lib/config';
 import type { ApiProgram } from '@/lib/types';
 import { STATUS_LABEL, STATUS_COLOR } from '@/lib/types';
 
-function formatPrice(p: number) {
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'https://api.aji-institute.com';
+
+function formatPrice(p: number | string) {
+  const num = Number(p);
+  if (num === 0 || isNaN(num)) return 'Hubungi Admin';
   return new Intl.NumberFormat('id-ID', {
     style: 'currency', currency: 'IDR', maximumFractionDigits: 0,
-  }).format(p);
+  }).format(num);
 }
 
 function ProgramCard({ p }: { p: ApiProgram }) {
@@ -17,17 +21,23 @@ function ProgramCard({ p }: { p: ApiProgram }) {
   return (
     <Link href={`/program/${p.slug}`}
       className="group flex flex-col bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-      <div className="h-28 relative flex items-center justify-center"
+      <div className="h-28 relative flex items-center justify-center overflow-hidden"
         style={{ backgroundColor: p.thumbnail_color || '#162058' }}>
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
-        <div className="relative text-center px-4">
-          <p className="text-white/60 text-xs font-semibold uppercase tracking-widest">Short Class</p>
-          <p className="text-white font-black text-base leading-tight line-clamp-2 mt-1">{p.title}</p>
-        </div>
-        {p.is_featured && (
-          <span className="absolute top-3 left-3 text-[10px] font-black bg-[#F0A500] text-[#162058] px-2 py-0.5 rounded-full">Unggulan</span>
+        {p.image ? (
+          <img src={p.image.startsWith('http') ? p.image : `${API_BASE}${p.image}`} alt={p.title} className="w-full h-full object-cover" />
+        ) : (
+          <>
+            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '16px 16px' }} />
+            <div className="relative text-center px-4">
+              <p className="text-white/60 text-xs font-semibold uppercase tracking-widest">Short Class</p>
+              <p className="text-white font-black text-base leading-tight line-clamp-2 mt-1">{p.title}</p>
+            </div>
+          </>
         )}
-        <span className={`absolute top-3 right-3 text-[10px] font-semibold px-2 py-0.5 rounded-full ${STATUS_COLOR[p.status]}`}>
+        {p.is_featured && (
+          <span className="absolute top-3 left-3 text-[10px] font-black bg-[#F0A500] text-[#162058] px-2 py-0.5 rounded-full z-10">Unggulan</span>
+        )}
+        <span className={`absolute top-3 right-3 text-[10px] font-semibold px-2 py-0.5 rounded-full z-10 ${STATUS_COLOR[p.status]}`}>
           {STATUS_LABEL[p.status]}
         </span>
       </div>
@@ -40,7 +50,9 @@ function ProgramCard({ p }: { p: ApiProgram }) {
         <p className="text-gray-500 text-xs mb-3">Durasi: <span className="text-gray-700 font-medium">{p.duration}</span></p>
         <div className="mt-auto flex items-center justify-between">
           <div>
-            <p className="text-[#162058] font-black">{formatPrice(p.price)}</p>
+            <p className="text-[#162058] font-black">
+              {Number(p.price) === 0 ? 'Hubungi Admin' : formatPrice(p.price)}
+            </p>
             {discount && <span className="text-[10px] text-red-500 font-bold">-{discount}%</span>}
           </div>
           <span className="bg-[#162058] group-hover:bg-[#2348A8] text-white font-bold py-2 px-4 rounded-xl text-xs transition-colors">

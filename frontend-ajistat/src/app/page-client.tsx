@@ -7,8 +7,12 @@ import { X, ChevronRight } from 'lucide-react';
 import { TOOLS, TOPICS, TARGET_MARKET, FIELDS, WA_LINK, BOOTCAMP_PROGRAMS, PRIVATE_PROGRAMS, SHORT_CLASS_PROGRAMS } from '@/lib/config';
 import type { ApiProgram } from '@/lib/types';
 
-function formatPrice(p: number) {
-  return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(p);
+function formatPrice(p: number | string) {
+  const num = Number(p);
+  if (num === 0 || isNaN(num)) return 'Hubungi Admin';
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency', currency: 'IDR', maximumFractionDigits: 0,
+  }).format(num);
 }
 
 /* ─── Target Market Modal ─── */
@@ -157,7 +161,9 @@ function ServiceModal({ title, programs, href, onClose }: ServiceModalProps) {
                 <p className="text-gray-400 text-[10px] mt-0.5">{p.duration}</p>
               </div>
               <div className="text-right shrink-0">
-                <p className="text-[#162058] font-black text-xs">{formatPrice(p.price)}</p>
+                <p className="text-[#162058] font-black text-xs">
+                  {Number(p.price) === 0 ? 'Hubungi Admin' : formatPrice(p.price)}
+                </p>
                 {p.original_price && <p className="text-gray-300 text-[10px] line-through">{formatPrice(p.original_price)}</p>}
               </div>
               <ChevronRight className="w-3.5 h-3.5 text-gray-300 group-hover:text-[#162058] transition-colors shrink-0" />

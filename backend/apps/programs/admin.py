@@ -8,8 +8,9 @@ class ProgramAdmin(admin.ModelAdmin):
     # ── Kolom yang tampil di halaman daftar program ──────────────
     list_display = (
         'title', 'brand', 'type', 'status', 'price_display',
-        'is_featured', 'facilitator_name', 'created_at'
+        'is_featured', 'order', 'facilitator_name', 'created_at'
     )
+    list_editable = ('is_featured', 'order')
     list_filter = ('brand', 'type', 'status', 'is_featured')
     search_fields = ('title', 'facilitator_name', 'tags', 'slug')
     prepopulated_fields = {'slug': ('title',)}
@@ -18,7 +19,7 @@ class ProgramAdmin(admin.ModelAdmin):
     # ── Urutan kolom di form edit ────────────────────────────────
     fieldsets = (
         ('Informasi Utama', {
-            'fields': ('title', 'slug', 'brand', 'type', 'status', 'is_featured')
+            'fields': ('title', 'slug', 'brand', 'type', 'status', 'is_featured', 'order')
         }),
         ('Harga', {
             'fields': ('price', 'original_price')
@@ -30,7 +31,7 @@ class ProgramAdmin(admin.ModelAdmin):
             'fields': ('facilitator_name', 'facilitator_title', 'facilitator_bio', 'facilitator_avatar')
         }),
         ('Media & Tampilan', {
-            'fields': ('demo_video_url', 'thumbnail_color')
+            'fields': ('image', 'demo_video_url', 'thumbnail_color')
         }),
         ('Metadata', {
             'fields': ('created_at',),

@@ -79,7 +79,35 @@ export function useCompanyConfig() {
         // Apply template with smart division detection
         if (query.data.whatsapp_template) {
           const division = getDivisionFromContext(href);
-          const finalMessage = query.data.whatsapp_template.replace(/{divisi}/g, division);
+          
+          let contextMsg = "Saya tertarik untuk mendapatkan informasi lebih lanjut terkait layanan yang tersedia.";
+          const originalText = url.searchParams.get('text') || '';
+          
+          if (originalText.trim() !== '') {
+            let extracted = originalText.trim();
+            if (extracted.toLowerCase().startsWith('halo')) {
+              const commaIndex = extracted.indexOf(',');
+              if (commaIndex !== -1) {
+                extracted = extracted.substring(commaIndex + 1).trim();
+              } else {
+                extracted = extracted.replace(/^Halo\s+(?:\w+\s+){0,2}/i, '').trim();
+              }
+            }
+            if (extracted.toLowerCase().startsWith('saya ')) {
+              extracted = extracted.substring(5).trim();
+            }
+            // Kapitalisasi awal, sisanya sesuai aslinya
+            contextMsg = 'Saya ' + extracted.charAt(0).toLowerCase() + extracted.slice(1);
+          }
+
+          let finalMessage = query.data.whatsapp_template.replace(/{divisi}/g, division);
+          // Jika template belum mengandung {konteks}, sisipkan di atas "Berikut data saya"
+          if (!finalMessage.includes('{konteks}')) {
+            finalMessage = finalMessage.replace(/Berikut data saya/i, `${contextMsg}\n\nBerikut data saya`);
+          } else {
+            finalMessage = finalMessage.replace(/{konteks}/g, contextMsg);
+          }
+          
           url.searchParams.set('text', finalMessage);
         }
 

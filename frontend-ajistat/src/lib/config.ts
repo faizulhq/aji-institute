@@ -187,16 +187,6 @@ export const ALL_PROGRAMS: Program[] = [
     status: 'Akan dilaksanakan',
     curriculum: ['Pengertian & jenis-jenis data', 'Ukuran pemusatan: mean, median, modus', 'Ukuran penyebaran: varians, standar deviasi', 'Distribusi data & interpretasi grafik'],
   },
-  {
-    id: 13, type: 'bootcamp', slug: 'bootcamp-nvivo',
-    title: 'Bootcamp NVivo: Analisis Data Kualitatif Komprehensif',
-    description: 'Kuasai analisis data kualitatif menggunakan NVivo secara mendalam. Dari pengkodean tema, analisis naratif, hingga triangulasi mixed methods. Cocok untuk mahasiswa S2/S3 dan peneliti yang menggunakan pendekatan kualitatif atau mixed methods.',
-    duration: '3 Hari (6 Sesi Live Zoom)', price: 400000, originalPrice: 750000,
-    tags: ['NVivo', 'Kualitatif', 'Mixed Methods'], facilitator: 'Aji Pamoso, S.Si, M.T',
-    facilitatorBio: 'Pendiri AjiStat, pakar statistik dan metodologi penelitian berpengalaman sejak 2015. Telah mendampingi 5.000+ klien dari berbagai universitas dan institusi.',
-    status: 'Akan dilaksanakan', previewVideo: '/videos/video-preview-nvivo.mp4',
-    curriculum: ['Pengantar analisis kualitatif & NVivo', 'Import data: wawancara, dokumen, media', 'Membuat node & melakukan koding', 'Analisis tema & kategori', 'Query & visualisasi data kualitatif', 'Triangulasi mixed methods', 'Menulis laporan hasil analisis kualitatif'],
-  },
 ];
 
 export const BOOTCAMP_PROGRAMS = ALL_PROGRAMS.filter(p => p.type === 'bootcamp');

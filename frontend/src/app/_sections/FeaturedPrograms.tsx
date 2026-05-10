@@ -52,49 +52,37 @@ export function ProgramGridSection() {
   );
 }
 
+import { PromoCard } from '@/components/promo-card';
+
 export function FeaturedPrograms() {
-  const { data: bootcampData, isLoading: l1 } = useQuery({
-    queryKey: ['programs', 'bootcamp', 'homepage'],
-    queryFn: () => programsApi.list({ type: 'bootcamp' }).then((r) => {
-      const arr = r.data?.data ?? r.data;
-      return Array.isArray(arr) ? arr[0] : undefined;
-    }),
-  });
-  const { data: privateData, isLoading: l2 } = useQuery({
-    queryKey: ['programs', 'private-class', 'homepage'],
-    queryFn: () => programsApi.list({ type: 'private-class' }).then((r) => {
-      const arr = r.data?.data ?? r.data;
-      return Array.isArray(arr) ? arr[0] : undefined;
-    }),
-  });
-  const { data: shortData, isLoading: l3 } = useQuery({
-    queryKey: ['programs', 'short-class', 'homepage'],
-    queryFn: () => programsApi.list({ type: 'short-class' }).then((r) => {
-      const arr = r.data?.data ?? r.data;
-      return Array.isArray(arr) ? arr[0] : undefined;
-    }),
+  const { data: featuredData, isLoading } = useQuery({
+    queryKey: ['programs', 'featured', 'homepage'],
+    queryFn: () => programsApi.list({ featured: true }).then((r) => r.data?.data ?? r.data),
   });
 
-  const featuredPrograms = [bootcampData, privateData, shortData].filter(Boolean) as Program[];
-  const isLoading = l1 || l2 || l3;
+  // Ambil maksimal 3 program unggulan
+  const featuredPrograms = Array.isArray(featuredData) ? featuredData.slice(0, 3) : [];
 
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between mb-10">
-          <div>
-            <p className="text-[#2348A8] text-sm font-semibold uppercase tracking-widest mb-2">Program Pilihan</p>
-            <h2 className="text-3xl font-black text-gray-900">Program Unggulan</h2>
-            <p className="text-gray-500 text-sm mt-1">Satu dari setiap format — Bootcamp, Private Class, Short Class</p>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 mb-3">
+              <span className="w-8 h-1 bg-[#F0A500] rounded-full"></span>
+              <span className="text-[#2348A8] text-sm font-bold uppercase tracking-widest">Program Pilihan</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-4">Layanan Spesial Kami</h2>
+            <p className="text-gray-500 text-base md:text-lg">Daftar layanan utama kami yang dirancang khusus untuk memenuhi kebutuhan riset dan metodologi Anda secara profesional.</p>
           </div>
-          <a href="/bootcamp" className="hidden sm:flex items-center gap-1.5 text-[#2348A8] font-semibold hover:underline text-sm">
-            Lihat Semua <ArrowRight className="w-4 h-4" />
+          <a href="/bootcamp" className="hidden sm:inline-flex items-center justify-center gap-2 px-6 py-3 bg-white border-2 border-[#1B3A8C] text-[#1B3A8C] hover:bg-[#1B3A8C] hover:text-white font-bold rounded-xl transition-all duration-300">
+            Lihat Semua Program <ArrowRight className="w-4 h-4" />
           </a>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {isLoading
             ? Array.from({ length: 3 }).map((_, i) => <ProgramCardSkeleton key={i} />)
-            : featuredPrograms.map((p) => <ProgramCard key={p.id} program={p} />)
+            : featuredPrograms.map((p) => <PromoCard key={p.id} program={p as Program} />)
           }
         </div>
       </div>

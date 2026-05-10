@@ -1,8 +1,8 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  // Static export untuk deploy ke cPanel (upload ke public_html)
-  output: 'export',
+  // Static export untuk deploy ke cPanel (upload ke public_html) hanya saat build production
+  output: process.env.NODE_ENV === 'development' ? undefined : 'export',
 
   // Setiap halaman mendapat folder + index.html tersendiri
   // mis: /tentang → out/tentang/index.html

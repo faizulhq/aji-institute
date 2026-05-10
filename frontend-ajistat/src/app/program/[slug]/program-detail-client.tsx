@@ -11,17 +11,20 @@ import type { ApiProgram } from '@/lib/types';
 import { STATUS_LABEL, STATUS_COLOR } from '@/lib/types';
 import { WA_LINK } from '@/lib/config';
 
-function formatPrice(p: number) {
+function formatPrice(p: number | string) {
+  const num = Number(p);
+  if (num === 0 || isNaN(num)) return 'Hubungi Admin';
   return new Intl.NumberFormat('id-ID', {
     style: 'currency', currency: 'IDR', maximumFractionDigits: 0,
-  }).format(p);
+  }).format(num);
 }
 
 // Helper to ensure media URLs point to the main site if they are relative
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'https://api.aji-institute.com';
 function getMediaUrl(url: string | undefined) {
   if (!url) return '';
   if (url.startsWith('http')) return url;
-  return `https://aji-institute.com${url.startsWith('/') ? '' : '/'}${url}`;
+  return `${API_BASE}${url.startsWith('/') ? '' : '/'}${url}`;
 }
 
 const TYPE_LABEL: Record<string, string> = {
@@ -135,7 +138,9 @@ export default function ProgramDetailClient({ program }: { program: ApiProgram }
     ? Math.round((1 - program.price / program.original_price) * 100)
     : null;
 
-  const scheduleItems = SCHEDULE[program.type] ?? SCHEDULE['bootcamp'];
+  const scheduleItems = (program.rundown && program.rundown.length > 0)
+    ? program.rundown
+    : SCHEDULE[program.type] ?? SCHEDULE['bootcamp'];
   const videoLabel = VIDEO_LABEL[program.type] ?? 'Cuplikan Pembelajaran';
 
   return (
@@ -175,16 +180,52 @@ export default function ProgramDetailClient({ program }: { program: ApiProgram }
                 ))}
               </div>
 
-              <h1 className="text-3xl sm:text-4xl font-black text-white mb-5 leading-snug">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-5 leading-snug">
                 {program.title}
               </h1>
 
               {program.description && (
-                <p className="text-white/70 text-base leading-relaxed mb-7">{program.description}</p>
+                <p className="text-white/70 text-base leading-relaxed mb-8 max-w-3xl">{program.description}</p>
+              )}
+
+              {/* EYE-CATCHING PRICE & CTA (Ebizmark style) */}
+              {program.image && (
+                <div className="mb-10 bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm">
+                  <p className="text-[#F0A500] text-xs font-black uppercase tracking-widest mb-2">Special Price</p>
+                  {program.original_price && program.price > 0 && (
+                    <p className="text-white/40 text-lg line-through mb-1">{formatPrice(program.original_price)}</p>
+                  )}
+                  <div className="flex items-center gap-4 mb-6">
+                    <p className="text-4xl sm:text-5xl font-black text-[#F0A500]">
+                      {Number(program.price) === 0 ? 'Hubungi Admin' : formatPrice(program.price)}
+                    </p>
+                    {discount && program.price > 0 && (
+                      <span className="bg-red-500 text-white font-bold px-3 py-1 rounded-full text-sm">
+                        Hemat {discount}%
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <a
+                      href={WA_LINK(`Halo AjiStat, saya ingin mendaftar kelas ${program.title}`)}
+                      target="_blank" rel="noopener noreferrer"
+                      className="flex-1 flex items-center justify-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-black py-4 px-6 rounded-xl transition-all shadow-lg shadow-[#F0A500]/20 text-sm hover:-translate-y-1"
+                    >
+                      Daftar Sekarang via WhatsApp
+                    </a>
+                    <a
+                      href={WA_LINK(`Halo AjiStat, saya ingin bertanya tentang kelas ${program.title}`)}
+                      target="_blank" rel="noopener noreferrer"
+                      className="sm:w-auto w-full flex items-center justify-center gap-2 border border-white/20 text-white hover:bg-white/10 font-bold py-4 px-6 rounded-xl transition-colors text-sm"
+                    >
+                      <MessageCircle className="w-5 h-5" /> Tanya Info
+                    </a>
+                  </div>
+                </div>
               )}
 
               {/* ─── VIDEO INLINE 16:9 (seperti web utama) ─── */}
-              {program.demo_video_url && (
+              {!program.image && program.demo_video_url && (
                 <div className="mb-10 mt-2 bg-black/40 rounded-2xl overflow-hidden border border-white/15 shadow-2xl relative group">
                   <div className="absolute top-0 left-0 w-full p-4 bg-gradient-to-b from-black/60 to-transparent pointer-events-none z-10 flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
@@ -203,64 +244,88 @@ export default function ProgramDetailClient({ program }: { program: ApiProgram }
                 </div>
               )}
 
-              {/* Meta */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                {program.duration && (
-                  <div className="bg-white/8 border border-white/12 rounded-xl p-4 flex items-center gap-3">
-                    <Clock className="w-5 h-5 text-[#4A72D4] shrink-0" />
+              {/* Meta info (White floating bar style) */}
+              <div className="bg-white rounded-2xl p-5 shadow-2xl flex flex-col sm:flex-row gap-6 divide-y sm:divide-y-0 sm:divide-x divide-gray-100">
+                {program.schedule && (
+                  <div className="flex-1 flex items-center gap-4">
+                    <div className="w-12 h-12 bg-[#162058]/5 rounded-full flex items-center justify-center shrink-0">
+                      <Calendar className="w-6 h-6 text-[#1B3A8C]" />
+                    </div>
                     <div>
-                      <p className="text-white/40 text-[10px] uppercase tracking-wider">Durasi</p>
-                      <p className="text-white text-sm font-medium">{program.duration}</p>
+                      <p className="text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-0.5">Jadwal</p>
+                      <p className="text-[#162058] font-bold text-sm">{program.schedule}</p>
                     </div>
                   </div>
                 )}
-                {program.schedule && (
-                  <div className="bg-white/8 border border-white/12 rounded-xl p-4 flex items-center gap-3">
-                    <Calendar className="w-5 h-5 text-[#4A72D4] shrink-0" />
+                {program.duration && (
+                  <div className="flex-1 flex items-center gap-4 pt-4 sm:pt-0 sm:pl-6">
+                    <div className="w-12 h-12 bg-[#162058]/5 rounded-full flex items-center justify-center shrink-0">
+                      <Clock className="w-6 h-6 text-[#1B3A8C]" />
+                    </div>
                     <div>
-                      <p className="text-white/40 text-[10px] uppercase tracking-wider">Jadwal</p>
-                      <p className="text-white text-sm font-medium">{program.schedule}</p>
+                      <p className="text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-0.5">Durasi</p>
+                      <p className="text-[#162058] font-bold text-sm">{program.duration}</p>
                     </div>
                   </div>
                 )}
               </div>
             </div>
 
-            {/* Right: Sidebar Price (desktop) */}
-            <div className="hidden lg:block">
-              <div className="bg-white rounded-2xl shadow-2xl overflow-hidden sticky top-24">
-                <div className="p-6">
-                  <div className="mb-4">
-                    <div className="flex items-baseline gap-3 mb-1">
-                      <p className="text-3xl font-black text-[#162058]">{formatPrice(program.price)}</p>
-                      {discount && (
-                        <span className="text-xs font-bold bg-red-100 text-red-600 px-2 py-0.5 rounded-full">-{discount}%</span>
+            {/* Right Column: Flyer OR Purchase Card */}
+            <div className="hidden lg:block relative">
+              {program.image ? (
+                /* FLYER (Ebizmark style on the right) */
+                <div className="sticky top-24">
+                  <div className="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 transform hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] transition-all duration-300 ease-out">
+                    <img
+                      src={getMediaUrl(program.image)}
+                      alt={program.title}
+                      className="w-full h-auto object-cover"
+                    />
+                  </div>
+                </div>
+              ) : (
+                /* PURCHASE CARD (Fallback if no flyer) */
+                <div className="bg-white rounded-2xl shadow-2xl overflow-hidden sticky top-24">
+                  <div className="p-6">
+                    <div className="mb-4">
+                      <div className="flex items-center gap-2">
+                        {Number(program.price) === 0 ? (
+                          <p className="text-3xl font-black text-[#162058]">Hubungi Admin</p>
+                        ) : (
+                          <>
+                            <p className="text-3xl font-black text-[#162058]">{formatPrice(program.price)}</p>
+                            {discount && (
+                              <span className="bg-red-50 text-red-500 text-xs font-black px-2 py-0.5 rounded border border-red-100">-{discount}%</span>
+                            )}
+                          </>
+                        )}
+                      </div>
+                      {program.original_price && (
+                        <p className="text-gray-400 text-sm line-through">{formatPrice(program.original_price)}</p>
                       )}
                     </div>
-                    {program.original_price && (
-                      <p className="text-gray-400 text-sm line-through">{formatPrice(program.original_price)}</p>
-                    )}
+                    <a href={WA_LINK(`Halo AjiStat, saya ingin mendaftar: ${program.title}`)}
+                      target="_blank" rel="noopener noreferrer"
+                      className="w-full flex items-center justify-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-black py-3.5 rounded-xl transition-colors text-sm mb-3">
+                      Daftar Sekarang via WhatsApp
+                    </a>
+                    <a href={WA_LINK(`Halo AjiStat, saya ingin bertanya tentang: ${program.title}`)}
+                      target="_blank" rel="noopener noreferrer"
+                      className="w-full flex items-center justify-center gap-2 border border-green-200 bg-green-50 hover:bg-green-100 text-green-700 font-semibold py-3.5 rounded-xl transition-colors text-sm mb-5">
+                      <MessageCircle className="w-4 h-4" /> Tanya via WhatsApp
+                    </a>
+                    <ul className="space-y-2.5">
+                      {WHAT_YOU_GET.map((item) => (
+                        <li key={item} className="flex items-center gap-2.5 text-gray-600 text-xs">
+                          <CheckCircle className="w-4 h-4 text-green-500 shrink-0" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <a href={WA_LINK(`Halo AjiStat, saya ingin mendaftar: ${program.title}`)}
-                    target="_blank" rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-black py-3.5 rounded-xl transition-colors text-sm mb-3">
-                    Daftar Sekarang via WhatsApp
-                  </a>
-                  <a href={WA_LINK(`Halo AjiStat, saya ingin bertanya tentang: ${program.title}`)}
-                    target="_blank" rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center gap-2 border border-green-200 bg-green-50 hover:bg-green-100 text-green-700 font-semibold py-3.5 rounded-xl transition-colors text-sm mb-5">
-                    <MessageCircle className="w-4 h-4" /> Tanya via WhatsApp
-                  </a>
-                  <ul className="space-y-2.5">
-                    {WHAT_YOU_GET.map((item) => (
-                      <li key={item} className="flex items-center gap-2.5 text-gray-600 text-xs">
-                        <CheckCircle className="w-4 h-4 text-green-500 shrink-0" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
@@ -269,8 +334,10 @@ export default function ProgramDetailClient({ program }: { program: ApiProgram }
       {/* MOBILE BAR */}
       <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-gray-100 shadow-2xl px-4 py-3 flex items-center gap-3">
         <div className="flex-1">
-          <p className="text-[#162058] font-black text-base leading-none">{formatPrice(program.price)}</p>
-          {program.original_price && (
+          <p className="text-[#162058] font-black text-base leading-none">
+            {Number(program.price) === 0 ? 'Hubungi Admin' : formatPrice(program.price)}
+          </p>
+          {program.original_price && program.price > 0 && (
             <p className="text-gray-400 text-xs line-through">{formatPrice(program.original_price)}</p>
           )}
         </div>
@@ -293,31 +360,31 @@ export default function ProgramDetailClient({ program }: { program: ApiProgram }
 
             {/* Fasilitator */}
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-5 flex items-center gap-2">
-                <GraduationCap className="w-5 h-5 text-[#2348A8]" /> Pemateri / Pengajar
-              </h2>
-              <div className="flex items-start gap-5 bg-gradient-to-br from-[#162058]/5 to-[#2348A8]/5 border border-[#2348A8]/15 rounded-2xl p-5">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#162058] to-[#2348A8] flex items-center justify-center text-white text-xl font-black shrink-0 shadow-lg">
-                  AP
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex flex-wrap items-center gap-2 mb-1">
-                    <p className="font-black text-gray-900 text-base">
-                      {program.facilitator_name || 'Aji Pamoso, S.Si, M.T'}
-                    </p>
-                    <span className="inline-flex items-center gap-1 text-[10px] font-bold bg-[#F0A500]/20 text-[#C8870A] px-2 py-0.5 rounded-full border border-[#F0A500]/30">
-                      <GraduationCap className="w-3 h-3" /> Fasilitator Terverifikasi
-                    </span>
+                <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                  <GraduationCap className="w-5 h-5 text-[#2348A8]" /> Pemateri / Pengajar
+                </h2>
+                <div className="flex items-start gap-5 bg-gradient-to-br from-[#162058]/5 to-[#2348A8]/5 border border-[#2348A8]/15 rounded-2xl p-5">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#162058] to-[#2348A8] flex items-center justify-center text-white text-xl font-black shrink-0 shadow-lg">
+                    AP
                   </div>
-                  <p className="text-[#2348A8] text-xs font-semibold mb-2">
-                    {program.facilitator_title || 'Fasilitator & Instruktur AjiStat'}
-                  </p>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    {program.facilitator_bio || 'Praktisi aktif dan pengajar berpengalaman di bidang statistik, riset kuantitatif, dan analisis data. Telah membantu ribuan mahasiswa dan peneliti dari berbagai universitas di seluruh Indonesia.'}
-                  </p>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-wrap items-center gap-2 mb-1">
+                      <p className="font-black text-gray-900 text-base">
+                        {program.facilitator_name || 'Aji Pamoso, S.Si, M.T'}
+                      </p>
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold bg-[#F0A500]/20 text-[#C8870A] px-2 py-0.5 rounded-full border border-[#F0A500]/30">
+                        <GraduationCap className="w-3 h-3" /> Fasilitator Terverifikasi
+                      </span>
+                    </div>
+                    <p className="text-[#2348A8] text-xs font-semibold mb-2">
+                      {program.facilitator_title || 'Fasilitator & Instruktur AjiStat'}
+                    </p>
+                    <p className="text-gray-600 text-sm leading-relaxed">
+                      {program.facilitator_bio || 'Praktisi aktif dan pengajar berpengalaman di bidang statistik, riset kuantitatif, dan analisis data. Telah membantu ribuan mahasiswa dan peneliti dari berbagai universitas di seluruh Indonesia.'}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </section>
+              </section>
 
             {/* Kurikulum */}
             {curriculum.length > 0 && (

@@ -183,7 +183,7 @@ export function Navbar() {
               className="hidden lg:flex items-center gap-1.5 bg-[#1B3A8C] hover:bg-[#2348A8] border border-white/20 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors">
               <MessageCircle className="w-3.5 h-3.5" /> Konsultasi Data
             </a>
-            <a href={WA_LINK('Halo Aji Institute, saya ingin mendaftar program')}
+            <a href={WA_LINK('Halo, saya ingin daftar kelas/program yang ada di Aji Institute. Bisa minta info mengenai kelas/program yang ada?')}
               target="_blank" rel="noopener noreferrer"
               className="hidden sm:flex items-center gap-1.5 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] text-xs font-bold px-3 py-1.5 rounded-lg transition-colors">
               Daftar Kelas
@@ -274,9 +274,10 @@ export function Navbar() {
                 className="flex items-center justify-center gap-2 w-full bg-[#1B3A8C] border border-white/20 text-white font-semibold py-2.5 rounded-xl text-sm">
                 <MessageCircle className="w-4 h-4" /> Konsultasi Data
               </a>
-              <a href={WA_LINK('Halo Aji Institute, saya ingin mendaftar program')}
-                target="_blank" rel="noopener noreferrer" onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-center gap-2 w-full bg-[#F0A500] text-[#162058] font-bold py-2.5 rounded-xl text-sm">
+              <a href={WA_LINK('Halo, saya ingin daftar kelas/program yang ada di Aji Institute. Bisa minta info mengenai kelas/program yang ada?')}
+                target="_blank" rel="noopener noreferrer"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-center gap-2 w-full bg-[#F0A500] text-[#162058] font-bold py-2.5 rounded-xl text-sm transition-colors">
                 💬 Daftar Kelas via WhatsApp
               </a>
             </div>

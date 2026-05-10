@@ -18,14 +18,24 @@ import type { Program } from '@/lib/types';
  * Deteksi divisi dari tags program agar pesan WA mencantumkan nama divisi
  * sehingga smart detection di useCompanyConfig bisa menemukan divisi yang tepat.
  */
-function getDivisionLabel(tags: string[]): string {
-  const t = tags.map((s) => s.toLowerCase());
+function getDivisionLabel(program: Program): string {
+  if (program.brand) {
+    if (program.brand === 'aji-institute') return 'Aji Institute';
+    if (program.brand === 'ajistat') return 'AjiStat';
+    if (program.brand === 'ajibiz') return 'AjiBiz';
+    if (program.brand === 'ajicomm') return 'AjiComm';
+    if (program.brand === 'ajiai') return 'AjiAI';
+    if (program.brand === 'ajilingua') return 'AjiLingua';
+  }
+
+  // Fallback to tags if brand is empty
+  const t = program.tags.map((s) => s.toLowerCase());
   if (t.includes('ajibiz')) return 'AjiBiz';
   if (t.includes('ajicomm')) return 'AjiComm';
   if (t.includes('ajiai')) return 'AjiAI';
   if (t.includes('ajilingua')) return 'AjiLingua';
-  // AjiStat = default jika tidak ada divisi lain
-  return 'AjiStat';
+  
+  return 'Aji Institute'; // Default ke Aji Institute karena ini adalah root brand
 }
 
 const TYPE_LABEL: Record<string, string> = {
@@ -33,6 +43,8 @@ const TYPE_LABEL: Record<string, string> = {
   'short-class': 'Short Class',
   'private-class': 'Private Class',
 };
+
+const API = process.env.NEXT_PUBLIC_API_URL || 'https://api.aji-institute.com';
 
 // Label video sesuai tipe kelas
 const VIDEO_LABEL: Record<string, string> = {
@@ -186,7 +198,7 @@ function MaterialModal({
 
           <div className="flex flex-col gap-3">
             <a
-              href={WA_LINK(`Halo, saya ingin mendaftar kelas ${getDivisionLabel(program.tags)} ${program.title} dan mendapatkan file ${material.label}`)}
+              href={WA_LINK(`Halo, saya ingin mendaftar kelas ${getDivisionLabel(program)} ${program.title} dan mendapatkan file ${material.label}`)}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full flex items-center justify-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-bold py-3.5 rounded-xl transition-colors text-sm shadow-md"
@@ -284,16 +296,52 @@ export default function ProgramDetailPage() {
                 ))}
               </div>
 
-              <h1 className="font-[family-name:var(--font-poppins)] text-3xl sm:text-4xl font-bold text-white mb-5 leading-snug">
+              <h1 className="font-[family-name:var(--font-poppins)] text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-5 leading-snug">
                 {program.title}
               </h1>
 
               {program.description && (
-                <p className="text-white/70 text-base leading-relaxed mb-7">{program.description}</p>
+                <p className="text-white/70 text-base leading-relaxed mb-8 max-w-3xl">{program.description}</p>
+              )}
+
+              {/* EYE-CATCHING PRICE & CTA (Ebizmark style) */}
+              {program.image && (
+                <div className="mb-10 bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm">
+                  <p className="text-[#F0A500] text-xs font-black uppercase tracking-widest mb-2">Special Price</p>
+                  <div className="flex items-end gap-3 mb-6 flex-wrap">
+                    {program.original_price && (
+                      <p className="text-white/40 text-lg line-through mb-1">{formatPrice(program.original_price)}</p>
+                    )}
+                    <p className="text-4xl sm:text-5xl font-black text-[#F0A500]">
+                      {Number(program.price) === 0 ? 'Hubungi Admin' : formatPrice(program.price)}
+                    </p>
+                    {discount && program.price > 0 && (
+                      <span className="bg-red-500 text-white font-bold px-3 py-1 rounded-full text-sm mb-2">
+                        Hemat {discount}%
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <a
+                      href={WA_LINK(`Halo, saya ingin mendaftar program ${getDivisionLabel(program)}: ${program.title}`)}
+                      target="_blank" rel="noopener noreferrer"
+                      className="flex-1 flex items-center justify-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-black py-4 px-6 rounded-xl transition-all shadow-lg shadow-[#F0A500]/20 text-sm hover:-translate-y-1"
+                    >
+                      Daftar Sekarang via WhatsApp
+                    </a>
+                    <a
+                      href={WA_LINK(`Halo, saya tertarik dengan program ${getDivisionLabel(program)}: ${program.title}. Bisa info lebih lanjut?`)}
+                      target="_blank" rel="noopener noreferrer"
+                      className="sm:w-auto w-full flex items-center justify-center gap-2 border border-white/20 text-white hover:bg-white/10 font-bold py-4 px-6 rounded-xl transition-colors text-sm"
+                    >
+                      <MessageCircle className="w-5 h-5" /> Tanya Info
+                    </a>
+                  </div>
+                </div>
               )}
 
               {/* Video — label dinamis sesuai tipe */}
-              {program.demo_video_url && (
+              {!program.image && program.demo_video_url && (
                 <div className="mb-10 mt-2 bg-black/40 rounded-2xl overflow-hidden border border-white/15 shadow-2xl relative group">
                   <div className="absolute top-0 left-0 w-full p-4 bg-gradient-to-b from-black/60 to-transparent pointer-events-none z-10 flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
@@ -312,90 +360,118 @@ export default function ProgramDetailPage() {
                 </div>
               )}
 
-              {/* Meta */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                {program.duration && (
-                  <div className="bg-white/8 border border-white/12 rounded-xl p-4 flex items-center gap-3">
-                    <Clock className="w-5 h-5 text-[#4A72D4] shrink-0" />
+              {/* Meta info (White floating bar style) */}
+              <div className="bg-white rounded-2xl p-5 shadow-2xl flex flex-col sm:flex-row gap-6 divide-y sm:divide-y-0 sm:divide-x divide-gray-100">
+                {program.schedule && (
+                  <div className="flex-1 flex items-center gap-4">
+                    <div className="w-12 h-12 bg-[#162058]/5 rounded-full flex items-center justify-center shrink-0">
+                      <Calendar className="w-6 h-6 text-[#1B3A8C]" />
+                    </div>
                     <div>
-                      <p className="text-white/40 text-[10px] uppercase tracking-wider">Durasi</p>
-                      <p className="text-white text-sm font-medium">{program.duration}</p>
+                      <p className="text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-0.5">Jadwal</p>
+                      <p className="text-[#162058] font-bold text-sm">{program.schedule}</p>
                     </div>
                   </div>
                 )}
-                {program.schedule && (
-                  <div className="bg-white/8 border border-white/12 rounded-xl p-4 flex items-center gap-3">
-                    <Calendar className="w-5 h-5 text-[#4A72D4] shrink-0" />
+                {program.duration && (
+                  <div className="flex-1 flex items-center gap-4 pt-4 sm:pt-0 sm:pl-6">
+                    <div className="w-12 h-12 bg-[#162058]/5 rounded-full flex items-center justify-center shrink-0">
+                      <Clock className="w-6 h-6 text-[#1B3A8C]" />
+                    </div>
                     <div>
-                      <p className="text-white/40 text-[10px] uppercase tracking-wider">Jadwal</p>
-                      <p className="text-white text-sm font-medium">{program.schedule}</p>
+                      <p className="text-gray-400 text-[10px] font-bold uppercase tracking-wider mb-0.5">Durasi</p>
+                      <p className="text-[#162058] font-bold text-sm">{program.duration}</p>
                     </div>
                   </div>
                 )}
               </div>
             </div>
 
-            {/* Right: Purchase Card (desktop) */}
-            <div className="hidden lg:block">
-              <div className="bg-white rounded-2xl p-6 shadow-2xl sticky top-20">
-                <div className="mb-5">
-                  {program.original_price && (
-                    <p className="text-gray-400 text-sm line-through">{formatPrice(program.original_price)}</p>
-                  )}
-                  <div className="flex items-center gap-2">
-                    <p className="text-3xl font-bold text-[#1B3A8C]">{formatPrice(program.price)}</p>
-                    {discount && (
-                      <span className="bg-red-50 text-red-500 text-xs font-bold px-2 py-0.5 rounded">-{discount}%</span>
-                    )}
+            {/* Right Column: Flyer OR Purchase Card */}
+            <div className="hidden lg:block relative">
+              {program.image ? (
+                /* FLYER (Ebizmark style on the right) */
+                <div className="sticky top-24">
+                  <div className="w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 transform hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] transition-all duration-300 ease-out">
+                    <img
+                      src={program.image.startsWith('http') ? program.image : `${API}${program.image}`}
+                      alt={program.title}
+                      className="w-full h-auto object-cover"
+                    />
                   </div>
                 </div>
+              ) : (
+                /* PURCHASE CARD (Fallback if no flyer) */
+                <div className="bg-white rounded-2xl p-6 shadow-2xl sticky top-24">
+                  <div className="mb-5">
+                    {program.original_price && (
+                      <p className="text-gray-400 text-sm line-through">{formatPrice(program.original_price)}</p>
+                    )}
+                    <div className="flex items-center gap-2">
+                      {Number(program.price) === 0 ? (
+                        <p className="text-3xl font-bold text-[#1B3A8C]">Hubungi Admin</p>
+                      ) : (
+                        <>
+                          <p className="text-3xl font-bold text-[#1B3A8C]">{formatPrice(program.price)}</p>
+                          {discount && (
+                            <span className="bg-red-50 text-red-500 text-xs font-bold px-2 py-0.5 rounded">-{discount}%</span>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  </div>
 
-                <a
-                  href={WA_LINK(`Halo, saya ingin mendaftar program ${getDivisionLabel(program.tags)}: ${program.title}`)}
-                  target="_blank" rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-bold py-3.5 rounded-xl transition-all mb-3 text-sm"
-                >
-                  💬 Daftar Sekarang via WhatsApp
-                </a>
+                  <a
+                    href={WA_LINK(`Halo, saya ingin mendaftar program ${getDivisionLabel(program)}: ${program.title}`)}
+                    target="_blank" rel="noopener noreferrer"
+                    className="w-full flex items-center justify-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-bold py-3.5 rounded-xl transition-all mb-3 text-sm"
+                  >
+                    💬 Daftar Sekarang via WhatsApp
+                  </a>
 
-                <a
-                  href={WA_LINK(`Halo, saya tertarik dengan program ${getDivisionLabel(program.tags)}: ${program.title}. Bisa info lebih lanjut?`)}
-                  target="_blank" rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2 bg-green-50 hover:bg-green-100 border border-green-200 text-green-700 font-semibold py-3 rounded-xl transition-colors text-sm"
-                >
-                  <MessageCircle className="w-4 h-4" /> Tanya via WhatsApp
-                </a>
+                  <a
+                    href={WA_LINK(`Halo, saya tertarik dengan program ${getDivisionLabel(program)}: ${program.title}. Bisa info lebih lanjut?`)}
+                    target="_blank" rel="noopener noreferrer"
+                    className="w-full flex items-center justify-center gap-2 bg-green-50 hover:bg-green-100 border border-green-200 text-green-700 font-semibold py-3 rounded-xl transition-colors text-sm"
+                  >
+                    <MessageCircle className="w-4 h-4" /> Tanya via WhatsApp
+                  </a>
 
-                <ul className="mt-5 space-y-2">
-                  {WHAT_YOU_GET.slice(0, 4).map(({ icon: Icon, label }) => (
-                    <li key={label} className="flex items-center gap-2 text-xs text-gray-600">
-                      <Icon className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
-                      {label}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                  <ul className="mt-5 space-y-2">
+                    {WHAT_YOU_GET.slice(0, 4).map(({ icon: Icon, label }) => (
+                      <li key={label} className="flex items-center gap-2 text-xs text-gray-600">
+                        <Icon className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                        {label}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
 
       {/* ─── MOBILE PURCHASE BAR ─── */}
-      <div className="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-white border-t border-gray-100 shadow-2xl px-4 py-3 flex items-center gap-3">
-        <div className="flex-1">
-          <p className="text-[#1B3A8C] font-bold text-lg leading-none">{formatPrice(program.price)}</p>
-          {discount && <p className="text-gray-400 text-xs line-through">{formatPrice(program.original_price!)}</p>}
-        </div>
-        <a href={WA_LINK(`Halo, saya tertarik dengan program ${getDivisionLabel(program.tags)}: ${program.title}`)}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 p-4 shadow-[0_-10px_20px_rgba(0,0,0,0.05)] z-50">
+        <div className="flex items-center justify-between max-w-7xl mx-auto gap-4">
+          <div className="flex flex-col flex-1">
+            <p className="text-[#1B3A8C] font-bold text-lg leading-none">
+              {Number(program.price) === 0 ? 'Hubungi Admin' : formatPrice(program.price)}
+            </p>
+            {discount && program.price > 0 && <p className="text-gray-400 text-xs line-through">{formatPrice(program.original_price!)}</p>}
+          </div>
+        <a href={WA_LINK(`Halo, saya tertarik dengan program ${getDivisionLabel(program)}: ${program.title}`)}
           target="_blank" rel="noopener noreferrer"
           className="flex items-center gap-1.5 bg-green-50 border border-green-200 text-green-700 font-semibold px-4 py-2.5 rounded-xl text-sm">
           <MessageCircle className="w-4 h-4" /> Tanya
         </a>
-        <a href={WA_LINK(`Halo, saya ingin mendaftar program ${getDivisionLabel(program.tags)}: ${program.title}`)}
+        <a href={WA_LINK(`Halo, saya ingin mendaftar program ${getDivisionLabel(program)}: ${program.title}`)}
           target="_blank" rel="noopener noreferrer"
           className="flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-bold px-5 py-2.5 rounded-xl text-sm transition-colors">
           💬 Daftar
         </a>
+        </div>
       </div>
 
       {/* ─── CONTENT ─── */}
@@ -469,7 +545,9 @@ export default function ProgramDetailPage() {
                 <div className="bg-[#162058] px-5 py-3">
                   <p className="text-white font-semibold text-sm">📋 Rundown Harian</p>
                 </div>
-                {(program.type === 'bootcamp'
+                {((program.rundown && program.rundown.length > 0)
+                  ? program.rundown
+                  : program.type === 'bootcamp'
                   ? [
                       { day: 'Hari 1', time: '08.00 – 12.00', label: 'Sesi Pagi: Materi & Konsep Dasar', note: 'Onboarding + pengenalan tools dan software' },
                       { day: 'Hari 1', time: '13.00 – 17.00', label: 'Sesi Siang: Hands-on Praktik', note: 'Input data, eksplorasi dataset nyata' },

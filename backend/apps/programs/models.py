@@ -33,6 +33,7 @@ class Program(models.Model):
     # JSON fields stored as text
     tags = models.JSONField(default=list)
     curriculum = models.JSONField(default=list)
+    rundown = models.JSONField(default=list, blank=True, help_text="Format: [{\"day\": \"Hari 1\", \"time\": \"08.00 - 12.00\", \"label\": \"Sesi Pagi\", \"note\": \"Materi\"}]")
 
     # Facilitator
     facilitator_name = models.CharField(max_length=100, blank=True)
@@ -41,6 +42,7 @@ class Program(models.Model):
     facilitator_avatar = models.CharField(max_length=10, blank=True)  # initials
 
     # Media
+    image = models.ImageField(upload_to='programs/', null=True, blank=True, help_text="Gambar/Flyer Program (Opsional)")
     demo_video_url = models.CharField(max_length=500, blank=True)  # local path or YouTube URL
     thumbnail_color = models.CharField(max_length=7, default='#162660')  # hex color for placeholder
 
@@ -53,10 +55,11 @@ class Program(models.Model):
     duration = models.CharField(max_length=50, blank=True)
     schedule = models.CharField(max_length=100, blank=True)
     is_featured = models.BooleanField(default=False)
+    order = models.IntegerField(default=0, help_text="Urutan tampil (angka terkecil tampil duluan)")
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        ordering = ['-is_featured', '-created_at']
+        ordering = ['order', '-is_featured', '-created_at']
 
     def __str__(self):
         return f"[{self.type.upper()}] {self.title}"

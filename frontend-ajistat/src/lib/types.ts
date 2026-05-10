@@ -8,6 +8,7 @@ export interface ApiProgram {
   price: number;
   original_price: number | null;
   tags: string[];
+  brand?: string;
   duration: string;
   schedule: string;
   facilitator_name: string;
@@ -16,9 +17,11 @@ export interface ApiProgram {
   facilitator_avatar?: string;
   thumbnail_color: string;
   is_featured: boolean;
+  image?: string | null;  // URL gambar/flyer program
   // Detail only
   description?: string;
   curriculum?: string[];
+  rundown?: { day: string; time: string; label: string; note: string }[];
   demo_video_url?: string;
 }
 

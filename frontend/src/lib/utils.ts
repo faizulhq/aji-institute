@@ -5,12 +5,15 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatPrice(price: number) {
+export function formatPrice(price: number | string) {
+  const num = Number(price);
+  if (num === 0 || isNaN(num)) return 'Hubungi Admin';
+  
   return new Intl.NumberFormat('id-ID', {
     style: 'currency',
     currency: 'IDR',
     minimumFractionDigits: 0,
-  }).format(price);
+  }).format(num);
 }
 
 export function formatDate(dateStr: string) {

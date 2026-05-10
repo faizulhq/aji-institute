@@ -10,7 +10,7 @@ class ProgramListSerializer(serializers.ModelSerializer):
             'id', 'title', 'slug', 'type', 'status',
             'price', 'original_price', 'tags', 'brand',
             'duration', 'schedule', 'facilitator_name',
-            'thumbnail_color', 'is_featured',
+            'thumbnail_color', 'is_featured', 'image',
         )
 
 

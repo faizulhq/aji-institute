@@ -65,7 +65,33 @@ export function useCompanyConfig() {
 
         // Apply template if exists
         if (config.whatsapp_template) {
-          const finalMessage = config.whatsapp_template.replace(/{divisi}/g, 'AjiStat by Aji Institute');
+          const division = 'AjiStat by Aji Institute';
+          let contextMsg = "Saya tertarik untuk mendapatkan informasi lebih lanjut terkait layanan yang tersedia.";
+          const originalText = url.searchParams.get('text') || '';
+          
+          if (originalText.trim() !== '') {
+            let extracted = originalText.trim();
+            if (extracted.toLowerCase().startsWith('halo')) {
+              const commaIndex = extracted.indexOf(',');
+              if (extracted.indexOf(',') !== -1) {
+                extracted = extracted.substring(commaIndex + 1).trim();
+              } else {
+                extracted = extracted.replace(/^Halo\s+(?:\w+\s+){0,2}/i, '').trim();
+              }
+            }
+            if (extracted.toLowerCase().startsWith('saya ')) {
+              extracted = extracted.substring(5).trim();
+            }
+            contextMsg = 'Saya ' + extracted.charAt(0).toLowerCase() + extracted.slice(1);
+          }
+
+          let finalMessage = config.whatsapp_template.replace(/{divisi}/g, division);
+          if (!finalMessage.includes('{konteks}')) {
+            finalMessage = finalMessage.replace(/Berikut data saya/i, `${contextMsg}\n\nBerikut data saya`);
+          } else {
+            finalMessage = finalMessage.replace(/{konteks}/g, contextMsg);
+          }
+          
           url.searchParams.set('text', finalMessage);
         }
 
