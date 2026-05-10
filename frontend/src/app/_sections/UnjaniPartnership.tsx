@@ -19,7 +19,7 @@ const isUnjaniProgram = (p: Program) =>
 
 const KERJASAMA_HIGHLIGHTS = [
   { icon: GraduationCap, label: 'Kolaborasi Akademik', desc: 'Kurikulum dirancang bersama dosen & praktisi UNJANI' },
-  { icon: Users, label: 'Terbuka untuk Umum', desc: 'Mahasiswa UNJANI & masyarakat umum' },
+  { icon: Users, label: 'Khusus Mahasiswa UNJANI', desc: 'Mahasiswa Semester Genap Prodi HI Fisip Unjani Angkatan 2025/2026' },
   { icon: Clock, label: '6 Kali Pertemuan', desc: 'Latihan langsung dengan bimbingan ahli' },
 ];
 
@@ -54,7 +54,7 @@ export function UnjaniPartnership() {
           </h2>
           <p className="text-gray-500 max-w-xl mx-auto leading-relaxed">
             Aji Institute berkolaborasi dengan Universitas Jenderal Achmad Yani dalam
-            penyelenggaraan program bootcamp untuk mahasiswa dan masyarakat umum.
+            penyelenggaraan program bootcamp untuk Mahasiswa Semester Genap Prodi HI Fisip Unjani Angkatan 2025/2026.
           </p>
         </div>
 
