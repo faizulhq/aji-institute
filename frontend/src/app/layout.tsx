@@ -100,6 +100,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="id" className={`${openSans.variable} ${ubuntu.variable}`}>
       <head>
+        {/* Preconnect ke API & font untuk mempercepat LCP */}
+        <link rel="preconnect" href="https://api.aji-institute.com" />
+        <link rel="dns-prefetch" href="https://api.aji-institute.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

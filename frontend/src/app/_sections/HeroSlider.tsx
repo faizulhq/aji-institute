@@ -116,7 +116,10 @@ export function HeroSlider() {
           alt={slide.headline}
           fill
           className="object-cover transition-all duration-1000"
-          priority
+          priority={active === 0}
+          loading={active === 0 ? 'eager' : 'lazy'}
+          sizes="100vw"
+          quality={85}
         />
         <div className={cn('absolute inset-0 bg-gradient-to-r', slide.overlay)} />
       </div>
