@@ -57,7 +57,7 @@ class ProgramDetailView(APIView):
             program = Program.objects.get(slug=slug)
         except Program.DoesNotExist:
             return Response({'error': 'Program tidak ditemukan.'}, status=404)
-        return Response(ProgramDetailSerializer(program).data)
+        return Response(ProgramDetailSerializer(program, context={'request': request}).data)
 
 
 class ProgramSlugListView(APIView):

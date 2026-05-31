@@ -1,17 +1,29 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Program, Testimonial, BlogArticle, Announcement
+from .models import Program, Testimonial, BlogArticle, Announcement, ProgramDocumentation
+
+
+class ProgramDocumentationInline(admin.TabularInline):
+    """Inline untuk upload foto dokumentasi langsung dari halaman edit program."""
+    model = ProgramDocumentation
+    extra = 1
+    fields = ('image', 'caption', 'order')
+    ordering = ('order',)
+    verbose_name = 'Foto Dokumentasi'
+    verbose_name_plural = 'Foto-foto Dokumentasi Pelatihan'
 
 
 @admin.register(Program)
 class ProgramAdmin(admin.ModelAdmin):
+    inlines = [ProgramDocumentationInline]
+
     # ── Kolom yang tampil di halaman daftar program ──────────────
     list_display = (
         'title', 'brand', 'type', 'status', 'price_display',
-        'is_featured', 'order', 'facilitator_name', 'created_at'
+        'is_featured', 'show_documentation', 'order', 'facilitator_name', 'created_at'
     )
-    list_editable = ('is_featured', 'order')
-    list_filter = ('brand', 'type', 'status', 'is_featured')
+    list_editable = ('is_featured', 'show_documentation', 'order')
+    list_filter = ('brand', 'type', 'status', 'is_featured', 'show_documentation')
     search_fields = ('title', 'facilitator_name', 'tags', 'slug')
     prepopulated_fields = {'slug': ('title',)}
     readonly_fields = ('created_at',)
@@ -32,6 +44,13 @@ class ProgramAdmin(admin.ModelAdmin):
         }),
         ('Media & Tampilan', {
             'fields': ('image', 'demo_video_url', 'thumbnail_color')
+        }),
+        ('Dokumentasi Pelatihan', {
+            'fields': ('show_documentation',),
+            'description': (
+                'Aktifkan toggle di bawah, lalu upload foto-foto sesi pelatihan '
+                'di bagian "Foto-foto Dokumentasi Pelatihan" yang ada di bawah halaman ini.'
+            ),
         }),
         ('Metadata', {
             'fields': ('created_at',),
@@ -68,12 +87,10 @@ class ProgramAdmin(admin.ModelAdmin):
     def mark_recorded(self, request, queryset):
         queryset.update(status='recorded')
 
-    @admin.action(description='Jadikan Program Unggulan ⭐')
+    @admin.action(description='Jadikan Program Unggulan')
     def mark_featured(self, request, queryset):
         queryset.update(is_featured=True)
 
     @admin.action(description='Hapus dari Program Unggulan')
     def unmark_featured(self, request, queryset):
         queryset.update(is_featured=False)
-
-

@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import Link from 'next/link';
 import { MessageCircle, CheckCircle, ArrowLeft } from 'lucide-react';
@@ -43,19 +43,19 @@ export function ComingSoonPage({ brand }: ComingSoonPageProps) {
 
           <h1 className="font-[family-name:var(--font-poppins)] text-4xl sm:text-5xl font-bold text-white mb-6">
             {brand.name}<br />
-            <span className="text-white/50 text-3xl font-normal">Segera Hadir 🚀</span>
+            <span className="text-white/50 text-3xl font-normal">Segera Hadir</span>
           </h1>
 
           <p className="text-white/65 text-lg leading-relaxed mb-8 max-w-xl mx-auto">{brand.description}</p>
 
           <div className="inline-flex items-center gap-2 bg-[#F0A500]/20 border border-[#F0A500]/40 text-[#F0A500] text-sm font-medium px-5 py-2.5 rounded-full mb-10">
-            🔔 Program dalam tahap pengembangan — Daftarkan minat Anda sekarang
+            Program dalam tahap pengembangan — Daftarkan minat Anda sekarang
           </div>
 
           {/* Early Interest Form */}
           {sent ? (
             <div className="bg-white/10 border border-white/20 rounded-2xl p-8">
-              <p className="text-4xl mb-3">✅</p>
+              <p className="text-4xl mb-3"></p>
               <p className="text-white font-semibold text-lg">Terima kasih sudah mendaftar!</p>
               <p className="text-white/60 text-sm mt-2">Kami akan mengirimkan informasi terbaru ke email Anda saat program siap diluncurkan.</p>
             </div>

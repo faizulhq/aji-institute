@@ -112,7 +112,7 @@ export function Navbar() {
                           <p className="text-white/40 text-[11px] truncate">{prog.desc}</p>
                         </div>
                         {prog.isFeatured && (
-                          <span className="text-[9px] bg-[#F0A500] text-[#162058] font-bold px-1.5 py-0.5 rounded-full shrink-0">⭐</span>
+                          <span className="text-[9px] bg-[#F0A500] text-[#162058] font-bold px-1.5 py-0.5 rounded-full shrink-0">Unggulan</span>
                         )}
                         {prog.external && (
                           <span className="text-[9px] text-white/30 ml-1">↗</span>
@@ -278,7 +278,7 @@ export function Navbar() {
                 target="_blank" rel="noopener noreferrer"
                 onClick={() => setMobileOpen(false)}
                 className="flex items-center justify-center gap-2 w-full bg-[#F0A500] text-[#162058] font-bold py-2.5 rounded-xl text-sm transition-colors">
-                💬 Daftar Kelas via WhatsApp
+                Daftar Kelas via WhatsApp
               </a>
             </div>
           </div>

@@ -48,7 +48,7 @@ const PROGRAM_TABS = [
 function EmptyState({ type, waMsg }: { type: string; waMsg: string }) {
   return (
     <div className="text-center py-20 bg-gray-50 rounded-3xl border border-dashed border-gray-200">
-      <p className="text-4xl mb-4">🔔</p>
+      <p className="text-4xl mb-4"></p>
       <p className="font-bold text-gray-800 text-lg mb-2">Segera Hadir!</p>
       <p className="text-gray-500 text-sm mb-6 max-w-sm mx-auto">
         Layanan <strong>{type}</strong> sedang dipersiapkan. Hubungi kami untuk informasi jadwal berikutnya.
@@ -59,7 +59,7 @@ function EmptyState({ type, waMsg }: { type: string; waMsg: string }) {
         rel="noopener noreferrer"
         className="inline-flex items-center gap-2 bg-[#162058] text-white font-bold px-6 py-3 rounded-xl text-sm hover:bg-[#1B3A8C] transition-colors"
       >
-        💬 Tanya via WhatsApp
+        Tanya via WhatsApp
       </a>
     </div>
   );

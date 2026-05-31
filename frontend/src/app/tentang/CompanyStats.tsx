@@ -34,10 +34,10 @@ function useCountUp(target: number, duration = 1800) {
 }
 
 const STATS = [
-  { target: 5000, suffix: '+', label: '🤝 Klien Terbantu dari Konsultasi', color: 'bg-blue-50 border-blue-100' },
-  { target: 30, suffix: '+', label: '📚 Layanan Aktif', color: 'bg-amber-50 border-amber-100' },
-  { target: 10, suffix: '+', label: '🎓 Fasilitator Expert', color: 'bg-green-50 border-green-100' },
-  { target: 5, suffix: '', label: '🏛️ Program Unggulan', color: 'bg-purple-50 border-purple-100' },
+  { target: 5000, suffix: '+', label: 'Klien Terbantu dari Konsultasi', color: 'bg-blue-50 border-blue-100' },
+  { target: 30, suffix: '+', label: 'Layanan Aktif', color: 'bg-amber-50 border-amber-100' },
+  { target: 10, suffix: '+', label: 'Fasilitator Expert', color: 'bg-green-50 border-green-100' },
+  { target: 5, suffix: '', label: 'Program Unggulan', color: 'bg-purple-50 border-purple-100' },
 ];
 
 function StatCard({ target, suffix, label, color }: typeof STATS[0]) {

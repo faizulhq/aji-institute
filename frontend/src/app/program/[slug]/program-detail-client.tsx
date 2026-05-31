@@ -7,7 +7,8 @@ import Link from 'next/link';
 import {
   Clock, Calendar, Users, CheckCircle, Star,
   MessageCircle, ArrowLeft, BookOpen, Award, ChevronDown, ChevronUp, X,
-  FileText, Database, Video, FileSpreadsheet, FileCode, Lock, GraduationCap
+  FileText, Database, Video, FileSpreadsheet, FileCode, Lock, GraduationCap,
+  ChevronLeft, ChevronRight, ZoomIn
 } from 'lucide-react';
 import { programsApi } from '@/lib/api';
 import { formatPrice, STATUS_LABELS, STATUS_COLORS, cn } from '@/lib/utils';
@@ -63,6 +64,7 @@ const WHAT_YOU_GET = [
   { icon: MessageCircle, label: 'Konsultasi lanjutan via WA' },
 ];
 
+
 // Materi pembelajaran saja (PDF, DOCX, Video, Dataset)
 const LEARNING_MATERIALS = [
   {
@@ -116,7 +118,7 @@ function FacilitatorCard({ program }: { program: Program }) {
 
   return (
     <section>
-      <h2 className="text-xl font-bold text-gray-900 mb-5">👨‍🏫 Pemateri / Pengajar</h2>
+      <h2 className="text-xl font-bold text-gray-900 mb-5">Pemateri / Pengajar</h2>
       <div className="flex items-start gap-5 bg-gradient-to-br from-[#162058]/5 to-[#2348A8]/5 border border-[#2348A8]/15 rounded-2xl p-5">
         {/* Avatar */}
         <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#162058] to-[#2348A8] flex items-center justify-center text-white text-xl font-black shrink-0 shadow-lg">
@@ -203,7 +205,7 @@ function MaterialModal({
               rel="noopener noreferrer"
               className="w-full flex items-center justify-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-bold py-3.5 rounded-xl transition-colors text-sm shadow-md"
             >
-              💬 Daftar Sekarang via WhatsApp
+              Daftar Sekarang via WhatsApp
             </a>
             <button
               onClick={onClose}
@@ -223,6 +225,7 @@ export default function ProgramDetailPage() {
   const slug = params.slug as string;
   const [showFullCurriculum, setShowFullCurriculum] = useState(false);
   const [activeMaterial, setActiveMaterial] = useState<typeof LEARNING_MATERIALS[0] | null>(null);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['program', slug],
@@ -244,7 +247,7 @@ export default function ProgramDetailPage() {
 
   if (isError || !program) return (
     <div className="text-center py-32">
-      <p className="text-5xl mb-4">😕</p>
+      <p className="text-5xl mb-4"></p>
       <h2 className="font-bold text-xl text-gray-800 mb-2">Program tidak ditemukan</h2>
       <Link href="/bootcamp" className="text-[#2348A8] text-sm hover:underline">← Lihat semua program</Link>
     </div>
@@ -426,7 +429,7 @@ export default function ProgramDetailPage() {
                     target="_blank" rel="noopener noreferrer"
                     className="w-full flex items-center justify-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-bold py-3.5 rounded-xl transition-all mb-3 text-sm"
                   >
-                    💬 Daftar Sekarang via WhatsApp
+                    Daftar Sekarang via WhatsApp
                   </a>
 
                   <a
@@ -469,7 +472,7 @@ export default function ProgramDetailPage() {
         <a href={WA_LINK(`Halo, saya ingin mendaftar program ${getDivisionLabel(program)}: ${program.title}`)}
           target="_blank" rel="noopener noreferrer"
           className="flex items-center gap-2 bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-bold px-5 py-2.5 rounded-xl text-sm transition-colors">
-          💬 Daftar
+          Daftar
         </a>
         </div>
       </div>
@@ -528,7 +531,7 @@ export default function ProgramDetailPage() {
 
             {/* ─── Jadwal Program ─── */}
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-5">📅 Jadwal Program</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-5">Jadwal Program</h2>
               {program.schedule ? (
                 <div className="bg-blue-50 border border-blue-100 rounded-2xl p-5 mb-5">
                   <div className="flex items-start gap-3">
@@ -543,7 +546,7 @@ export default function ProgramDetailPage() {
               {/* Jadwal harian default berdasarkan type program */}
               <div className="border border-gray-100 rounded-2xl overflow-hidden">
                 <div className="bg-[#162058] px-5 py-3">
-                  <p className="text-white font-semibold text-sm">📋 Rundown Harian</p>
+                  <p className="text-white font-semibold text-sm">Rundown Harian</p>
                 </div>
                 {((program.rundown && program.rundown.length > 0)
                   ? program.rundown
@@ -591,7 +594,7 @@ export default function ProgramDetailPage() {
 
             {curriculum.length > 0 && (
               <section>
-                <h2 className="text-xl font-bold text-gray-900 mb-5">📚 Kurikulum Program</h2>
+                <h2 className="text-xl font-bold text-gray-900 mb-5">Kurikulum Program</h2>
                 <div className="border border-gray-100 rounded-2xl overflow-hidden">
                   {visibleCurriculum.map((item, i) => (
                     <div key={i} className={cn(
@@ -623,7 +626,7 @@ export default function ProgramDetailPage() {
 
             {/* Untuk Siapa */}
             <section>
-              <h2 className="text-xl font-bold text-gray-900 mb-5">🎯 Untuk Siapa Program Ini?</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-5">Untuk Siapa Program Ini?</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {((): string[] => {
                   const tags = program.tags.map(t => t.toLowerCase());
@@ -671,10 +674,12 @@ export default function ProgramDetailPage() {
               </div>
             </section>
 
+
+
             {/* Testimoni */}
             {testimonials.length > 0 && (
               <section>
-                <h2 className="text-xl font-bold text-gray-900 mb-5">⭐ Apa Kata Peserta?</h2>
+                <h2 className="text-xl font-bold text-gray-900 mb-5">Apa Kata Peserta?</h2>
                 <div className="space-y-4">
                   {testimonials.map((t) => (
                     <div key={t.id} className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
@@ -703,7 +708,7 @@ export default function ProgramDetailPage() {
           {/* Sidebar: Yang Didapatkan */}
           <div className="hidden lg:block">
             <div className="bg-gray-50 border border-gray-100 rounded-2xl p-6">
-              <h3 className="font-bold text-gray-900 mb-4">✅ Yang Akan Anda Dapatkan</h3>
+              <h3 className="font-bold text-gray-900 mb-4">Yang Akan Anda Dapatkan</h3>
               <ul className="space-y-3">
                 {WHAT_YOU_GET.map(({ icon: Icon, label }) => (
                   <li key={label} className="flex items-center gap-3">
@@ -716,16 +721,43 @@ export default function ProgramDetailPage() {
               </ul>
             </div>
 
-            {/* Back to listing */}
-            <Link
-              href={`/${program.type}`}
-              className="mt-4 flex items-center gap-2 text-gray-500 hover:text-[#2348A8] text-sm transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" /> Kembali ke daftar program
-            </Link>
+            {/* Dokumentasi Pelatihan — dinamis dari admin */}
+            {program.show_documentation &&
+              program.documentation_images &&
+              program.documentation_images.length > 0 && (
+              <div className="mt-4">
+                <h3 className="font-bold text-gray-900 mb-2">Dokumentasi Pelatihan</h3>
+                <p className="text-gray-400 text-xs mb-3">Rekaman sesi pelatihan langsung — Aji Institute</p>
+                <div className="grid grid-cols-2 gap-2 mb-3">
+                  {program.documentation_images.map((doc, i) => (
+                    <button
+                      key={doc.id}
+                      onClick={() => setLightboxIndex(i)}
+                      className="relative rounded-lg overflow-hidden border border-gray-100 shadow-sm bg-gray-50 aspect-video group cursor-zoom-in"
+                    >
+                      <img src={doc.image} alt={doc.caption || `Foto dokumentasi ${i + 1}`} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+                      <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+                        <ZoomIn className="w-5 h-5 text-white drop-shadow" />
+                      </div>
+                    </button>
+                  ))}
+                </div>
+                <a
+                  href="https://drive.google.com/drive/folders/1LKSNpd7as7V0VCoxaVfH_3i1JqWAIIEH"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 w-full bg-[#1B3A8C] hover:bg-[#2348A8] text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-colors duration-200"
+                >
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M6.28 3l5.72 9.9L17.72 3H6.28zM2 17l3.09-5.35L2 17zm15.72-8.65L21.91 17 18.82 11.35l-1.1-1.9zM12 13.1L8.18 20h7.64L12 13.1z"/></svg>
+                  Tonton Rekaman via Google Drive
+                </a>
+              </div>
+            )}
+
           </div>
         </div>
-      </div>
+
+</div>
 
       {/* ─── Material Modal ─── */}
       <MaterialModal
@@ -733,6 +765,47 @@ export default function ProgramDetailPage() {
         program={program}
         onClose={() => setActiveMaterial(null)}
       />
+
+      {/* ─── Lightbox ─── */}
+      {lightboxIndex !== null &&
+        program.documentation_images &&
+        program.documentation_images.length > 0 && (
+        <div
+          className="fixed inset-0 z-[200] bg-black/90 flex items-center justify-center p-4"
+          onClick={() => setLightboxIndex(null)}
+        >
+          <button
+            onClick={() => setLightboxIndex(null)}
+            className="absolute top-4 right-4 text-white bg-white/10 hover:bg-white/20 rounded-full p-2 transition-colors"
+          >
+            <X className="w-6 h-6" />
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex - 1 + program.documentation_images!.length) % program.documentation_images!.length); }}
+            className="absolute left-4 text-white bg-white/10 hover:bg-white/20 rounded-full p-3 transition-colors"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+          <div className="max-w-5xl w-full" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={program.documentation_images[lightboxIndex].image}
+              alt={program.documentation_images[lightboxIndex].caption || `Foto dokumentasi ${lightboxIndex + 1}`}
+              className="w-full max-h-[80vh] object-contain rounded-xl shadow-2xl"
+            />
+            {program.documentation_images[lightboxIndex].caption && (
+              <p className="text-white/70 text-sm text-center mt-3">
+                {lightboxIndex + 1} / {program.documentation_images.length} — {program.documentation_images[lightboxIndex].caption}
+              </p>
+            )}
+          </div>
+          <button
+            onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex + 1) % program.documentation_images!.length); }}
+            className="absolute right-4 text-white bg-white/10 hover:bg-white/20 rounded-full p-3 transition-colors"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+        </div>
+      )}
     </>
   );
 }

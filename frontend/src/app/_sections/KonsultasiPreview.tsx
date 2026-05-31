@@ -104,13 +104,13 @@ function LayananModal({ item, onClose }: { item: Layanan; onClose: () => void })
         </div>
 
         <div className={`rounded-xl px-4 py-3 text-xs text-gray-600 border mb-5 ${item.color}`}>
-          👥 <strong>Cocok untuk:</strong> {item.cocokUntuk}
+          <strong>Cocok untuk:</strong> {item.cocokUntuk}
         </div>
 
         <a href={WA_LINK(`Halo, saya tertarik dengan layanan: ${item.title}`)}
           target="_blank" rel="noopener noreferrer"
           className="w-full flex items-center justify-center gap-2 bg-[#1B3A8C] hover:bg-[#2348A8] text-white font-bold py-3 rounded-xl transition-colors text-sm">
-          💬 Konsultasikan Kebutuhan Saya
+          Konsultasikan Kebutuhan Saya
         </a>
       </div>
     </div>

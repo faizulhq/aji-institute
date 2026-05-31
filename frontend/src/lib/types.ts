@@ -1,3 +1,11 @@
+// ─── Program Documentation ────────────────────────────────────
+export interface ProgramDocumentationImage {
+  id: number;
+  image: string;    // absolute URL dari Django media
+  caption: string;
+  order: number;
+}
+
 // ─── Program ──────────────────────────────────────────────────
 export interface Program {
   id: number;
@@ -18,6 +26,8 @@ export interface Program {
   image?: string | null;
   is_featured: boolean;
   brand?: 'aji-institute' | 'ajistat' | 'ajibiz' | 'ajicomm' | 'ajiai' | 'ajilingua';
+  show_documentation?: boolean;
+  documentation_images?: ProgramDocumentationImage[];
   // Detail only
   description?: string;
   curriculum?: string[];

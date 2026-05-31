@@ -56,6 +56,11 @@ class Program(models.Model):
     schedule = models.CharField(max_length=100, blank=True)
     is_featured = models.BooleanField(default=False)
     order = models.IntegerField(default=0, help_text="Urutan tampil (angka terkecil tampil duluan)")
+    show_documentation = models.BooleanField(
+        default=False,
+        verbose_name='Tampilkan Dokumentasi Pelatihan?',
+        help_text='Aktifkan untuk menampilkan section foto dokumentasi di halaman program'
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -82,6 +87,37 @@ class Testimonial(models.Model):
 
     def __str__(self):
         return f"{self.name} — ⭐{self.rating}"
+
+
+class ProgramDocumentation(models.Model):
+    """Foto-foto dokumentasi pelatihan untuk ditampilkan di halaman program."""
+    program = models.ForeignKey(
+        Program, on_delete=models.CASCADE,
+        related_name='documentation_images',
+        verbose_name='Program'
+    )
+    image = models.ImageField(
+        upload_to='documentation/',
+        verbose_name='Foto Dokumentasi'
+    )
+    caption = models.CharField(
+        max_length=200, blank=True,
+        verbose_name='Keterangan Foto',
+        help_text='Opsional — keterangan singkat foto (contoh: Sesi coding NVivo hari ke-2)'
+    )
+    order = models.PositiveIntegerField(
+        default=0,
+        verbose_name='Urutan',
+        help_text='Angka terkecil tampil duluan'
+    )
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = 'Foto Dokumentasi'
+        verbose_name_plural = 'Foto Dokumentasi'
+
+    def __str__(self):
+        return f"Foto {self.order} — {self.program.title}"
 
 
 class BlogArticle(models.Model):

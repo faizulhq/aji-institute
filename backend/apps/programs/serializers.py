@@ -1,5 +1,21 @@
 from rest_framework import serializers
-from .models import Program, Testimonial, BlogArticle, Announcement
+from .models import Program, Testimonial, BlogArticle, Announcement, ProgramDocumentation
+
+
+class ProgramDocumentationSerializer(serializers.ModelSerializer):
+    """Serializer for documentation photos with absolute image URL."""
+    image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ProgramDocumentation
+        fields = ('id', 'image', 'caption', 'order')
+
+    def get_image(self, obj):
+        request = self.context.get('request')
+        if obj.image:
+            url = obj.image.url
+            return request.build_absolute_uri(url) if request else url
+        return None
 
 
 class ProgramListSerializer(serializers.ModelSerializer):
@@ -17,6 +33,7 @@ class ProgramListSerializer(serializers.ModelSerializer):
 class ProgramDetailSerializer(serializers.ModelSerializer):
     """Full serializer for program detail page."""
     testimonials = serializers.SerializerMethodField()
+    documentation_images = ProgramDocumentationSerializer(many=True, read_only=True)
 
     class Meta:
         model = Program

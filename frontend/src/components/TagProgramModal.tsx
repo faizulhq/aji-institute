@@ -132,7 +132,7 @@ export function TagProgramModal({ tag, programs, onClose }: Props) {
           ) : (
             <div className="text-center py-14">
               <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">🔍</span>
+                <span className="text-3xl"></span>
               </div>
               <p className="font-bold text-gray-700 mb-1">Kelas belum tersedia</p>
               <p className="text-gray-400 text-sm max-w-xs mx-auto">

@@ -1,4 +1,4 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 
 export default function NotFound() {
   return (
@@ -20,11 +20,11 @@ export default function NotFound() {
         <div className="flex flex-wrap justify-center gap-3">
           <Link href="/"
             className="bg-[#F0A500] hover:bg-[#C8870A] text-[#162058] font-bold px-6 py-3 rounded-xl transition-colors">
-            🏠 Kembali ke Beranda
+            Kembali ke Beranda
           </Link>
           <Link href="/bootcamp"
             className="bg-white/10 border border-white/25 hover:bg-white/20 text-white font-semibold px-6 py-3 rounded-xl transition-colors">
-            🎓 Lihat Program
+            Lihat Program
           </Link>
         </div>
 
