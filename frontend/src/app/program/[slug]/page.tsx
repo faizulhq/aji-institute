@@ -59,6 +59,8 @@ const FALLBACK_SLUGS = [
   'short-ajibiz-digital-marketing', 'bootcamp-ajicomm-corpcomm', 'short-ajicomm-press-release',
   'bootcamp-ajiai-mern', 'short-ajiai-uiux', 'bootcamp-ajilinguage-toefl',
   'private-ajilinguage-academic',
+  // NVivo — wajib ada karena ini program utama AjiStat
+  'penelitian-kualitatif-dengan-nvivo',
 ];
 
 export async function generateStaticParams() {
