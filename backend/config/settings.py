@@ -134,6 +134,8 @@ CORS_ALLOWED_ORIGINS = [
     'https://aji-institute.com',
     'https://www.aji-institute.com',
     'https://ajistat.aji-institute.com',
+    'http://aji-institute.com',       # HTTP fallback (redirect belum aktif)
+    'http://www.aji-institute.com',   # HTTP fallback (redirect belum aktif)
     'http://localhost:3000',   # development
     'http://localhost:3001',   # development alt
 ]
