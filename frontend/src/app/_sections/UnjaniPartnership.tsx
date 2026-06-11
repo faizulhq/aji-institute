@@ -2,11 +2,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { programsApi } from '@/lib/api';
-import { ArrowRight, Clock, Calendar, GraduationCap, Users } from 'lucide-react';
+import { ArrowRight, Clock, Calendar, GraduationCap, Users, ZoomIn, X, ChevronLeft, ChevronRight, Camera } from 'lucide-react';
 import { WA_LINK } from '@/lib/config';
-import type { Program } from '@/lib/types';
+import type { Program, ProgramDocumentationImage } from '@/lib/types';
 
 const API = process.env.NEXT_PUBLIC_API_URL || 'https://api.aji-institute.com';
 
@@ -23,7 +24,22 @@ const KERJASAMA_HIGHLIGHTS = [
   { icon: Clock, label: '6 Kali Pertemuan', desc: 'Latihan langsung dengan bimbingan ahli' },
 ];
 
+// Tidak ada static fallback — section hanya muncul jika admin upload foto di Django Admin
+
+/** Ekstrak YouTube video ID dari berbagai format URL */
+function getYouTubeId(url: string): string | null {
+  try {
+    const u = new URL(url);
+    if (u.hostname === 'youtu.be') return u.pathname.slice(1).split('?')[0];
+    if (u.hostname.includes('youtube.com')) return u.searchParams.get('v');
+  } catch { /* invalid URL */ }
+  return null;
+}
+
 export function UnjaniPartnership() {
+  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+  const [showPlayer, setShowPlayer] = useState(false);
+
   const { data } = useQuery<Program[]>({
     queryKey: ['unjani-collab-programs'],
     queryFn: () =>
@@ -37,6 +53,25 @@ export function UnjaniPartnership() {
 
   const programs = data ?? [];
   const featured = programs[0] ?? null;
+
+  // Fetch detail program Unjani untuk mendapatkan documentation_images secara dinamis
+  const { data: featuredDetail } = useQuery({
+    queryKey: ['unjani-program-detail', featured?.slug],
+    queryFn: () => programsApi.detail(featured!.slug).then((r) => r.data),
+    enabled: !!featured?.slug,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  // Foto dokumentasi dari API — hanya tampil jika admin sudah upload & aktifkan show_documentation
+  const dokumentasiFotos: { src: string; caption: string }[] =
+    featuredDetail?.show_documentation &&
+    Array.isArray(featuredDetail?.documentation_images) &&
+    featuredDetail.documentation_images.length > 0
+      ? featuredDetail.documentation_images.map((d: ProgramDocumentationImage) => ({
+          src: d.image,
+          caption: d.caption || `Foto dokumentasi ${d.order}`,
+        }))
+      : [];
 
   return (
     <section className="py-20 bg-gradient-to-b from-gray-50 to-white overflow-hidden">
@@ -124,10 +159,9 @@ export function UnjaniPartnership() {
 
               {/* Frame: Flyer (kiri) + Card info (kanan) bersebelahan */}
               <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden">
-                {/* items-stretch → card info otomatis mengikuti tinggi flyer */}
                 <div className="grid grid-cols-2 items-stretch">
 
-                  {/* Flyer image — ukuran ASLI gambar (lebar penuh, tinggi mengikuti rasio) */}
+                  {/* Flyer image */}
                   <div className="relative border-r border-white/10 overflow-hidden">
                     {featured?.image ? (
                       <div className="relative">
@@ -152,9 +186,8 @@ export function UnjaniPartnership() {
                     )}
                   </div>
 
-                  {/* Card info — tinggi otomatis = tinggi flyer (stretch) */}
+                  {/* Card info */}
                   <div className="p-5 flex flex-col justify-between h-full">
-
                     <div>
                       <p className="text-[#1E6B2E] text-[16px] font-bold uppercase tracking-wider mb-1">FISIP HI UNJANI</p>
                       <h4 className="text-white font-black text-sm leading-tight mb-3 line-clamp-2">
@@ -181,36 +214,158 @@ export function UnjaniPartnership() {
                         )}
                       </div>
                     </div>
-
-                    {/* <div className="mt-4 pt-4 border-t border-white/10">
-                      <p className="text-[#F0A500] font-black text-base mb-3">
-                        {!featured || Number(featured.price) === 0
-                          ? 'Hubungi Admin'
-                          : `Rp ${Number(featured.price).toLocaleString('id-ID')}`}
-                      </p>
-                      {featured ? (
-                        <Link
-                          href={`/program/${featured.slug}`}
-                          className="flex items-center gap-1 text-[#F0A500] hover:text-white text-xs font-bold transition-colors"
-                        >
-                          Daftar <ArrowRight className="w-3 h-3" />
-                        </Link>
-                      ) : (
-                        <Link
-                          href="/program/bootcamp-praktikum-nvivo"
-                          className="flex items-center gap-1 text-[#F0A500] hover:text-white text-xs font-bold transition-colors"
-                        >
-                          Daftar <ArrowRight className="w-3 h-3" />
-                        </Link>
-                      )}
-                    </div> */}
                   </div>
+
                 </div>
               </div>
             </div>
 
           </div>
         </div>
+
+        {/* ── Dokumentasi Sesi Pelatihan — hanya tampil jika admin sudah upload foto ── */}
+        {dokumentasiFotos.length > 0 && (
+          <div className="mt-10">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-8 h-8 rounded-lg bg-[#1E6B2E]/10 flex items-center justify-center shrink-0">
+                <Camera className="w-4 h-4 text-[#1E6B2E]" />
+              </div>
+              <div>
+                <h3 className="font-bold text-gray-900 text-base leading-tight">Dokumentasi Sesi Pelatihan</h3>
+                <p className="text-gray-400 text-xs">Rekaman sesi pelatihan langsung bersama mahasiswa UNJANI — Aji Institute</p>
+              </div>
+            </div>
+
+            {/* Grid foto dinamis dari API */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {dokumentasiFotos.map((foto, i) => (
+                <button
+                  key={i}
+                  onClick={() => setLightboxIdx(i)}
+                  className="relative rounded-xl overflow-hidden border border-gray-100 shadow-sm bg-gray-50 aspect-video group cursor-zoom-in"
+                  title={foto.caption}
+                >
+                  <Image
+                    src={foto.src}
+                    alt={foto.caption}
+                    fill
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                    sizes="(max-width: 640px) 50vw, 25vw"
+                  />
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+                    <ZoomIn className="w-5 h-5 text-white drop-shadow" />
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── Video YouTube — hanya tampil jika admin mengisi youtube_url ── */}
+        {featuredDetail?.youtube_url && (() => {
+          const videoId = getYouTubeId(featuredDetail.youtube_url);
+          if (!videoId) return null;
+          return (
+            <div className="mt-10">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center shrink-0">
+                  {/* YouTube icon */}
+                  <svg className="w-4 h-4 text-red-600" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="font-bold text-gray-900 text-base leading-tight">Video Rekaman Pelatihan</h3>
+                  <p className="text-gray-400 text-xs">Rekaman sesi bootcamp UNJANI × Aji Institute</p>
+                </div>
+              </div>
+
+              {/* Thumbnail facade → iframe on click */}
+              <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-100 bg-black" style={{ aspectRatio: '16/9' }}>
+                {showPlayer ? (
+                  <iframe
+                    src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+                    title="Video Rekaman Pelatihan"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="w-full h-full"
+                  />
+                ) : (
+                  <button
+                    onClick={() => setShowPlayer(true)}
+                    className="relative w-full h-full group"
+                    aria-label="Putar video"
+                  >
+                    {/* Thumbnail */}
+                    <Image
+                      src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+                      alt="Thumbnail video pelatihan"
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 800px"
+                      unoptimized
+                    />
+                    {/* Dark overlay */}
+                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors" />
+                    {/* Play button */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-16 h-16 rounded-full bg-red-600 hover:bg-red-500 flex items-center justify-center shadow-2xl transition-transform group-hover:scale-110">
+                        <svg className="w-7 h-7 text-white ml-1" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </button>
+                )}
+              </div>
+            </div>
+          );
+        })()}
+
+        {/* Lightbox */}
+        {lightboxIdx !== null && (
+          <div
+            className="fixed inset-0 z-[200] bg-black/90 flex items-center justify-center p-4"
+            onClick={() => setLightboxIdx(null)}
+          >
+            {/* Close */}
+            <button
+              onClick={() => setLightboxIdx(null)}
+              className="absolute top-4 right-4 text-white bg-white/10 hover:bg-white/20 rounded-full p-2 transition-colors z-10"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            {/* Prev */}
+            <button
+              onClick={(e) => { e.stopPropagation(); setLightboxIdx((lightboxIdx - 1 + dokumentasiFotos.length) % dokumentasiFotos.length); }}
+              className="absolute left-4 text-white bg-white/10 hover:bg-white/20 rounded-full p-3 transition-colors z-10"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            {/* Image */}
+            <div className="max-w-4xl w-full" onClick={(e) => e.stopPropagation()}>
+              <div className="relative w-full" style={{ aspectRatio: '16/9' }}>
+                <Image
+                  src={dokumentasiFotos[lightboxIdx].src}
+                  alt={dokumentasiFotos[lightboxIdx].caption}
+                  fill
+                  className="object-contain rounded-xl shadow-2xl"
+                  sizes="90vw"
+                />
+              </div>
+              <p className="text-white/70 text-sm text-center mt-3">
+                {lightboxIdx + 1} / {dokumentasiFotos.length} — {dokumentasiFotos[lightboxIdx].caption}
+              </p>
+            </div>
+            {/* Next */}
+            <button
+              onClick={(e) => { e.stopPropagation(); setLightboxIdx((lightboxIdx + 1) % dokumentasiFotos.length); }}
+              className="absolute right-4 text-white bg-white/10 hover:bg-white/20 rounded-full p-3 transition-colors z-10"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </div>
+        )}
 
         {/* CTA bawah */}
         <div className="text-center mt-10">

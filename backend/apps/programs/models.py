@@ -61,6 +61,12 @@ class Program(models.Model):
         verbose_name='Tampilkan Dokumentasi Pelatihan?',
         help_text='Aktifkan untuk menampilkan section foto dokumentasi di halaman program'
     )
+    youtube_url = models.URLField(
+        blank=True,
+        null=True,
+        verbose_name='Link Video YouTube',
+        help_text='URL video YouTube (contoh: https://youtu.be/xxxxx atau https://www.youtube.com/watch?v=xxxxx)'
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
