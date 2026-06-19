@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from apps.programs.urls import blog_urlpatterns, announcement_urlpatterns
+from apps.programs.urls import blog_urlpatterns, announcement_urlpatterns, riset_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -10,6 +10,7 @@ urlpatterns = [
     path('api/programs/', include('apps.programs.urls')),
     path('api/blog/', include((blog_urlpatterns, 'blog'))),
     path('api/announcements/', include((announcement_urlpatterns, 'announcements'))),
+    path('api/riset/', include((riset_urlpatterns, 'riset'))),
     path('api/cms/', include('apps.cms.urls')),
     path('api/', include('apps.orders.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

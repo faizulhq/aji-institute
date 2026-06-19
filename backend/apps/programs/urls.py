@@ -15,3 +15,7 @@ blog_urlpatterns = [
 announcement_urlpatterns = [
     path('', views.AnnouncementListView.as_view(), name='announcements'),
 ]
+
+riset_urlpatterns = [
+    path('', views.RisetProjectListView.as_view(), name='riset-list'),
+]

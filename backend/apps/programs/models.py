@@ -213,3 +213,47 @@ class Announcement(models.Model):
     def __str__(self):
         status = 'AKTIF' if self.is_active else 'nonaktif'
         return f"[{status}] {self.title}"
+
+
+class RisetProject(models.Model):
+    STATUS_CHOICES = [
+        ('ongoing',   'Sedang Berlangsung'),
+        ('completed', 'Selesai'),
+    ]
+
+    title       = models.CharField(max_length=255, verbose_name='Judul Proyek')
+    slug        = models.SlugField(unique=True, max_length=255)
+    client      = models.CharField(max_length=255, blank=True, verbose_name='Klien / Instansi')
+    description = models.TextField(verbose_name='Deskripsi Proyek')
+    scope       = models.JSONField(
+        default=list, blank=True,
+        verbose_name='Bidang Riset',
+        help_text='Contoh: ["Sosial Budaya", "Ekonomi", "Hankam"]'
+    )
+    methodology = models.JSONField(
+        default=list, blank=True,
+        verbose_name='Metodologi',
+        help_text='Contoh: ["Survei", "Wawancara Mendalam", "FGD"]'
+    )
+    location    = models.CharField(max_length=255, blank=True, verbose_name='Lokasi')
+    year        = models.IntegerField(null=True, blank=True, verbose_name='Tahun Pelaksanaan')
+    status      = models.CharField(
+        max_length=20, choices=STATUS_CHOICES, default='ongoing',
+        verbose_name='Status Proyek'
+    )
+    image       = models.ImageField(
+        upload_to='riset/', null=True, blank=True,
+        verbose_name='Cover Image Proyek'
+    )
+    is_featured  = models.BooleanField(default=False, verbose_name='Tampilkan sebagai Unggulan?')
+    is_published = models.BooleanField(default=False, verbose_name='Publikasikan?')
+    order        = models.IntegerField(default=0, verbose_name='Urutan Tampil')
+    created_at   = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering     = ['order', '-created_at']
+        verbose_name = 'Proyek Riset'
+        verbose_name_plural = 'Proyek Riset'
+
+    def __str__(self):
+        return f"[{self.get_status_display()}] {self.title}"

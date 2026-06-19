@@ -46,3 +46,9 @@ temp/
 tmp/
 *.zip
 *.tar.gz
+
+# Folder referensi lokal (tidak perlu di-commit)
+file-tambahan/
+foto-tambahan/
+ss-bukti-nvivo/
+video-preview/

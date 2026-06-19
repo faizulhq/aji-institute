@@ -92,3 +92,27 @@ export interface ProgramsResponse {
   total: number;
   data: Program[];
 }
+
+// ─── Riset Project ────────────────────────────────────────────
+export interface RisetProject {
+  id: number;
+  title: string;
+  slug: string;
+  client: string;
+  description: string;
+  scope: string[];
+  methodology: string[];
+  location: string;
+  year: number | null;
+  status: 'ongoing' | 'completed';
+  image: string | null;
+  is_featured: boolean;
+  is_published: boolean;
+  order: number;
+  created_at: string;
+}
+
+export interface RisetProjectsResponse {
+  total: number;
+  data: RisetProject[];
+}

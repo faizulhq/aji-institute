@@ -4,10 +4,11 @@ from rest_framework.permissions import AllowAny
 from rest_framework.throttling import AnonRateThrottle
 from django.db.models import Q
 from django.utils import timezone
-from .models import Program, Testimonial, BlogArticle, Announcement
+from .models import Program, Testimonial, BlogArticle, Announcement, RisetProject
 from .serializers import (
     ProgramListSerializer, ProgramDetailSerializer,
-    TestimonialSerializer, BlogArticleSerializer, AnnouncementSerializer,
+    TestimonialSerializer, BlogArticleSerializer,
+    AnnouncementSerializer, RisetProjectSerializer,
 )
 
 
@@ -123,3 +124,20 @@ class AnnouncementListView(APIView):
         serializer = AnnouncementSerializer(qs, many=True)
         return Response({'data': serializer.data})
 
+
+class RisetProjectListView(APIView):
+    """
+    GET /api/riset/
+    Mengembalikan proyek riset yang sudah dipublikasikan.
+    Query params: featured=true
+    """
+    permission_classes = [AllowAny]
+    throttle_classes = [AnonRateThrottle]
+
+    def get(self, request):
+        qs = RisetProject.objects.filter(is_published=True)
+        featured = request.query_params.get('featured')
+        if featured == 'true':
+            qs = qs.filter(is_featured=True)
+        serializer = RisetProjectSerializer(qs, many=True, context={'request': request})
+        return Response({'total': qs.count(), 'data': serializer.data})

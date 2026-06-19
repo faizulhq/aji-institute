@@ -21,6 +21,7 @@ const LAYANAN_LINKS = [
   { label: 'Workshop',          href: '/workshop' },
   { label: 'Konsultasi AjiStat', href: 'https://ajistat.aji-institute.com', external: true },
   { label: 'In-House Training', href: '/in-house-training' },
+  { label: 'Proyek Riset',      href: '/proyek-riset' },
 ];
 
 const MAIN_LINKS = [

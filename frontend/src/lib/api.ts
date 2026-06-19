@@ -89,6 +89,12 @@ export const announcementsApi = {
   active: () => api.get('/announcements/'),
 };
 
+// ─── Riset Projects ───────────────────────────────────────────
+export const risetApi = {
+  list: (params?: { featured?: boolean }) =>
+    api.get('/riset/', { params }),
+};
+
 // ─── CMS ──────────────────────────────────────────────────────
 export const cmsApi = {
   config: () => api.get('/cms/config/'),

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Program, Testimonial, BlogArticle, Announcement, ProgramDocumentation
+from .models import Program, Testimonial, BlogArticle, Announcement, ProgramDocumentation, RisetProject
 
 
 class ProgramDocumentationInline(admin.TabularInline):
@@ -94,3 +94,29 @@ class ProgramAdmin(admin.ModelAdmin):
     @admin.action(description='Hapus dari Program Unggulan')
     def unmark_featured(self, request, queryset):
         queryset.update(is_featured=False)
+
+
+@admin.register(RisetProject)
+class RisetProjectAdmin(admin.ModelAdmin):
+    list_display  = ('title', 'client', 'location', 'year', 'status', 'is_published', 'is_featured', 'order')
+    list_editable = ('is_published', 'is_featured', 'order')
+    list_filter   = ('status', 'is_published', 'is_featured')
+    search_fields = ('title', 'client', 'location')
+    prepopulated_fields = {'slug': ('title',)}
+    readonly_fields = ('created_at',)
+
+    fieldsets = (
+        ('Informasi Utama', {
+            'fields': ('title', 'slug', 'client', 'location', 'year', 'status', 'is_published', 'is_featured', 'order')
+        }),
+        ('Konten', {
+            'fields': ('description', 'scope', 'methodology')
+        }),
+        ('Media', {
+            'fields': ('image',)
+        }),
+        ('Metadata', {
+            'fields': ('created_at',),
+            'classes': ('collapse',)
+        }),
+    )

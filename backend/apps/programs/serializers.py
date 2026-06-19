@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Program, Testimonial, BlogArticle, Announcement, ProgramDocumentation
+from .models import Program, Testimonial, BlogArticle, Announcement, ProgramDocumentation, RisetProject
 
 
 class ProgramDocumentationSerializer(serializers.ModelSerializer):
@@ -67,3 +67,19 @@ class AnnouncementSerializer(serializers.ModelSerializer):
             'id', 'title', 'message', 'type',
             'cta_label', 'cta_url',
         )
+
+
+class RisetProjectSerializer(serializers.ModelSerializer):
+    """Serializer for research project portfolio."""
+    image = serializers.SerializerMethodField()
+
+    class Meta:
+        model  = RisetProject
+        fields = '__all__'
+
+    def get_image(self, obj):
+        request = self.context.get('request')
+        if obj.image:
+            url = obj.image.url
+            return request.build_absolute_uri(url) if request else url
+        return None
