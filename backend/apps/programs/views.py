@@ -22,7 +22,7 @@ class ProgramListView(APIView):
     throttle_classes = [AnonRateThrottle]
 
     def get(self, request):
-        qs = Program.objects.all()
+        qs = Program.objects.filter(is_published=True)
 
         ptype = request.query_params.get('type')
         if ptype:

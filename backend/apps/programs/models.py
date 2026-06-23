@@ -55,6 +55,11 @@ class Program(models.Model):
     duration = models.CharField(max_length=50, blank=True)
     schedule = models.CharField(max_length=100, blank=True)
     is_featured = models.BooleanField(default=False)
+    is_published = models.BooleanField(
+        default=True,
+        verbose_name='Tampilkan di Website?',
+        help_text='Uncheck untuk menyembunyikan program dari website tanpa menghapus datanya'
+    )
     order = models.IntegerField(default=0, help_text="Urutan tampil (angka terkecil tampil duluan)")
     show_documentation = models.BooleanField(
         default=False,
