@@ -43,7 +43,7 @@ class ProgramAdmin(admin.ModelAdmin):
             'fields': ('facilitator_name', 'facilitator_title', 'facilitator_bio', 'facilitator_avatar')
         }),
         ('Media & Tampilan', {
-            'fields': ('image', 'demo_video_url', 'thumbnail_color')
+            'fields': ('image', 'demo_video_url', 'youtube_url', 'thumbnail_color')
         }),
         ('Dokumentasi Pelatihan', {
             'fields': ('show_documentation',),
