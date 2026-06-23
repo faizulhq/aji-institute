@@ -261,7 +261,6 @@ function ProgramCard({ p, dark = true }: { p: Program; dark?: boolean }) {
   );
 }
 
-// ─── COMBINED: Aji Institute + UNJANI bersebelahan (atas) ────────────────────
 function OpenClassSideBySide() {
   const { data: allData, isLoading } = useQuery<Program[]>({
     queryKey: ['aji-institute-openclass-combined'],
@@ -278,6 +277,13 @@ function OpenClassSideBySide() {
   const regularPrograms = (allData ?? []).filter((p) => !isUnjaniProgram(p));
   const unjaniPrograms  = (allData ?? []).filter((p) =>  isUnjaniProgram(p));
 
+  const hasRegular = regularPrograms.length > 0;
+  const hasUnjani  = unjaniPrograms.length  > 0;
+  const bothExist  = hasRegular && hasUnjani;
+
+  // Setelah loading selesai, jika tidak ada program sama sekali — sembunyikan section
+  if (!isLoading && !hasRegular && !hasUnjani) return null;
+
   return (
     <section className="relative bg-gradient-to-br from-[#0d1632] via-[#162058] to-[#1B3A8C] py-10 overflow-hidden">
       {/* Dekorasi */}
@@ -288,68 +294,67 @@ function OpenClassSideBySide() {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-8">
+        {/* Grid 2 kolom jika keduanya ada, flex center jika hanya 1 */}
+        <div className={bothExist
+          ? 'grid lg:grid-cols-2 gap-8'
+          : 'flex justify-center'
+        }>
 
-          {/* ─── KIRI: Kelas Terbuka Aji Institute ─── */}
-          <div style={{ maxWidth: CARD_CONFIG.colMaxWidth }}>
-            <div className="mb-5">
-              <span className="inline-flex items-center gap-2 bg-[#F0A500]/20 border border-[#F0A500]/40 text-[#F0A500] text-xs font-bold px-3 py-1 rounded-full mb-2 uppercase tracking-widest">
-                Open Class
-              </span>
-              <h2 className="text-lg font-black text-white mb-1">Kelas Terbuka Aji Institute</h2>
-              <p className="text-white/50 text-xs">Program bootcamp untuk umum.</p>
-            </div>
-            {isLoading ? (
-              <div className="space-y-4">{[1, 2].map((i) => <div key={i} className="bg-white/10 animate-pulse rounded-2xl h-56" />)}</div>
-            ) : regularPrograms.length === 0 ? (
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-8 text-center">
-                <p className="text-white/30 text-sm">Belum ada program saat ini</p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {regularPrograms.map((p) => <ProgramCard key={p.id} p={p} dark={true} />)}
-              </div>
-            )}
-          </div>
-
-          {/* ─── KANAN: Kerjasama UNJANI ─── */}
-          <div style={{ maxWidth: CARD_CONFIG.colMaxWidth }}>
-            {/* Header dengan logo UNJANI */}
-            <div className="flex items-center gap-3 mb-5">
-              <div className="flex-1">
-                <span className="inline-flex items-center gap-2 bg-[#1E6B2E]/30 border border-[#1E6B2E]/40 text-[#4ade80] text-xs font-bold px-3 py-1 rounded-full mb-2 uppercase tracking-widest">
-                  Kerjasama UNJANI
+          {/* ─── KIRI: Kelas Terbuka Aji Institute — hanya tampil jika ada program ─── */}
+          {(isLoading || hasRegular) && (
+            <div style={{ maxWidth: CARD_CONFIG.colMaxWidth, width: '100%' }}>
+              <div className="mb-5">
+                <span className="inline-flex items-center gap-2 bg-[#F0A500]/20 border border-[#F0A500]/40 text-[#F0A500] text-xs font-bold px-3 py-1 rounded-full mb-2 uppercase tracking-widest">
+                  Open Class
                 </span>
-                <h2 className="text-lg font-black text-white mb-1">Bootcamp × UNJANI</h2>
-                <p className="text-white/50 text-xs">Program kolaborasi FISIP HI UNJANI.</p>
+                <h2 className="text-lg font-black text-white mb-1">Kelas Terbuka Aji Institute</h2>
+                <p className="text-white/50 text-xs">Program bootcamp untuk umum.</p>
               </div>
-              {/* Logo UNJANI kecil di header */}
-              <div className="bg-white/10 border border-white/20 rounded-xl p-1.5 shrink-0">
-                <Image src="/images/Logo_Unjani.png" alt="UNJANI" width={28} height={28} className="object-contain" />
-              </div>
+              {isLoading ? (
+                <div className="space-y-4">{[1, 2].map((i) => <div key={i} className="bg-white/10 animate-pulse rounded-2xl h-56" />)}</div>
+              ) : (
+                <div className="space-y-4">
+                  {regularPrograms.map((p) => <ProgramCard key={p.id} p={p} dark={true} />)}
+                </div>
+              )}
             </div>
-            {isLoading ? (
-              <div className="space-y-4">{[1].map((i) => <div key={i} className="bg-white/10 animate-pulse rounded-2xl h-56" />)}</div>
-            ) : unjaniPrograms.length === 0 ? (
-              <div className="bg-[#1E6B2E]/10 border border-[#1E6B2E]/25 rounded-2xl p-8 text-center">
-                <Image src="/images/Logo_Unjani.png" alt="UNJANI" width={40} height={40} className="mx-auto opacity-40 mb-3" />
-                <p className="text-white/30 text-sm">Belum ada program kerjasama saat ini</p>
+          )}
+
+          {/* ─── KANAN: Kerjasama UNJANI — hanya tampil jika ada program ─── */}
+          {(isLoading || hasUnjani) && (
+            <div style={{ maxWidth: CARD_CONFIG.colMaxWidth, width: '100%' }}>
+              {/* Header dengan logo UNJANI */}
+              <div className="flex items-center gap-3 mb-5">
+                <div className="flex-1">
+                  <span className="inline-flex items-center gap-2 bg-[#1E6B2E]/30 border border-[#1E6B2E]/40 text-[#4ade80] text-xs font-bold px-3 py-1 rounded-full mb-2 uppercase tracking-widest">
+                    Kerjasama UNJANI
+                  </span>
+                  <h2 className="text-lg font-black text-white mb-1">Bootcamp × UNJANI</h2>
+                  <p className="text-white/50 text-xs">Program kolaborasi FISIP HI UNJANI.</p>
+                </div>
+                {/* Logo UNJANI kecil di header */}
+                <div className="bg-white/10 border border-white/20 rounded-xl p-1.5 shrink-0">
+                  <Image src="/images/Logo_Unjani.png" alt="UNJANI" width={28} height={28} className="object-contain" />
+                </div>
               </div>
-            ) : (
-              <div className="space-y-4">
-                {unjaniPrograms.map((p) => (
-                  <div key={p.id} className="relative">
-                    {/* Badge kerjasama di atas card */}
-                    <div className="absolute -top-2 right-3 z-10 flex items-center gap-1.5 bg-[#1E6B2E] border border-[#2D9B44] rounded-full px-3 py-1">
-                      <Image src="/images/Logo_Unjani.png" alt="UNJANI" width={14} height={14} className="object-contain" />
-                      <span className="text-[9px] text-white font-bold uppercase tracking-widest">× UNJANI</span>
+              {isLoading ? (
+                <div className="space-y-4">{[1].map((i) => <div key={i} className="bg-white/10 animate-pulse rounded-2xl h-56" />)}</div>
+              ) : (
+                <div className="space-y-4">
+                  {unjaniPrograms.map((p) => (
+                    <div key={p.id} className="relative">
+                      {/* Badge kerjasama di atas card */}
+                      <div className="absolute -top-2 right-3 z-10 flex items-center gap-1.5 bg-[#1E6B2E] border border-[#2D9B44] rounded-full px-3 py-1">
+                        <Image src="/images/Logo_Unjani.png" alt="UNJANI" width={14} height={14} className="object-contain" />
+                        <span className="text-[9px] text-white font-bold uppercase tracking-widest">× UNJANI</span>
+                      </div>
+                      <ProgramCard p={p} dark={true} />
                     </div>
-                    <ProgramCard p={p} dark={true} />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
 
         </div>
       </div>
