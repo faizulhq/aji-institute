@@ -47,6 +47,7 @@ function getYouTubeId(url: string): string | null {
 export function UnjaniPartnership() {
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
   const [showPlayer, setShowPlayer] = useState(false);
+  const [showPlayer2, setShowPlayer2] = useState(false);
 
   const { data } = useQuery<Program[]>({
     queryKey: ['unjani-collab-programs'],
@@ -82,9 +83,11 @@ export function UnjaniPartnership() {
       : [];
 
   // Derived state untuk kondisi tampilan
-  const videoId = featuredDetail?.youtube_url ? getYouTubeId(featuredDetail.youtube_url) : null;
-  const hasFotos = dokumentasiFotos.length > 0;
-  const hasVideo = !!videoId;
+  const videoId  = featuredDetail?.youtube_url   ? getYouTubeId(featuredDetail.youtube_url)   : null;
+  const videoId2 = featuredDetail?.youtube_url_2  ? getYouTubeId(featuredDetail.youtube_url_2)  : null;
+  const hasFotos  = dokumentasiFotos.length > 0;
+  const hasVideo  = !!videoId;
+  const hasVideo2 = !!videoId2;
   const bothExist = hasFotos && hasVideo;
   const displayFotos = dokumentasiFotos.slice(0, 4);
 
@@ -244,32 +247,87 @@ export function UnjaniPartnership() {
           <div className="mt-10">
 
             {bothExist ? (
-              /* ── KEDUANYA ADA: side-by-side dengan divider ── */
+              /* ── KEDUANYA ADA: video(s) di atas, foto di bawah ── */
               <div>
-                {/* Judul section — tengah, tanpa icon */}
+                {/* Judul section */}
                 <div className="text-center mb-5">
                   <h3 className="font-bold text-gray-900 text-base leading-tight">Dokumentasi Sesi Pelatihan</h3>
                   <p className="text-gray-400 text-xs mt-0.5">Rekaman sesi pelatihan langsung bersama mahasiswa UNJANI × Aji Institute</p>
                 </div>
 
-                {/* Row: container dengan ambient colored background */}
+                {/* Container: merah ambient atas (video), hijau ambient bawah (foto) */}
                 <div
-                  className="relative flex flex-col lg:flex-row items-stretch rounded-2xl overflow-hidden"
+                  className="rounded-2xl overflow-hidden"
                   style={{
                     background: [
-                      'radial-gradient(ellipse 70% 90% at 8% 50%, rgba(30, 107, 46, 0.13) 0%, transparent 100%)',
-                      'radial-gradient(ellipse 70% 90% at 92% 50%, rgba(239, 68, 68, 0.13) 0%, transparent 100%)',
+                      'radial-gradient(ellipse 100% 55% at 50% 18%, rgba(239, 68, 68, 0.12) 0%, transparent 100%)',
+                      'radial-gradient(ellipse 100% 55% at 50% 82%, rgba(30, 107, 46, 0.12) 0%, transparent 100%)',
                     ].join(', ')
                   }}
                 >
-                  {/* KIRI: Foto 2×2 */}
-                  <div className="flex-1 flex flex-col p-4 lg:p-5">
-                    <div className="grid grid-cols-2 gap-2 flex-1">
+                  {/* ATAS: Thumbnail fill kolom langsung + play button, tanpa card mengambang */}
+                  <div className={`flex overflow-hidden ${!hasVideo2 ? 'justify-center' : ''}`} style={{ minHeight: 460 }}>
+
+                    {/* Kolom Video 1 */}
+                    <div className={`relative overflow-hidden ${hasVideo2 ? 'flex-1' : 'w-full'}`}>
+                      {showPlayer ? (
+                        <iframe src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`} title="Video 1"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen className="w-full h-full border-0" />
+                      ) : (
+                        <>
+                          <Image src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`} alt="Video 1" fill className="object-cover" unoptimized sizes="600px" />
+                          <button onClick={() => setShowPlayer(true)} className="absolute inset-0 flex items-center justify-center group" aria-label="Putar video 1">
+                            <div className="w-14 h-14 rounded-full bg-red-600 group-hover:bg-red-500 flex items-center justify-center shadow-xl transition-transform group-hover:scale-110">
+                              <svg className="w-7 h-7 text-white ml-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                            </div>
+                          </button>
+                        </>
+                      )}
+                    </div>
+
+                    {/* Separator */}
+                    {hasVideo2 && <div className="w-px bg-white/20 shrink-0 self-stretch" />}
+
+                    {/* Kolom Video 2 */}
+                    {hasVideo2 && (
+                      <div className="flex-1 relative overflow-hidden">
+                        {showPlayer2 ? (
+                          <iframe src={`https://www.youtube.com/embed/${videoId2}?autoplay=1&rel=0`} title="Video 2"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen className="w-full h-full border-0" />
+                        ) : (
+                          <>
+                            <Image src={`https://img.youtube.com/vi/${videoId2}/maxresdefault.jpg`} alt="Video 2" fill className="object-cover" unoptimized sizes="600px" />
+                            <button onClick={() => setShowPlayer2(true)} className="absolute inset-0 flex items-center justify-center group" aria-label="Putar video 2">
+                              <div className="w-14 h-14 rounded-full bg-red-600 group-hover:bg-red-500 flex items-center justify-center shadow-xl transition-transform group-hover:scale-110">
+                                <svg className="w-7 h-7 text-white ml-0.5" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                              </div>
+                            </button>
+                          </>
+                        )}
+                      </div>
+                    )}
+
+                  </div>
+
+                  {/* Divider horizontal — merah (video/atas) → hijau (foto/bawah) */}
+                  <div
+                    className="mx-6"
+                    style={{
+                      height: '1.5px',
+                      background: 'linear-gradient(to right, transparent 0%, rgba(239, 68, 68, 0.55) 30%, rgba(30, 107, 46, 0.55) 70%, transparent 100%)'
+                    }}
+                  />
+
+                  {/* BAWAH: 4 foto sejajar, centered */}
+                  <div className="py-5 px-4 lg:px-6">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                       {displayFotos.map((foto, i) => (
                         <button
                           key={i}
                           onClick={() => setLightboxIdx(i)}
-                          className="relative rounded-lg overflow-hidden aspect-square group cursor-zoom-in shadow-sm"
+                          className="relative rounded-xl overflow-hidden aspect-video group cursor-zoom-in shadow-sm"
                           title={foto.caption}
                         >
                           <Image
@@ -277,7 +335,7 @@ export function UnjaniPartnership() {
                             alt={foto.caption}
                             fill
                             className="object-cover transition-transform duration-300 group-hover:scale-105"
-                            sizes="(max-width: 640px) 50vw, 20vw"
+                            sizes="(max-width: 640px) 50vw, 25vw"
                           />
                           <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                             <ZoomIn className="w-4 h-4 text-white drop-shadow" />
@@ -294,62 +352,6 @@ export function UnjaniPartnership() {
                         Lihat semua foto ({dokumentasiFotos.length})
                       </button>
                     )}
-                  </div>
-
-                  {/* Divider vertikal (desktop) — tipis, memudar atas & bawah */}
-                  <div
-                    className="hidden lg:block self-stretch shrink-0"
-                    style={{
-                      width: '1.5px',
-                      background: 'linear-gradient(to bottom, transparent 0%, rgba(30, 107, 46, 0.55) 25%, rgba(239, 68, 68, 0.55) 75%, transparent 100%)'
-                    }}
-                  />
-
-                  {/* Divider horizontal (mobile) — memudar kiri & kanan */}
-                  <div
-                    className="block lg:hidden mx-4 my-1 shrink-0"
-                    style={{
-                      height: '1.5px',
-                      background: 'linear-gradient(to right, transparent 0%, rgba(30, 107, 46, 0.55) 30%, rgba(239, 68, 68, 0.55) 70%, transparent 100%)'
-                    }}
-                  />
-
-                  {/* KANAN: Video */}
-                  <div className="flex-1 flex flex-col p-4 lg:p-5">
-                    <div className="flex-1 min-h-[180px] rounded-xl overflow-hidden shadow-md bg-black">
-                      {showPlayer ? (
-                        <iframe
-                          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
-                          title="Video Rekaman Pelatihan"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                          className="w-full h-full"
-                        />
-                      ) : (
-                        <button
-                          onClick={() => setShowPlayer(true)}
-                          className="relative w-full h-full group"
-                          aria-label="Putar video"
-                        >
-                          <Image
-                            src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
-                            alt="Thumbnail video pelatihan"
-                            fill
-                            className="object-cover"
-                            sizes="300px"
-                            unoptimized
-                          />
-                          <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors" />
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-10 h-10 rounded-full bg-red-600 hover:bg-red-500 flex items-center justify-center shadow-xl transition-transform group-hover:scale-110">
-                              <svg className="w-5 h-5 text-white ml-0.5" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M8 5v14l11-7z"/>
-                              </svg>
-                            </div>
-                          </div>
-                        </button>
-                      )}
-                    </div>
                   </div>
 
                 </div>

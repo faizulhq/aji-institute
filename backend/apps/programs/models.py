@@ -69,8 +69,14 @@ class Program(models.Model):
     youtube_url = models.URLField(
         blank=True,
         null=True,
-        verbose_name='Link Video YouTube',
-        help_text='URL video YouTube (contoh: https://youtu.be/xxxxx atau https://www.youtube.com/watch?v=xxxxx)'
+        verbose_name='Link Video YouTube ke-1',
+        help_text='URL video YouTube pertama (contoh: https://youtu.be/xxxxx)'
+    )
+    youtube_url_2 = models.URLField(
+        blank=True,
+        null=True,
+        verbose_name='Link Video YouTube ke-2',
+        help_text='URL video YouTube kedua/tambahan (opsional)'
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
